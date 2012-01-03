@@ -6,3 +6,4 @@ runtime/*
 protected/data/*.db
 protected/tests/report/*
 *.swp
+yii/*
