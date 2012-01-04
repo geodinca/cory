@@ -142,10 +142,11 @@ div.form .errorSummary ul
 div.wide.form label
 {
 	float: left;
-	margin-right: 10px;
-	position: relative;
-	text-align: right;
-	width: 100px;
+    margin-right: 10px;
+    padding-top: 18px;
+    position: relative;
+    text-align: right;
+    width: 300px;
 }
 
 div.wide.form .row
