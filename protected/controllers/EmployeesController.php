@@ -140,8 +140,16 @@ class EmployeesController extends Controller
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Employees']))
+		if(isset($_GET['Employees'])){
 			$model->attributes=$_GET['Employees'];
+		}
+		
+		if(isset($_POST['Search'])){
+			if(!empty($_POST['Search']['present_employer'])){
+				$model->companies_id = explode(',', $_POST['Search']['present_employer']);
+			}
+//			echo '<pre>'.print_r($_POST, true).'</pre>';
+		}
 
 		$this->render('admin',array(
 			'model'=>$model,
