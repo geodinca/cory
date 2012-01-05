@@ -23,12 +23,10 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:block">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
+<?php
+// search form 
+$this->renderPartial('_search',array('model'=>$model)); 
+?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'employees-grid',
@@ -38,6 +36,10 @@ $('.search-form form').submit(function(){
 		'id',
 		'name',
 		'title',
+		array(
+			'header' => 'Employer',
+			'value' => '$data->present_employer->name'
+		),
 		'geographical_area',
 		'contact_info',
 		'email',
