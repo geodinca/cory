@@ -230,17 +230,21 @@ div.search-form
 
 #logo-tag
 {
-	padding-left: 20px;
+	padding: 20px;
+	width: 200px;
+	clear:right;
+	float:left;
 }
 
 #application-title
 {
-	padding: 10px;
-	float: right;
+	padding: 30px 0px 20px 20px;
+	float: left;
 	position: relative;
-	width: 600px;
+	text-align: center;
+	width: 50%;
 	font-size:2em;
-	top:-50px;
+	
 }
 
 input[type="text"], input[type="password"] {
@@ -249,4 +253,48 @@ input[type="text"], input[type="password"] {
 	color: #636363;
 	font-size: 1.2em;
 	font-family: Tahoma, Geneva, sans-serif;
+}
+
+.tabmenu 
+{
+	background: #FFF url(bg.gif) repeat-x left top;
+}
+
+.tabmenu ul
+{
+	padding: 6px 20px 5px 20px;
+	margin: 0px;
+}
+
+.tabmenu ul li
+{
+	display: inline;
+}
+
+.tabmenu  ul li a 
+{
+	color: white;
+	background-color: transparent;
+	font-size: 12px;
+	font-weight: bold;
+	text-decoration: none;
+	padding: 5px 8px;
+}
+
+.profile-view 
+{
+	margin-left: 15%;
+	margin-right: 15%;
+	max-width: 100%;
+}
+
+.profile-view h3 
+{
+	padding: 10px 0 0 0;
+	margin-bottom: 0.3em;
+	border-bottom: 1px #CCC solid;
+}
+
+.profile-view .profile-data span {
+	padding: 0 0 10px 0;
 }

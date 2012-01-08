@@ -22,13 +22,17 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-
+<?php
+// search form 
+$this->renderPartial('_menu',array('action'=>'search_screen')); 
+?>
 <?php
 // search form 
 $this->renderPartial('_search',array('model'=>$model)); 
 ?>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php 
+$this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'employees-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
@@ -56,4 +60,5 @@ $this->renderPartial('_search',array('model'=>$model));
 			'class'=>'CButtonColumn',
 		),
 	),
-)); ?>
+));
+?>

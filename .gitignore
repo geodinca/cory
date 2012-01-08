@@ -5,6 +5,7 @@ assets/*
 runtime/*
 protected/data/*.db
 protected/tests/report/*
+protected/runtime/*
 *.swp
 yii/*
 /sources
