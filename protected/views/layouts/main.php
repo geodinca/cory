@@ -29,6 +29,7 @@
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Search Tips', 'url'=>array('/site/page', 'view'=>'searchtips'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Search Screen', 'url'=>array('/employees/admin'), 'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>'Import data', 'url'=>array('/imports/admin'), 'visible'=>!Yii::app()->user->isGuest),
 			),
 		)); ?>
 	</div><!-- mainmenu -->
