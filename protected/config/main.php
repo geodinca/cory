@@ -44,6 +44,13 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
+		'cache'=>array(
+//            'class'=>'system.caching.CMemCache',
+            'class'=>'system.caching.CDummyCache',
+        ),
+        'format'=>array(
+            'class'=>'application.components.PFormatter',
+        ),
 		/*
 		'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
