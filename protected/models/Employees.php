@@ -27,6 +27,7 @@
  */
 class Employees extends CActiveRecord
 {
+	public $importdata;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Employees the static model class
@@ -52,6 +53,8 @@ class Employees extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('importdata', 'required', 'on' => 'import'),
+			array('importdata', 'file', 'types' => 'xls, xlsx', 'on' => 'import'),
 			array('companies_id, instances_id', 'numerical', 'integerOnly'=>true),
 			array('name, title, geographical_area, email, home_street, home_city, home_state_country, home_zip, home_phone, actual_location_street, actual_location_city, actual_location_state', 'length', 'max'=>255),
 			array('contact_info, profile, date_entered, date_update, misc_info', 'safe'),
@@ -99,6 +102,7 @@ class Employees extends CActiveRecord
 			'date_entered' => 'Date Entered',
 			'date_update' => 'Date Update',
 			'misc_info' => 'Misc Info',
+			'import' => 'Upload files'
 		);
 	}
 
