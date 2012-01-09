@@ -5,7 +5,7 @@
 			<?php echo CHtml::link('Search Screen', array('employees/admin')); ?>
 		</li>
 		<li <?php echo ($action == 'search_result' ? 'class="active"' : '');?>>
-			<?php echo CHtml::link('Search Result', array('employees/admin')); ?>
+			<?php echo CHtml::link('Search Result', array('employees/list')); ?>
 		</li>
 		<li <?php echo ($action == 'selected_profile' ? 'class="active"' : '');?>>
 			<?php echo CHtml::link('Selected Profile', array('id'=>1)); ?>

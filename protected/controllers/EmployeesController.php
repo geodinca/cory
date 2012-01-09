@@ -30,6 +30,10 @@ class EmployeesController extends Controller
 				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+					'actions'=>array('admin','list'),
+					'users'=>array('admin'),
+			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update'),
 				'users'=>array('@'),
@@ -132,6 +136,18 @@ class EmployeesController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 	}
+	
+	/**
+	 * Lists search results in separate screen.
+	 */
+	public function actionList($model)
+	{
+		//$dataProvider=new CActiveDataProvider('Employees');
+		var_dump($model);
+		$this->render('list',array(
+			'model'=>$model,
+		));
+	}
 
 	/**
 	 * Manages all models.
@@ -148,7 +164,11 @@ class EmployeesController extends Controller
 			if(!empty($_POST['Search']['present_employer'])){
 				$model->companies_id = explode(',', $_POST['Search']['present_employer']);
 			}
-//			echo '<pre>'.print_r($_POST, true).'</pre>';
+			
+			$this->render('list',array(
+					'model'=>$model,
+			));
+			exit;
 		}
 
 		$this->render('admin',array(
