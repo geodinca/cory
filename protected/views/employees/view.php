@@ -16,7 +16,7 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		<span><?php echo $model->name; ?></span>
 		
 		<h3>Geographical Area</h3>
-		<span><?php echo $model->geographical_area; ?></span>
+		<span><?php echo Yii::app()->format->html(nl2br($model->geographical_area)); ?></span>
 		
 		<h3>Curent title</h3>
 		<span><?php echo $model->title; ?></span>
@@ -25,10 +25,10 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		<span><?php echo $model->present_employer->name; ?></span>
 		
 		<h3>Company info</h3>
-		<span><?php echo $model->contact_info; ?></span>
+		<span><?php echo Yii::app()->format->html(nl2br($model->contact_info)); ?></span>
 		
 		<h3>Profile/Biography/Past employers</h3>
-		<span><?php echo $model->profile; ?></span>
+		<span><?php echo Yii::app()->format->html(nl2br($model->profile)); ?></span>
 		
 		<h3>Notes</h3>
 		<?php $form=$this->beginWidget('CActiveForm', array(
@@ -41,12 +41,3 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 	</div>
 </div>
 <!-- PROFILE: START -->
-<?php 
-// $this->menu=array(
-// 		array('label'=>'List Employees', 'url'=>array('index')),
-// 		array('label'=>'Create Employees', 'url'=>array('create')),
-// 		array('label'=>'Update Employees', 'url'=>array('update', 'id'=>$model->id)),
-// 		array('label'=>'Delete Employees', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-// 		array('label'=>'Manage Employees', 'url'=>array('admin')),
-// );
-?>
