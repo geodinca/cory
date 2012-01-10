@@ -9,9 +9,31 @@ $form=$this->beginWidget('CActiveForm', array(
 ));
 ?>
 
-	<p class="note"><?php echo Yii::t('app','Fields with <span class="required">*</span> are required.'); ?></p>
+	<!-- Instance details	-->
+	<h2>Instance details</h2>
+	<?php echo $form->errorSummary($oInstanceModel); ?>
+
+	<div class="row">
+		<?php echo $form->labelEx($oInstanceModel,'name'); ?>
+		<?php echo $form->textField($oInstanceModel,'name',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($oInstanceModel,'name'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($oInstanceModel,'client_id'); ?>
+		<?php echo $form->dropDownList($oInstanceModel, 'client_id', CHtml::listData(Clients::model()->findAll(array('order' => 'name ASC')), 'id', 'name')); ?>
+		<?php echo $form->error($oInstanceModel,'client_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($oInstanceModel,'expire'); ?>
+		<?php echo $form->textField($oInstanceModel,'expire'); ?>
+		<?php echo $form->error($oInstanceModel,'expire'); ?>
+	</div>
+
 
 	<!-- Import fields -->
+	<h2>Import details</h2>
 	<div class="row even">
 		<?php echo CHtml::activeLabelEx($model, 'importdata'); ?>
 		<?php echo CHtml::activeFileField($model, 'importdata'); ?>
