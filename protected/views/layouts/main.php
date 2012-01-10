@@ -30,6 +30,9 @@
 				array('label'=>'Search Tips', 'url'=>array('/site/page', 'view'=>'searchtips'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Search Screen', 'url'=>array('/employees/admin'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Import data', 'url'=>array('/imports/admin'), 'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>'Clients', 'url'=>array('/clients/admin'), 'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>'Instances', 'url'=>array('/instances/admin'), 'visible'=>!Yii::app()->user->isGuest),
+				array('label'=>'Users', 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest),
 			),
 		)); ?>
 	</div><!-- mainmenu -->
