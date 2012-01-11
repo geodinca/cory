@@ -261,7 +261,7 @@ input[type="text"], input[type="password"] {
 	font-family: Tahoma, Geneva, sans-serif;
 }
 
-table thead input[type="text"], input[type="password"] {
+table thead input[type="text"] {
 	width: 98% !important;
 	padding: 2px;
 	color: #636363;
