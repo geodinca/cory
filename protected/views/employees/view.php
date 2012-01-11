@@ -1,17 +1,23 @@
 <?php
+//load jScrollPane JS
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/jquery.jscrollpane.css');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/mwheelIntent.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.mousewheel.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.jscrollpane.min.js');
 // search form 
 $this->renderPartial('_menu',array('action'=>'selected_profile')); 
 ?>
 <!-- PROFILE: START -->
 <div class="profile-view">
 	<div class="profile-actions">
-		<span>1/21</span>
-		<span>Mark profile</span>
-		<span>Save PDF</span>
-		<span>Print</span>
-		<span> &laquo; Previous</span> | <span>Next &raquo;</span>
+		<span style="float: left">1/21</span>
+		<span style="float: right"> &laquo; Previous | Next &raquo;</span>
+		<span style="float: right"><?php echo CHtml::button('Save PDF'); ?></span>
+		<span style="float: right"><?php echo CHtml::button('Print'); ?></span>
+		<span style="float: right"><?php echo CHtml::checkBox('Mark profile',false,array()).' Mark profile'?></span>
 	</div>
-	<div id="profile-<?php echo $model->id?>" class="profile-data">
+	<div class="clear"></div>
+	<div id="profile-<?php echo $model->id?>" class="profile-data"  style="height: 260px; ">
 		<h3>Name</h3>
 		<span><?php echo $model->name; ?></span>
 		
@@ -30,24 +36,39 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		<h3>Profile/Biography/Past employers</h3>
 		<span><?php echo Yii::app()->format->html(nl2br($model->profile)); ?></span>
 		
-		<h3>Notes</h3>
-		<?php //$form=$this->beginWidget('CActiveForm', array(
+		
+		<?php 
+// 		$form=$this->beginWidget('CActiveForm', array(
 // 			'action'=>Yii::app()->createUrl($this->route),
 // 			'method'=>'post',
-// 		)); ?>
+// 		)); 
+		?>
 		<?php //echo $form->textArea($model,'misc_info',array('rows'=>6, 'cols'=>118)); ?>
+		
+		<?php //echo $form->error($model,'misc_info'); ?>
+		<?php //$this->endWidget(); ?>
+	</div>
+	<div class="profile-notes">
+		<h3>Notes</h3>
 		<?php $this->widget(
 				'application.extensions.jeditable.DsJEditableWidget', 
 				array(
-						//'model'=>$model,
+						'model'=>$model,
 						'jeditable_type' => 'textarea',
 						'name'=>'misc_info',
 						'rows'=> 6,
 						'cols'=> 118,
 						//'tooltip' => 'Hint message - press to add your custom notes to this profile'
 			)) ?>
-		<?php //echo $form->error($model,'misc_info'); ?>
-		<?php //$this->endWidget(); ?>
 	</div>
+	
 </div>
-<!-- PROFILE: START -->
+<!-- PROFILE: END -->
+<script type="text/javascript">
+//<!--
+$(document).ready(function()
+	{
+		$('.profile-data').jScrollPane();
+	});
+//-->
+</script>

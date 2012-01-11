@@ -4,9 +4,9 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'Create Client', 'url'=>array('create')),
-);
+// $this->menu=array(
+// 	array('label'=>'Create Client', 'url'=>array('create')),
+// );
 ?>
 
 <h1>Manage Clients</h1>

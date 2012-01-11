@@ -3,10 +3,10 @@ $this->breadcrumbs=array(
 	'Employees',
 );
 
-$this->menu=array(
-	array('label'=>'Create Employees', 'url'=>array('create')),
-	array('label'=>'Manage Employees', 'url'=>array('admin')),
-);
+// $this->menu=array(
+// 	array('label'=>'Create Employees', 'url'=>array('create')),
+// 	array('label'=>'Manage Employees', 'url'=>array('admin')),
+// );
 ?>
 
 <h1>Employees</h1>

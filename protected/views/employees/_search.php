@@ -66,7 +66,7 @@
 	</div>
 	
 	<div class="row">
-		<?php echo $form->label($model,'geographical_area'); ?>
+		<?php echo Chtml::label('Code area:', 'geographical_area');; ?>
 		<?php
 			$this->widget('application.extensions.multicomplete.MultiComplete', array(
 					'splitter'=>',',
@@ -83,7 +83,7 @@
 			  ));
 		?>
 		<p class="hint">
-			Hint: geographical area</tt>.
+			Hint: Use telephone prefixes</tt>.
 		</p>
 	</div>
 	

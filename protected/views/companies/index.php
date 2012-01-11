@@ -3,10 +3,10 @@ $this->breadcrumbs=array(
 	'Companies',
 );
 
-$this->menu=array(
-	array('label'=>'Create Companies', 'url'=>array('create')),
-	array('label'=>'Manage Companies', 'url'=>array('admin')),
-);
+// $this->menu=array(
+// 	array('label'=>'Create Companies', 'url'=>array('create')),
+// 	array('label'=>'Manage Companies', 'url'=>array('admin')),
+// );
 ?>
 
 <h1>Companies</h1>

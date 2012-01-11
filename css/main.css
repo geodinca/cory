@@ -29,7 +29,7 @@ body
 
 #content
 {
-    padding: 20px;
+    padding: 10px 0;
 	clear: left;
 }
 
@@ -257,7 +257,15 @@ input[type="text"], input[type="password"] {
 	width: 300px;
 	padding: 10px 10px 9px;
 	color: #636363;
-	font-size: 1.2em;
+	font-size: 18px;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+
+table thead input[type="text"], input[type="password"] {
+	width: 98% !important;
+	padding: 2px;
+	color: #636363;
+	font-size: 12px;
 	font-family: Tahoma, Geneva, sans-serif;
 }
 
@@ -303,4 +311,23 @@ input[type="text"], input[type="password"] {
 
 .profile-view .profile-data span {
 	padding: 0 0 10px 0;
+}
+
+.profile-actions
+{
+	padding: 5px;
+	background: #ccc;
+	height:25px;
+	display: block;
+}
+
+.profile-actions span
+{
+	padding: 0 15px 0 0;
+	line-height: 25px;
+}
+
+.grid-view {
+	padding: 15px !important;
+	width: 98%;
 }
