@@ -36,6 +36,16 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 			'method'=>'post',
 		)); ?>
 		<?php echo $form->textArea($model,'misc_info',array('rows'=>6, 'cols'=>118)); ?>
+		<?php $this->widget(
+				'application.extensions.jeditable.DsJEditableWidget', 
+				array(
+						//'model'=>$model,
+						'jeditable_type' => 'textarea',
+						'name'=>'misc_info',
+						'rows'=> 6,
+						'cols'=> 118,
+						//'tooltip' => 'Hint message - press to add your custom notes to this profile'
+			)) ?>
 		<?php echo $form->error($model,'misc_info'); ?>
 		<?php $this->endWidget(); ?>
 	</div>
