@@ -52,7 +52,9 @@
 			'links'=>$this->breadcrumbs,
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
-
+	
+	<div class="clear"></div>
+	
 	<?php echo $content; ?>
 
 	<div id="footer">
