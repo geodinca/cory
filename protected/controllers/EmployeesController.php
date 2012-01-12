@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Search employees controller
+ * @author cmarin
+ */
 class EmployeesController extends Controller
 {
 	/**
@@ -134,41 +137,132 @@ class EmployeesController extends Controller
 	}
 	
 	/**
-	 * Lists search results in separate screen.
-	 */
-	public function actionList($model)
-	{
-		//$dataProvider=new CActiveDataProvider('Employees');
-		var_dump($model);
-		$this->render('list',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Manages all models.
+	 * Search form for employees
 	 */
 	public function actionAdmin()
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Employees'])){
-			$model->attributes=$_GET['Employees'];
-		}
-		
-		if(isset($_POST['Search'])){
-			if(!empty($_POST['Search']['present_employer'])){
-				$model->companies_id = explode(',', $_POST['Search']['present_employer']);
-			}
-			
-			$this->render('list',array(
-					'model'=>$model,
-			));
-			exit;
-		}
 
 		$this->render('admin',array(
 			'model'=>$model,
+		));
+	}
+	
+	/**
+	 * Lists search results in separate screen.
+	 */
+	public function actionList()
+	{
+		$model=new Employees('search');
+		$model->unsetAttributes();  // clear any default values
+		
+		if(Yii::app()->request->isAjaxRequest){
+			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+			
+			if($aSession){
+				$dataProvider = new CActiveDataProvider($model, array(
+					'criteria'=>$aSession['criteria'],
+				));
+			} else {
+				$dataProvider = $model->search();
+			}
+		}
+		
+		if(isset($_GET['Employees'])){
+			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+			
+			if($aSession){
+				$oCriteria = $aSession['criteria'];
+				
+				$oCriteria1 = new CDbCriteria;
+				$model->attributes=$_GET['Employees'];
+				foreach($model->attributes as $sAttribute => $sValue){
+					if($sValue){
+						$oCriteria1->addCondition($sAttribute.' LIKE :v_'.$sAttribute);
+						$oCriteria1->params[':v_'.$sAttribute] = '%'.$sValue.'%';
+					}
+				}
+				$oCriteria->mergeWith($oCriteria1);
+//				echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
+				
+				$dataProvider = new CActiveDataProvider($model, array(
+					'criteria'=>$oCriteria,
+				));
+			} else {
+				$model->attributes=$_GET['Employees'];
+				$dataProvider = $model->search();
+			}
+		}
+		
+		if(isset($_POST['Search'])){
+			$oCriteria = new CDbCriteria;
+			
+			if($_POST['Search']['present_employer']){
+				$oCriteria->addInCondition('t.companies_id', explode(',', $_POST['Search']['present_employer']));
+			}
+			if($_POST['Search']['present_or_past_employer']){
+				$oCriteria->addInCondition('t.profile', explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -1)));
+			}
+			if($_POST['Search']['contact_info']){
+				$oCriteria->addInCondition('t.contact_info', explode(',', trim($_POST['Search']['contact_info'])), 'AND');
+			}
+			if($_POST['Search']['country_state']){
+				$oCriteria->addInCondition('t.geographical_area', explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -1)), 'AND');
+			}
+			
+			if($_POST['Search']['any_word']){
+				$oCriteria1 = new CDbCriteria;
+				$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
+				foreach($aWordsToBeSearched as $sWord){
+					$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.name', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.title', $sWord, true, 'OR');
+				}
+				$oCriteria->mergeWith($oCriteria1);
+			}
+			
+			if($_POST['Search']['all_word']){
+				$oCriteria1 = new CDbCriteria;
+				$aWordsToBeSearched = explode(' ', trim($_POST['Search']['all_word']));
+				foreach($aWordsToBeSearched as $sWord){
+					$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.name', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.title', $sWord, true, 'OR');
+				}
+				$oCriteria->mergeWith($oCriteria1);
+			}
+			
+			if($_POST['Search']['none_word']){
+				$oCriteria1 = new CDbCriteria;
+				$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
+				foreach($aWordsToBeSearched as $sWord){
+					$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.name', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.title', $sWord, true, 'OR');
+				}
+				$oCriteria->mergeWith($oCriteria1);
+			}
+			
+			Yii::app()->session->add('search_criteria', serialize(array('criteria' => $oCriteria)));
+			
+//			echo '<pre>'.print_r($oCriteria, true).'</pre>';
+//			echo '<pre>'.print_r($_POST, true).'</pre>'; die();
+
+			$dataProvider = new CActiveDataProvider($model, array(
+				'criteria'=>$oCriteria,
+			));
+		}
+
+		$this->render('list',array(
+			'model'=>$model,
+			'dataProvider' => $dataProvider
 		));
 	}
 	

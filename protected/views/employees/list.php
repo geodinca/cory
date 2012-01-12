@@ -5,7 +5,7 @@ $this->renderPartial('_menu',array('action'=>'search_screen'));
 <?php 
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'employees-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$dataProvider, //$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
 		array(

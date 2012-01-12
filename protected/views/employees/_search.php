@@ -1,7 +1,7 @@
 <div class="wide form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'action'=>Yii::app()->createUrl($this->route),
+	'action'=>Yii::app()->createUrl('/employees/list'),
 //	'method'=>'get',
 	'method'=>'post',
 )); ?>
@@ -14,7 +14,7 @@
 				'class' => 'search_form',
 				)); ?>
 		<p class="hint">
-			Hint: Boolean Search</tt>.
+			Hint: Boolean Search.
 		</p>
 	</div>
 	
@@ -25,7 +25,7 @@
 			$aCompanies = CHtml::ListData(Companies::model()->findAll(), 'id', 'name');
 			$this->widget('application.extensions.multicomplete.MultiComplete', array(
 					'updater' => 'Search_present_employer',
-					'splitter'=>',',
+					'splitter'=>'::',
 					'source'=>$aCompanies,
 					'options'=>array(
 						'minLength'=>'2',
@@ -39,7 +39,7 @@
 			  ));
 		?>
 		<p class="hint">
-			Hint: Present Employer with autocomplete</tt>.
+			Hint: Present Employer with autocomplete.
 		</p>
 	</div>
 	
@@ -47,7 +47,7 @@
 		<?php echo Chtml::label('Present or Past Employer:', 'present_or_past_employer'); ?>
 		<?php
 			$this->widget('application.extensions.multicomplete.MultiComplete', array(
-					'splitter'=>',',
+					'splitter'=>'::',
 					'source'=>$aCompanies,
 					'options'=>array(
 						'minLength'=>'2',
@@ -61,29 +61,15 @@
 			  ));
 		?>
 		<p class="hint">
-			Hint: Present or Past Employer with autocomplete</tt>.
+			Hint: Present or Past Employer with autocomplete.
 		</p>
 	</div>
 	
 	<div class="row">
-		<?php echo Chtml::label('Code area:', 'geographical_area');; ?>
-		<?php
-			$this->widget('application.extensions.multicomplete.MultiComplete', array(
-					'splitter'=>',',
-					'source'=>CHtml::listData(Employees::model()->findAll(array('group' => 'geographical_area')), 'geographical_area', 'geographical_area'),
-					'options'=>array(
-						'minLength'=>'2',
-					),
-					'htmlOptions'=>array(
-						'size'=>'60',
-			            'name' => 'Search[geographical_area]',
-			          	'id' => 'Search_geographical_area',
-						'class' => 'search_form',
-					),
-			  ));
-		?>
+		<?php echo Chtml::label('Code area:', 'contact_info'); ?>
+		<?php echo CHtml::textField('Search[contact_info]', ''); ?>
 		<p class="hint">
-			Hint: Use telephone prefixes</tt>.
+			Hint: Use telephone prefixes.
 		</p>
 	</div>
 	
@@ -91,7 +77,7 @@
 		<?php echo Chtml::label('Countries AND/OR US States:', 'country_state'); ?>
 		<?php
 			$this->widget('application.extensions.multicomplete.MultiComplete', array(
-					'splitter'=>',',
+					'splitter'=>'::',
 					'source'=>CHtml::listData(Employees::model()->findAll(array('group' => 'geographical_area')), 'geographical_area', 'geographical_area'),
 					'options'=>array(
 						'minLength'=>'2',
@@ -105,13 +91,13 @@
 			  ));
 		?>
 		<p class="hint">
-			Hint: Countries AND/OR US States</tt>.
+			Hint: Countries AND/OR US States.
 		</p>
 	</div>
 	
 	<div class="row">
 		<?php echo Chtml::label('ANY of this words:', 'any_word'); ?>
-		<?php echo CHtml::textField('any_word', 'enter text...', array(
+		<?php echo CHtml::textField('Search[any_word]', '', array(
 				'size'=>50,
 				'maxlength'=>256,
 				'class' => 'search_form',
@@ -123,7 +109,7 @@
 	
 	<div class="row">
 		<?php echo Chtml::label('ALL of this words:', 'all_word'); ?>
-		<?php echo CHtml::textField('all_word', 'enter text...', array(
+		<?php echo CHtml::textField('Search[all_word]', '', array(
 				'size'=>50,
 				'maxlength'=>256,
 				'class' => 'search_form',
@@ -135,7 +121,7 @@
 	
 	<div class="row">
 		<?php echo Chtml::label('NONE of this words:', 'none_word'); ?>
-		<?php echo CHtml::textField('none_word', 'enter text...', array(
+		<?php echo CHtml::textField('Search[none_word]', '', array(
 				'size'=>50,
 				'maxlength'=>256,
 				'class' => 'search_form',
