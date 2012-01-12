@@ -1,3 +1,8 @@
+<?php 
+//load tooltip js 
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.tools.min.js');
+?>
+
 <?php
 $this->breadcrumbs=array(
 	'Companies'=>array('index'),
@@ -33,14 +38,21 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
-
+<?php //var_dump($model->search())?>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'companies-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
+		array(
+			'class'=>'CCheckBoxColumn',
+		),
 		'id',
-		'name',
+		array(
+			'name'=> 'name',
+			'htmlOptions'=>array('class' => 'company_title', ),
+			//'value'=> '<span class="ttip" title="abc">zxsde</span>',	
+		),
 		'street',
 		'city',
 		'country',
@@ -57,3 +69,18 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 		),
 	),
 )); ?>
+<script>
+
+// initialize tooltip
+$(".ttip").tooltip({
+
+   // tweak the position
+   offset: [1, 1],
+
+   // use the "slide" effect
+   effect: 'slide'
+
+// add dynamic plugin with optional configuration for bottom edge
+}).dynamic({ bottom: { direction: 'down', bounce: true } });
+</script>
+

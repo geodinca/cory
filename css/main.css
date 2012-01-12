@@ -14,10 +14,7 @@ body
 
 #page
 {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	background: white;
-	border: 1px solid #C9E0ED;
+
 }
 
 #header
@@ -27,9 +24,13 @@ body
 	border-top: 3px solid #C9E0ED;
 }
 
+.sf-menu {
+	float: left;
+	margin-bottom: 0 !important;
+}
+
 #content
 {
-    padding: 10px 0;
 	clear: left;
 }
 
@@ -236,7 +237,7 @@ div.search-form
 
 #logo-tag
 {
-	padding: 20px;
+	padding: 10px 20px;
 	width: 200px;
 	clear:right;
 	float:left;
@@ -255,7 +256,7 @@ div.search-form
 
 input[type="text"], input[type="password"] {
 	width: 300px;
-	padding: 10px 10px 9px;
+	padding: 5px 5px 5px;
 	color: #636363;
 	font-size: 18px;
 	font-family: Tahoma, Geneva, sans-serif;
@@ -330,4 +331,8 @@ table thead input[type="text"] {
 .grid-view {
 	padding: 15px !important;
 	width: 98%;
+}
+
+#import-screen, #home-screen, #static-page {
+	padding: 0 20px;
 }

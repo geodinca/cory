@@ -19,8 +19,8 @@
 
 <body>
 <div class="container" id="page">
-	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array(
+	<div>
+		<?php $this->widget('ext.CDropDownMenu.CDropDownMenu',array(
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site/index')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
@@ -30,7 +30,12 @@
 				array('label'=>'Search Tips', 'url'=>array('/site/page', 'view'=>'searchtips'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Search Screen', 'url'=>array('/employees/admin'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Import data', 'url'=>array('/imports/admin'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Clients', 'url'=>array('/clients/admin'), 'visible'=>!Yii::app()->user->isGuest),
+				array(
+						'label'=>'Clients', 
+						'url'=>array('/clients/admin'), 
+						'visible'=>!Yii::app()->user->isGuest,
+						'items' => array(array('label'=>'Create Client', 'url'=>array('/clients/create'))
+				)),
 				array('label'=>'Instances', 'url'=>array('/instances/admin'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Users', 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest),
 			),
@@ -47,11 +52,11 @@
 	</div><!-- header -->
 
 	
-	<?php if(isset($this->breadcrumbs)):?>
-		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
-	<?php endif?>
+	<?php //if(isset($this->breadcrumbs)):?>
+		<?php //$this->widget('zii.widgets.CBreadcrumbs', array(
+			//'links'=>$this->breadcrumbs,
+		//)); ?><!-- breadcrumbs -->
+	<?php //endif?>
 	
 	<div class="clear"></div>
 	
