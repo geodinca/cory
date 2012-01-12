@@ -4,6 +4,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/jquery.jscro
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/mwheelIntent.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.mousewheel.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.jscrollpane.min.js');
+//load jEditable JS
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.jeditable.mini.js');
 // search form 
 $this->renderPartial('_menu',array('action'=>'selected_profile')); 
 ?>
@@ -50,25 +52,47 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 	</div>
 	<div class="profile-notes">
 		<h3>Notes</h3>
-		<?php $this->widget(
-				'application.extensions.jeditable.DsJEditableWidget', 
-				array(
-						'model'=>$model,
-						'jeditable_type' => 'textarea',
-						'name'=>'misc_info',
-						'rows'=> 6,
-						'cols'=> 118,
-						//'tooltip' => 'Hint message - press to add your custom notes to this profile'
-			)) ?>
+		<?php 
+// 		$this->widget(
+// 				'application.extensions.jeditable.DsJEditableWidget', 
+// 				array(
+// 						'model'				=>$model,
+// 						'jeditable_type' 	=> 'textarea',
+// 						'name'				=>'misc_info',
+// 						'rows'				=> 6,
+// 						'cols'				=> 118,
+// 						'saveurl'			=>'/employees/update/'.$model->id,
+// 						'data'	 			=> $model->misc_info,
+// 			)) 
+		?>
+		<div class="edit_area" id="<?php echo $model->id ?>">
+			<?php echo  Yii::app()->format->html(nl2br($model->misc_info))?>
+		</div>
+		
 	</div>
 	
 </div>
 <!-- PROFILE: END -->
 <script type="text/javascript">
 //<!--
-$(document).ready(function()
-	{
-		$('.profile-data').jScrollPane();
-	});
+$(document).ready(function(){
+	$('.profile-data').jScrollPane();
+
+    $('.edit_area').editable('/employees/saveNotes', { 
+        type      	: 'textarea',
+        name	  	: 'misc_info',
+        placeholder	: 'Dubleclick to edit',
+        loadurl  	: '/employees/loadNotes',
+        loadtype   	: 'POST',
+        loaddata 	: {id: "<?php echo $model->id ?>"},
+        rows	  	: 6,
+        cols	  	: 118,
+        cancel    	: 'Cancel',
+        submit    	: 'OK',
+        event	  	: 'dblclick',
+        //indicator 	: '<img src="img/indicator.gif">',
+        tooltip   	: 'Dubleclick to edit...'
+    });
+});
 //-->
 </script>

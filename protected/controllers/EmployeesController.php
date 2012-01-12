@@ -27,15 +27,11 @@ class EmployeesController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','list'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-					'actions'=>array('admin','list'),
-					'users'=>array('admin'),
-			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','saveNotes','loadNotes'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -175,6 +171,27 @@ class EmployeesController extends Controller
 			'model'=>$model,
 		));
 	}
+	
+	public function actionSaveNotes()
+	{
+		if(isset($_POST['misc_info']) && isset($_POST['id'])) {
+			$model = $this->loadModel($_POST['id']);
+			$model->misc_info = $_POST['misc_info'];
+			$model->save();
+			echo nl2br($model->misc_info);
+		}
+	}
+	
+	public function actionLoadNotes()
+	{
+		if(isset($_POST['id'])) {
+			echo $_POST['id'];
+			$model = $this->loadModel($_POST['id']);
+			echo $model->misc_info;
+			exit;
+		}
+		echo 'no data';
+	}
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
@@ -201,4 +218,5 @@ class EmployeesController extends Controller
 			Yii::app()->end();
 		}
 	}
+	
 }
