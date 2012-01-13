@@ -8,6 +8,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.too
 $this->renderPartial('_menu',array('action'=>'search_screen')); 
 ?>
 <?php 
+//$i = 1;	
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'employees-grid',
 	'dataProvider'=>$dataProvider, //$model->search(),
@@ -17,7 +18,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'class'=>'CCheckBoxColumn',
 			'selectableRows' => 2
 		),
-		'id',
+		array(
+			'header' => '#',
+			'value'	 => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row + 1)'
+		),
+		//'id',
 		'name',
 		'title',
 		array(

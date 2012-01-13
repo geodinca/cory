@@ -51,7 +51,10 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 			'class'=>'CCheckBoxColumn',
 			'selectableRows' => 2
 		),
-		'id',
+		array(
+			'header' => '#',
+			'value'	 => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row + 1)'
+		),
 		array(
 			'name'=> 'name',
 			'htmlOptions'=>array('class' => 'company_title', ),

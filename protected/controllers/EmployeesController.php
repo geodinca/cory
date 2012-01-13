@@ -202,13 +202,13 @@ class EmployeesController extends Controller
 				$oCriteria->addInCondition('t.companies_id', explode(',', $_POST['Search']['present_employer']));
 			}
 			if($_POST['Search']['present_or_past_employer']){
-				$oCriteria->addInCondition('t.profile', explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -1)));
+				$oCriteria->addInCondition('t.profile', explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -2)));
 			}
 			if($_POST['Search']['contact_info']){
 				$oCriteria->addInCondition('t.contact_info', explode(',', trim($_POST['Search']['contact_info'])), 'AND');
 			}
 			if($_POST['Search']['country_state']){
-				$oCriteria->addInCondition('t.geographical_area', explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -1)), 'AND');
+				$oCriteria->addInCondition('t.geographical_area', explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -2)), 'AND');
 			}
 			
 			if($_POST['Search']['any_word']){
@@ -252,7 +252,7 @@ class EmployeesController extends Controller
 			
 			Yii::app()->session->add('search_criteria', serialize(array('criteria' => $oCriteria)));
 			
-//			echo '<pre>'.print_r($oCriteria, true).'</pre>';
+// 			echo '<pre>'.print_r($oCriteria, true).'</pre>';die;
 //			echo '<pre>'.print_r($_POST, true).'</pre>'; die();
 
 			$dataProvider = new CActiveDataProvider($model, array(
