@@ -1,3 +1,8 @@
+<?php 
+//load tooltip js 
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.tools.min.js');
+?>
+
 <?php
 // search form 
 $this->renderPartial('_menu',array('action'=>'search_screen')); 
@@ -10,13 +15,16 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'columns'=>array(
 		array(
 			'class'=>'CCheckBoxColumn',
+			'selectableRows' => 2
 		),
 		'id',
 		'name',
 		'title',
 		array(
 			'header' => 'Employer',
-			'value' => '$data->present_employer->name'
+			'htmlOptions'=>array('class' => 'company_title', ),
+			'type' => 'html',
+			'value' => array($this, 'getTooltip')
 		),
 		'geographical_area',
 		//'contact_info',
@@ -36,3 +44,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	),
 ));
 ?>
+<script>
+
+// initialize tooltip
+$(".ttip").tooltip({
+
+   // tweak the position
+   offset: [1, 1],
+
+   // use the "slide" effect
+   effect: 'slide'
+
+// add dynamic plugin with optional configuration for bottom edge
+}).dynamic({ bottom: { direction: 'down', bounce: true } });
+</script>

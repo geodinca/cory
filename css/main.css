@@ -157,7 +157,6 @@ div.search-form
 {
 	padding: 10px;
 	margin: 10px 0;
-	background: #eee;
 }
 
 .portlet
@@ -318,8 +317,8 @@ table thead input[type="text"] {
 {
 	padding: 5px;
 	background: #ccc;
-	height:25px;
-	display: block;
+	line-height:25px;
+	overflow: hidden;	
 }
 
 .profile-actions span
@@ -335,4 +334,24 @@ table thead input[type="text"] {
 
 #import-screen, #home-screen, #static-page {
 	padding: 0 20px;
+}
+
+.tooltip 
+{
+	background-color:#EEE;
+	padding: 15px;
+	border: 1px #ccc solid;	
+	width: 500px;
+}
+
+.summary
+{
+	float: left;
+	position: relative;
+	top: -15px;
+	margin: 0 0 -10px 0;
+}
+
+.profile-actions .search-button {
+	float:right;
 }

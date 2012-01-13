@@ -31,7 +31,7 @@ class CompaniesController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','getTooltip'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -146,6 +146,12 @@ class CompaniesController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+	
+	public function getTooltip($data,$row)
+	{
+		$model = Companies::model()->findByPk($data->id);
+		return $this->renderPartial('../companies/tooltip', array('model'=>$model),true);
 	}
 
 	/**

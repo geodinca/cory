@@ -32,26 +32,31 @@ $('.search-form form').submit(function(){
 // search form 
 $this->renderPartial('../employees/_menu',array('action'=>'companies_data')); 
 ?>
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
+<div class="profile-actions">
+<?php echo CHtml::button('Advanced Search',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
+</div>
 </div><!-- search-form -->
 <?php //var_dump($model->search())?>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'companies-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
+	//'enablePagination'=>false,
 	'columns'=>array(
 		array(
 			'class'=>'CCheckBoxColumn',
+			'selectableRows' => 2
 		),
 		'id',
 		array(
 			'name'=> 'name',
 			'htmlOptions'=>array('class' => 'company_title', ),
-			//'value'=> '<span class="ttip" title="abc">zxsde</span>',	
+			'type' => 'html',
+			'value'=> array($this,'getTooltip'),	
 		),
 		'street',
 		'city',
@@ -69,6 +74,7 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 		),
 	),
 )); ?>
+
 <script>
 
 // initialize tooltip
