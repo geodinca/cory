@@ -28,6 +28,6 @@ $this->renderPartial('_menu',array('action'=>'search_screen'));
 ?>
 <?php
 // search form 
-$this->renderPartial('_search',array('model'=>$model)); 
+$this->renderPartial('_search',array('model'=>$model, 'aPostedData' => $aPostedData)); 
 ?>
 
