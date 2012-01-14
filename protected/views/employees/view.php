@@ -50,7 +50,7 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		<?php //echo $form->error($model,'misc_info'); ?>
 		<?php //$this->endWidget(); ?>
 	</div>
-	<div class="profile-notes">
+	<div class="profile-notes" >
 		<h3>Notes</h3>
 		<div class="edit_area" id="<?php echo $model->id ?>">
 			<?php echo $this->widget('application.widgets.getUserNotes', array("iEmployeeId" => $model->id, "iUserId" => Yii::app()->user->id), true); ?>
@@ -71,9 +71,9 @@ $(document).ready(function(){
         placeholder	: 'Dubleclick to edit',
         loadurl  	: "<?php echo Yii::app()->createUrl('/notes/loadNotes'); ?>",
         loadtype   	: 'POST',
-        loaddata 	: {id: "<?php echo $model->id; ?>"},
-        rows	  	: 6,
-        cols	  	: 118,
+        loaddata 	: {id: "<?php echo $model->id ?>"},
+        rows	  	: 5,
+        cols	  	: 117,
         onblur    	: 'submit',
         event	  	: 'dblclick',
         tooltip   	: 'Dubleclick to edit...'
