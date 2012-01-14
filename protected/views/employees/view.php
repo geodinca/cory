@@ -66,7 +66,7 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 // 			))
 		?>
 		<div class="edit_area" id="<?php echo $model->id ?>">
-			<?php echo  Yii::app()->format->html(nl2br($model->misc_info))?>
+			<?php echo  Yii::app()->format->html(nl2br($model->notes->note))?>
 		</div>
 
 	</div>
@@ -78,11 +78,11 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 $(document).ready(function(){
 	$('.profile-data').jScrollPane();
 
-    $('.edit_area').editable('/employees/saveNotes', {
+    $('.edit_area').editable('/notes/saveNotes', {
         type      	: 'textarea',
-        name	  	: 'misc_info',
+        name	  	: 'note',
         placeholder	: 'Dubleclick to edit',
-        loadurl  	: '/employees/loadNotes',
+        loadurl  	: '/notes/loadNotes',
         loadtype   	: 'POST',
         loaddata 	: {id: "<?php echo $model->id ?>"},
         rows	  	: 6,

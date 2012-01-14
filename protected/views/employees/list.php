@@ -35,7 +35,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'filter'	=> CHtml::listData(Companies::model()->findAll(array('order' => 'name ASC')), 'id', 'name')
 		),
 		'geographical_area',
-		'misc_info',
+		array(
+		    'name'       => 'note',
+		    'type'        => 'html',
+		    'value'      => '$data->notes->note'
+		),
 		array(
 			'class'=>'CButtonColumn',
 			'template' => $sTemplate
