@@ -8,7 +8,7 @@
 
 	<div class="row">
 		<?php echo Chtml::label('Boolean Search:', 'boolean_search'); ?>
-		<?php echo CHtml::textField('Search[boolean_search]', 'enter text...', array(
+		<?php echo CHtml::textField('Search[boolean_search]', isset($aPostedData['Search']['boolean_search']) ? $aPostedData['Search']['boolean_search'] : '', array(
 				'size'=>50,
 				'maxlength'=>256,
 				'class' => 'search_form',
@@ -20,7 +20,7 @@
 	
 	<div class="row">
 		<?php echo Chtml::label('Present Employer:', 'present_employer'); ?>
-		<?php echo CHtml::hiddenField('Search[present_employer]', null); ?>
+		<?php echo CHtml::hiddenField('Search[present_employer]', isset($aPostedData['Search']['present_employer']) ? $aPostedData['Search']['present_employer'] : ''); ?>
 		<?php
 			$aCompanies = CHtml::ListData(Companies::model()->findAll(), 'id', 'name');
 			$this->widget('application.extensions.multicomplete.MultiComplete', array(
@@ -34,8 +34,9 @@
 						'size'=>'60',
 			            'name' => 'present_employer',
 			          	'id' => 'present_employer',
-						'class' => 'search_form',	
+						'class' => 'search_form',
 					),
+					'value' => isset($aPostedData['present_employer']) ? $aPostedData['present_employer'] : ''
 			  ));
 		?>
 		<p class="hint">
@@ -58,6 +59,7 @@
 			          	'id' => 'Search_present_or_past_employer',
 						'class' => 'search_form',
 					),
+					'value' => isset($aPostedData['Search']['present_or_past_employer']) ? $aPostedData['Search']['present_or_past_employer'] : ''
 			  ));
 		?>
 		<p class="hint">
@@ -67,7 +69,7 @@
 	
 	<div class="row">
 		<?php echo Chtml::label('Code area:', 'contact_info'); ?>
-		<?php echo CHtml::textField('Search[contact_info]', ''); ?>
+		<?php echo CHtml::textField('Search[contact_info]', isset($aPostedData['Search']['contact_info']) ? $aPostedData['Search']['contact_info'] : ''); ?>
 		<p class="hint">
 			Hint: Use telephone prefixes.
 		</p>
@@ -88,6 +90,7 @@
 			          	'id' => 'Search_country_state',
 						'class' => 'search_form',
 					),
+					'value' => isset($aPostedData['Search']['country_state']) ? $aPostedData['Search']['country_state'] : ''
 			  ));
 		?>
 		<p class="hint">
@@ -97,38 +100,33 @@
 	
 	<div class="row">
 		<?php echo Chtml::label('ANY of this words:', 'any_word'); ?>
-		<?php echo CHtml::textField('Search[any_word]', '', array(
+		<?php echo CHtml::textField('Search[any_word]', isset($aPostedData['Search']['any_word']) ? $aPostedData['Search']['any_word'] : '', array(
 				'size'=>50,
 				'maxlength'=>256,
 				'class' => 'search_form',
-				)); ?>
-		<p class="hint">
-			Hint: ANY of this words</tt>.
-		</p>
+				)); 
+		?>
+		<p class="hint">Hint: ANY of this words</p>
 	</div>
 	
 	<div class="row">
 		<?php echo Chtml::label('ALL of this words:', 'all_word'); ?>
-		<?php echo CHtml::textField('Search[all_word]', '', array(
+		<?php echo CHtml::textField('Search[all_word]', isset($aPostedData['Search']['any_word']) ? $aPostedData['Search']['all_word'] : '', array(
 				'size'=>50,
 				'maxlength'=>256,
 				'class' => 'search_form',
 				)); ?>
-		<p class="hint">
-			Hint: ALL of this words</tt>.
-		</p>
+		<p class="hint">Hint: ALL of this words</p>
 	</div>
 	
 	<div class="row">
 		<?php echo Chtml::label('NONE of this words:', 'none_word'); ?>
-		<?php echo CHtml::textField('Search[none_word]', '', array(
+		<?php echo CHtml::textField('Search[none_word]', isset($aPostedData['Search']['any_word']) ? $aPostedData['Search']['none_word'] : '', array(
 				'size'=>50,
 				'maxlength'=>256,
 				'class' => 'search_form',
 				)); ?>
-		<p class="hint">
-			Hint: NONE of this words</tt>.
-		</p>
+		<p class="hint">Hint: NONE of this words</p>
 	</div>
 
 	<div class="row buttons">

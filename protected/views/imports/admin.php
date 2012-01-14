@@ -13,6 +13,13 @@
 		<!-- Instance details	-->
 		<h2>Instance details</h2>
 		<?php echo $form->errorSummary($oInstanceModel); ?>
+		
+		<h2>
+		<?php
+			echo 'Old companies '.$iOldCompanies.', new imported '.$iNewCompanies.';<br />';
+			echo 'Imported '.$iNewEployees.', new employees, updated '.$iUpdatedEmployees.', failed: <b style="color: red;">'.$iFailedEployees.'</b><br />';
+		?>
+		</h2>
 	
 		<div class="row">
 			<?php echo $form->labelEx($oInstanceModel,'name'); ?>
@@ -28,7 +35,7 @@
 	
 		<div class="row">
 			<?php echo $form->labelEx($oInstanceModel,'expire'); ?>
-			<?php echo $form->textField($oInstanceModel,'expire'); ?>
+			<?php echo $form->textField($oInstanceModel,'expire', array('class' => 'datepicker')); ?>
 			<?php echo $form->error($oInstanceModel,'expire'); ?>
 		</div>
 	

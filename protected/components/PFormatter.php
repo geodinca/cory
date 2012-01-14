@@ -56,7 +56,7 @@ class PFormatter extends CFormatter
 	 */
 	public function formatDate($value)
 	{
-		return date($this->dateFormat,strtotime($value));
+		return $value ? date($this->dateFormat, strtotime($value)) : null;
 	}
 
 	/**

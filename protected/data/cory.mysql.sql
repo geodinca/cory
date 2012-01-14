@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 10, 2012 at 09:15 PM
+-- Generation Time: Jan 14, 2012 at 05:12 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -26,7 +26,6 @@ SET time_zone = "+00:00";
 -- Table structure for table `clients`
 --
 
-DROP TABLE IF EXISTS `clients`;
 CREATE TABLE IF NOT EXISTS `clients` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -39,7 +38,6 @@ CREATE TABLE IF NOT EXISTS `clients` (
 -- Table structure for table `companies`
 --
 
-DROP TABLE IF EXISTS `companies`;
 CREATE TABLE IF NOT EXISTS `companies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -54,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `companies` (
   `sales` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=530 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=533 ;
 
 -- --------------------------------------------------------
 
@@ -62,31 +60,33 @@ CREATE TABLE IF NOT EXISTS `companies` (
 -- Table structure for table `employees`
 --
 
-DROP TABLE IF EXISTS `employees`;
 CREATE TABLE IF NOT EXISTS `employees` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `companies_id` int(11) NOT NULL,
   `instances_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `title` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `geographical_area` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `contact_info` text CHARACTER SET latin1,
-  `email` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `home_street` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `home_city` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `home_state_country` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `home_zip` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `home_phone` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `actual_location_street` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `actual_location_city` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `actual_location_state` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `profile` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `geographical_area` varchar(255) DEFAULT NULL,
+  `contact_info` text,
+  `email` varchar(255) DEFAULT NULL,
+  `home_street` varchar(255) DEFAULT NULL,
+  `home_city` varchar(255) DEFAULT NULL,
+  `home_state_country` varchar(255) DEFAULT NULL,
+  `home_zip` varchar(255) DEFAULT NULL,
+  `home_phone` varchar(255) DEFAULT NULL,
+  `actual_location_street` varchar(255) DEFAULT NULL,
+  `actual_location_city` varchar(255) DEFAULT NULL,
+  `actual_location_state` varchar(255) DEFAULT NULL,
+  `profile` text NOT NULL,
   `date_entered` datetime NOT NULL,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `misc_info` text CHARACTER SET latin1,
+  `misc_info` text,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3145 ;
+  UNIQUE KEY `name` (`name`),
+  FULLTEXT KEY `geographical_area` (`geographical_area`),
+  FULLTEXT KEY `contact_info` (`contact_info`),
+  FULLTEXT KEY `profile` (`profile`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3165 ;
 
 -- --------------------------------------------------------
 
@@ -94,7 +94,6 @@ CREATE TABLE IF NOT EXISTS `employees` (
 -- Table structure for table `instances`
 --
 
-DROP TABLE IF EXISTS `instances`;
 CREATE TABLE IF NOT EXISTS `instances` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -102,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `instances` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `expire` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -110,7 +109,6 @@ CREATE TABLE IF NOT EXISTS `instances` (
 -- Table structure for table `instances_users`
 --
 
-DROP TABLE IF EXISTS `instances_users`;
 CREATE TABLE IF NOT EXISTS `instances_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `instance_id` int(10) unsigned NOT NULL,
@@ -124,36 +122,19 @@ CREATE TABLE IF NOT EXISTS `instances_users` (
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `client_id` int(10) unsigned NOT NULL,
+  `client_id` int(10) unsigned DEFAULT NULL,
   `username` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` char(32) NOT NULL,
-  `status` enum('enabled','disabled') NOT NULL DEFAULT 'disabled',
+  `status` enum('enabled','disabled') NOT NULL DEFAULT 'enabled',
   `type` enum('admin','client','guest') NOT NULL DEFAULT 'client',
   `created` datetime NOT NULL,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `expire` datetime DEFAULT NULL,
+  `expire` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `notes`
---
-
-DROP TABLE IF EXISTS `notes`;
-CREATE TABLE IF NOT EXISTS `notes` (
-    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `user_id` INT NOT NULL,
-    `employee_id` INT NOT NULL,
-    `note` TEXT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE = MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT = 'store user notes on employees profiles';
-ALTER TABLE `notes` ADD UNIQUE  (`user_id`, `employee_id`);
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

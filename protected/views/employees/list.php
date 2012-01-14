@@ -13,7 +13,9 @@ $this->renderPartial('_menu',array('action'=>'search_screen'));
 </div>
 
 <?php
-//$i = 1;
+
+$sTemplate = (Yii::app()->user->credentials['type'] == 'admin') ? '{view}{update}{delete}' : '{view}';
+
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'employees-grid',
 	'dataProvider'=>$dataProvider, //$model->search(),
@@ -27,19 +29,15 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'header' => '#',
 			'value'	 => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row + 1)'
 		),
-		//'id',
 		'name',
 		'title',
-// 		array(
-// 		    'name' => 'company_name',
-// 		    'value' => '$data->present_employer->name'
-// 		),
 		array(
 			'header'      => 'Employer',
-		    'name'        => 'company_name',
+		    'name'        => 'companies_id',
 			'htmlOptions' => array('class' => 'company_title', ),
 			'type'        => 'html',
-			'value'       => array($this, 'getTooltip')
+			'value'       => array($this, 'getTooltip'),
+			'filter'	=> CHtml::listData(Companies::model()->findAll(array('order' => 'name ASC')), 'id', 'name')
 		),
 		'geographical_area',
 		array(
@@ -49,6 +47,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 		array(
 			'class'=>'CButtonColumn',
+			'template' => $sTemplate
 		),
 	),
 ));
