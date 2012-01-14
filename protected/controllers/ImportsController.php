@@ -143,7 +143,7 @@ class ImportsController extends Controller
 							'actual_location_street' => $objWorksheet->getCellByColumnAndRow(17, $row)->getValue(),
 							'actual_location_city' => $objWorksheet->getCellByColumnAndRow(18, $row)->getValue(),
 							'actual_location_state' => $objWorksheet->getCellByColumnAndRow(19, $row)->getValue(),
-							'profile' => $objWorksheet->getCellByColumnAndRow(20, $row)->getValue(),
+							'profile' => $objWorksheet->getCellByColumnAndRow(21, $row)->getValue(),
 							'date_entered' => date('Y-m-d H:i:s'),
 							'misc_info' => $objWorksheet->getCellByColumnAndRow(26, $row)->getValue()
 						);
