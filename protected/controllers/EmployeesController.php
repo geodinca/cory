@@ -260,6 +260,9 @@ class EmployeesController extends Controller
 			));
 		}
 
+		if (empty($dataProvider)) {
+		    $dataProvider=new CActiveDataProvider('Employees');
+		}
 		$this->render('list',array(
 			'model'=>$model,
 			'dataProvider' => $dataProvider
