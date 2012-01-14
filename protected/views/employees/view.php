@@ -1,4 +1,6 @@
 <?php
+Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/pdf.js',CClientScript::POS_HEAD);
+
 //load jScrollPane JS
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/jquery.jscrollpane.css');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/mwheelIntent.js');
@@ -14,7 +16,9 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 	<div class="profile-actions">
 		<span style="float: left">1/21</span>
 		<span style="float: right"> &laquo; Previous | Next &raquo;</span>
-		<span style="float: right"><?php echo CHtml::button('Save PDF'); ?></span>
+		<span style="float: right">
+			<?php echo CHtml::button('Save PDF', array('onclick' => 'openPdf("'.Yii::app()->createUrl('/employees/showPdf', array('id' => $model->id)).'","'.$model->id.'");')); ?>
+		</span>
 		<span style="float: right"><?php echo CHtml::button('Print'); ?></span>
 		<span style="float: right"><?php echo CHtml::checkBox('Mark profile',false,array()).' Mark profile'?></span>
 	</div>
@@ -37,28 +41,19 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 
 		<h3>Profile/Biography/Past employers</h3>
 		<span><?php echo Yii::app()->format->html(nl2br($model->profile)); ?></span>
-
-
-		<?php
-// 		$form=$this->beginWidget('CActiveForm', array(
-// 			'action'=>Yii::app()->createUrl($this->route),
-// 			'method'=>'post',
-// 		));
-		?>
-		<?php //echo $form->textArea($model,'misc_info',array('rows'=>6, 'cols'=>118)); ?>
-
-		<?php //echo $form->error($model,'misc_info'); ?>
-		<?php //$this->endWidget(); ?>
 	</div>
 	<div class="profile-notes" >
 		<h3>Notes</h3>
 		<div class="edit_area" id="<?php echo $model->id ?>">
 			<?php echo $this->widget('application.widgets.getUserNotes', array("iEmployeeId" => $model->id, "iUserId" => Yii::app()->user->id), true); ?>
 		</div>
-
 	</div>
-
 </div>
+
+<div id="pdf_content" class="ui-widget">
+	<iframe id="pdf_frame" src="" width="800" height="600"></iframe>
+</div>
+
 <!-- PROFILE: END -->
 <script type="text/javascript">
 //<!--
