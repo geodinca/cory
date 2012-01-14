@@ -28,6 +28,11 @@
 class Employees extends CActiveRecord
 {
 	public $importdata;
+
+	/**
+	 * Property to display relational dat from Companies Model
+	 */
+	public $company_name;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Employees the static model class
@@ -60,7 +65,11 @@ class Employees extends CActiveRecord
 			array('contact_info, profile, date_entered, date_update, misc_info', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, companies_id, instances_id, name, title, geographical_area, contact_info, email, home_street, home_city, home_state_country, home_zip, home_phone, actual_location_street, actual_location_city, actual_location_state, profile, date_entered, date_update, misc_info', 'safe', 'on'=>'search'),
+			array(
+			    'name, title, geographical_area, misc_info,company_name',
+			    'safe',
+			    'on'=>'search'
+			),
 		);
 	}
 
@@ -102,7 +111,8 @@ class Employees extends CActiveRecord
 			'date_entered' => 'Date Entered',
 			'date_update' => 'Date Update',
 			'misc_info' => 'Misc Info',
-			'import' => 'Upload files'
+			'import' => 'Upload files',
+		    'company_name' => 'Company'
 		);
 	}
 
@@ -117,27 +127,17 @@ class Employees extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('companies_id',$this->companies_id);
-		$criteria->compare('instances_id',$this->instances_id);
+		//$criteria->compare('companies_id',$this->companies_id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('geographical_area',$this->geographical_area,true);
-		$criteria->compare('contact_info',$this->contact_info,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('home_street',$this->home_street,true);
-		$criteria->compare('home_city',$this->home_city,true);
-		$criteria->compare('home_state_country',$this->home_state_country,true);
-		$criteria->compare('home_zip',$this->home_zip,true);
-		$criteria->compare('home_phone',$this->home_phone,true);
-		$criteria->compare('actual_location_street',$this->actual_location_street,true);
-		$criteria->compare('actual_location_city',$this->actual_location_city,true);
-		$criteria->compare('actual_location_state',$this->actual_location_state,true);
-		$criteria->compare('profile',$this->profile,true);
-		$criteria->compare('date_entered',$this->date_entered,true);
-		$criteria->compare('date_update',$this->date_update,true);
 		$criteria->compare('misc_info',$this->misc_info,true);
-
+		if($this->company_name)
+		{
+		    $criteria->together  =  true;
+		    $criteria->with = array('present_employer');
+		    $criteria->compare('present_employer.name',$this->company_name,true);
+		}
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

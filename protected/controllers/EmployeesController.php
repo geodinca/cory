@@ -135,7 +135,7 @@ class EmployeesController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 	}
-	
+
 	/**
 	 * Search form for employees
 	 */
@@ -148,7 +148,7 @@ class EmployeesController extends Controller
 			'model'=>$model,
 		));
 	}
-	
+
 	/**
 	 * Lists search results in separate screen.
 	 */
@@ -156,10 +156,10 @@ class EmployeesController extends Controller
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-		
+
 		if(Yii::app()->request->isAjaxRequest){
 			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
-			
+
 			if($aSession){
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria'=>$aSession['criteria'],
@@ -168,13 +168,13 @@ class EmployeesController extends Controller
 				$dataProvider = $model->search();
 			}
 		}
-		
+
 		if(isset($_GET['Employees'])){
 			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
-			
+
 			if($aSession){
 				$oCriteria = $aSession['criteria'];
-				
+
 				$oCriteria1 = new CDbCriteria;
 				$model->attributes=$_GET['Employees'];
 				foreach($model->attributes as $sAttribute => $sValue){
@@ -185,7 +185,7 @@ class EmployeesController extends Controller
 				}
 				$oCriteria->mergeWith($oCriteria1);
 //				echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
-				
+
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria'=>$oCriteria,
 				));
@@ -194,10 +194,10 @@ class EmployeesController extends Controller
 				$dataProvider = $model->search();
 			}
 		}
-		
+
 		if(isset($_POST['Search'])){
 			$oCriteria = new CDbCriteria;
-			
+
 			if($_POST['Search']['present_employer']){
 				$oCriteria->addInCondition('t.companies_id', explode(',', $_POST['Search']['present_employer']));
 			}
@@ -210,7 +210,7 @@ class EmployeesController extends Controller
 			if($_POST['Search']['country_state']){
 				$oCriteria->addInCondition('t.geographical_area', explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -2)), 'AND');
 			}
-			
+
 			if($_POST['Search']['any_word']){
 				$oCriteria1 = new CDbCriteria;
 				$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
@@ -223,7 +223,7 @@ class EmployeesController extends Controller
 				}
 				$oCriteria->mergeWith($oCriteria1);
 			}
-			
+
 			if($_POST['Search']['all_word']){
 				$oCriteria1 = new CDbCriteria;
 				$aWordsToBeSearched = explode(' ', trim($_POST['Search']['all_word']));
@@ -236,7 +236,7 @@ class EmployeesController extends Controller
 				}
 				$oCriteria->mergeWith($oCriteria1);
 			}
-			
+
 			if($_POST['Search']['none_word']){
 				$oCriteria1 = new CDbCriteria;
 				$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
@@ -249,9 +249,9 @@ class EmployeesController extends Controller
 				}
 				$oCriteria->mergeWith($oCriteria1);
 			}
-			
+
 			Yii::app()->session->add('search_criteria', serialize(array('criteria' => $oCriteria)));
-			
+
 // 			echo '<pre>'.print_r($oCriteria, true).'</pre>';die;
 //			echo '<pre>'.print_r($_POST, true).'</pre>'; die();
 
@@ -265,7 +265,7 @@ class EmployeesController extends Controller
 			'dataProvider' => $dataProvider
 		));
 	}
-	
+
 	public function actionSaveNotes()
 	{
 		if(isset($_POST['misc_info']) && isset($_POST['id'])) {
@@ -275,7 +275,7 @@ class EmployeesController extends Controller
 			echo nl2br($model->misc_info);
 		}
 	}
-	
+
 	public function actionLoadNotes()
 	{
 		if(isset($_POST['id'])) {
@@ -292,7 +292,7 @@ class EmployeesController extends Controller
 		$model = Companies::model()->findByPk($data->companies_id);
 		return $this->renderPartial('../companies/tooltip', array('model'=>$model),true);
 	}
-	
+
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
@@ -318,5 +318,5 @@ class EmployeesController extends Controller
 			Yii::app()->end();
 		}
 	}
-	
+
 }

@@ -1,14 +1,14 @@
-<?php 
-//load tooltip js 
+<?php
+//load tooltip js
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.tools.min.js');
 ?>
 
 <?php
-// search form 
-$this->renderPartial('_menu',array('action'=>'search_screen')); 
+// search form
+$this->renderPartial('_menu',array('action'=>'search_screen'));
 ?>
-<?php 
-//$i = 1;	
+<?php
+//$i = 1;
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'employees-grid',
 	'dataProvider'=>$dataProvider, //$model->search(),
@@ -25,23 +25,18 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		//'id',
 		'name',
 		'title',
+// 		array(
+// 		    'name' => 'company_name',
+// 		    'value' => '$data->present_employer->name'
+// 		),
 		array(
-			'header' => 'Employer',
-			'htmlOptions'=>array('class' => 'company_title', ),
-			'type' => 'html',
-			'value' => array($this, 'getTooltip')
+			'header'      => 'Employer',
+		    'name'        => 'company_name',
+			'htmlOptions' => array('class' => 'company_title', ),
+			'type'        => 'html',
+			'value'       => array($this, 'getTooltip')
 		),
 		'geographical_area',
-		//'contact_info',
-		//'email',
-		//'home_street',
-		//'home_city',
-		//'home_state_country',
-		//'home_zip',
-		//'home_phone',
-		//'actual_location_street',
-		//'actual_location_city',
-		//'actual_location_state',
 		'misc_info',
 		array(
 			'class'=>'CButtonColumn',
@@ -54,11 +49,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 // initialize tooltip
 $(".ttip").tooltip({
 
-   // tweak the position
-   offset: [1, 1],
+    // tweak the position
+    offset: [1, 1],
 
-   // use the "slide" effect
-   effect: 'slide'
+    // use the "slide" effect
+    effect: 'slide'
 
 // add dynamic plugin with optional configuration for bottom edge
 }).dynamic({ bottom: { direction: 'down', bounce: true } });
