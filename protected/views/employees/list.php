@@ -37,7 +37,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'value'       => array($this, 'getTooltip')
 		),
 		'geographical_area',
-		'misc_info',
+		array(
+		    'name'       => 'note',
+		    'type'        => 'html',
+		    'value'      => '$data->notes->note'
+		),
 		array(
 			'class'=>'CButtonColumn',
 		),

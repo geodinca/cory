@@ -139,6 +139,22 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notes`
+--
+
+DROP TABLE IF EXISTS `notes`;
+CREATE TABLE IF NOT EXISTS `notes` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `user_id` INT NOT NULL,
+    `employee_id` INT NOT NULL,
+    `note` TEXT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT = 'store user notes on employees profiles';
+ALTER TABLE `notes` ADD UNIQUE  (`user_id`, `employee_id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

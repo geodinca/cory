@@ -30,9 +30,15 @@ class Employees extends CActiveRecord
 	public $importdata;
 
 	/**
-	 * Property to display relational dat from Companies Model
+	 * Property to display relational data from Companies Model
 	 */
 	public $company_name;
+
+	/**
+	 * Property to display notes data from Notes Model
+	 */
+	public $note;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Employees the static model class
@@ -66,7 +72,7 @@ class Employees extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array(
-			    'name, title, geographical_area, misc_info,company_name',
+			    'name, title, geographical_area, note, company_name',
 			    'safe',
 			    'on'=>'search'
 			),
@@ -81,7 +87,8 @@ class Employees extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'present_employer' => array(self::BELONGS_TO, 'Companies', 'companies_id')
+			'present_employer' => array(self::BELONGS_TO, 'Companies', 'companies_id'),
+		    'notes' => array(self::HAS_ONE, 'Notes', 'employee_id')
 		);
 	}
 
@@ -110,7 +117,7 @@ class Employees extends CActiveRecord
 			'profile' => 'Profile',
 			'date_entered' => 'Date Entered',
 			'date_update' => 'Date Update',
-			'misc_info' => 'Misc Info',
+			'note' => 'Notes',
 			'import' => 'Upload files',
 		    'company_name' => 'Company'
 		);
@@ -131,13 +138,19 @@ class Employees extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('geographical_area',$this->geographical_area,true);
-		$criteria->compare('misc_info',$this->misc_info,true);
+		if($this->note)
+		{
+		    $criteria->together  =  true;
+		    $criteria->with = array('notes');
+		    $criteria->compare('notes.note',$this->note,true);
+		}
 		if($this->company_name)
 		{
 		    $criteria->together  =  true;
 		    $criteria->with = array('present_employer');
 		    $criteria->compare('present_employer.name',$this->company_name,true);
 		}
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
