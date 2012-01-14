@@ -4,9 +4,14 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.too
 ?>
 
 <?php
-// search form
+// tab menu
 $this->renderPartial('_menu',array('action'=>'search_screen'));
 ?>
+
+<div class="profile-actions">
+<?php echo CHtml::button('Show only selected',array('class'=>'show-selected')); ?>
+</div>
+
 <?php
 //$i = 1;
 $this->widget('zii.widgets.grid.CGridView', array(

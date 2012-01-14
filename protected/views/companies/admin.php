@@ -1,6 +1,8 @@
-<?php 
-//load tooltip js 
+<?php
+//load tooltip js
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.tools.min.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.cookie.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/main.js');
 ?>
 
 <?php
@@ -29,8 +31,8 @@ $('.search-form form').submit(function(){
 ?>
 
 <?php
-// search form 
-$this->renderPartial('../employees/_menu',array('action'=>'companies_data')); 
+// search form
+$this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 ?>
 <div class="profile-actions">
 <?php echo CHtml::button('Advanced Search',array('class'=>'search-button')); ?>
@@ -49,7 +51,7 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 	'columns'=>array(
 		array(
 			'class'=>'CCheckBoxColumn',
-			'selectableRows' => 2
+			'selectableRows' => 2,
 		),
 		array(
 			'header' => '#',
@@ -59,7 +61,7 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 			'name'=> 'name',
 			'htmlOptions'=>array('class' => 'company_title', ),
 			'type' => 'html',
-			'value'=> array($this,'getTooltip'),	
+			'value'=> array($this,'getTooltip'),
 		),
 		'street',
 		'city',
@@ -79,17 +81,27 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 )); ?>
 
 <script>
+$(document).ready(function(){
+	//set cookie for checkboxes
+	var cookieArray = [];
+	cookieArray = $.cookie('company_check');
+	if ()
+    $.cookie('company_check','test',{
+    	expires: 1,
+    	//path: '/',
+    	//domain: 'example.com',
+    	//secure: true,
+    	raw: true
+    });
+    // initialize tooltip
+    $(".ttip").tooltip({
+       // tweak the position
+       offset: [1, 1],
+       // use the "slide" effect
+       effect: 'slide'
+    // add dynamic plugin with optional configuration for bottom edge
+    }).dynamic({ bottom: { direction: 'down', bounce: true } });
 
-// initialize tooltip
-$(".ttip").tooltip({
-
-   // tweak the position
-   offset: [1, 1],
-
-   // use the "slide" effect
-   effect: 'slide'
-
-// add dynamic plugin with optional configuration for bottom edge
-}).dynamic({ bottom: { direction: 'down', bounce: true } });
+});
 </script>
 

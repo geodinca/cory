@@ -50,7 +50,7 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		<?php //echo $form->error($model,'misc_info'); ?>
 		<?php //$this->endWidget(); ?>
 	</div>
-	<div class="profile-notes">
+	<div class="profile-notes" >
 		<h3>Notes</h3>
 		<?php
 // 		$this->widget(
@@ -65,8 +65,10 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 // 						'data'	 			=> $model->misc_info,
 // 			))
 		?>
-		<div class="edit_area" id="<?php echo $model->id ?>">
-			<?php echo  Yii::app()->format->html(nl2br($model->notes->note))?>
+		<div class="profile-notes-scroll"  style="height: 80px;">
+    		<div class="edit_area" id="<?php echo $model->id ?>">
+    			<?php echo  Yii::app()->format->html(nl2br($model->notes->note))?>
+    		</div>
 		</div>
 
 	</div>
@@ -77,7 +79,7 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 //<!--
 $(document).ready(function(){
 	$('.profile-data').jScrollPane();
-
+	$('.profile-notes-scroll').jScrollPane();
     $('.edit_area').editable('/notes/saveNotes', {
         type      	: 'textarea',
         name	  	: 'note',
@@ -85,8 +87,8 @@ $(document).ready(function(){
         loadurl  	: '/notes/loadNotes',
         loadtype   	: 'POST',
         loaddata 	: {id: "<?php echo $model->id ?>"},
-        rows	  	: 6,
-        cols	  	: 118,
+        rows	  	: 5,
+        cols	  	: 117,
         onblur    	: 'submit',
         event	  	: 'dblclick',
         tooltip   	: 'Dubleclick to edit...'
