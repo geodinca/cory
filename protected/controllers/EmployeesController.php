@@ -279,7 +279,6 @@ class EmployeesController extends Controller
 	public function actionLoadNotes()
 	{
 		if(isset($_POST['id'])) {
-			echo $_POST['id'];
 			$model = $this->loadModel($_POST['id']);
 			echo $model->misc_info;
 			exit;

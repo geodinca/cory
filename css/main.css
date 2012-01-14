@@ -32,20 +32,12 @@ body
 #content
 {
 	clear: left;
+	margin-bottom: 30px;
 }
 
 #sidebar
 {
 	padding: 20px 20px 20px 0;
-}
-
-#footer
-{
-	padding: 10px;
-	margin: 10px 20px;
-	font-size: 0.8em;
-	text-align: center;
-	border-top: 1px solid #C9E0ED;
 }
 
 #logo
@@ -318,7 +310,8 @@ table thead input[type="text"] {
 	padding: 5px;
 	background: #ccc;
 	line-height:25px;
-	overflow: hidden;	
+	overflow: hidden;
+	margin-bottom: 4px;	
 }
 
 .profile-actions span
@@ -326,6 +319,40 @@ table thead input[type="text"] {
 	padding: 0 15px 0 0;
 	line-height: 25px;
 }
+
+.profile-data
+{
+    padding: 0px 10px 10px 10px;	
+}
+
+.jspVerticalBar
+{
+	right: 20px !important;
+}
+
+.profile-notes
+{
+	position: fixed;
+	bottom: 0;
+	height: 150px;
+	width: 877px;
+	background: white;
+	padding: 0 10px;
+}
+
+#footer
+{
+	position: fixed;
+    bottom: 0;
+    padding: 5px;
+    margin: 0 16px;
+	width: 96%;
+    font-size: 0.7em;
+    text-align: center;
+    border-top: 1px solid #C9E0ED;
+	background: #EFEFEF;
+}
+
 
 .grid-view {
 	padding: 15px !important;
