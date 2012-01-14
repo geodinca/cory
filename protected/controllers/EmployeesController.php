@@ -30,7 +30,7 @@ class EmployeesController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','list','view','saveNotes','loadNotes','getTooltip'),
+				'actions'=>array('admin','list','view','saveNotes','loadNotes','getTooltip', 'showPdf'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -45,8 +45,9 @@ class EmployeesController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model' => $model,
 		));
 	}
 
@@ -274,7 +275,9 @@ class EmployeesController extends Controller
 			}
 			
 			// instance
-			$oCriteria->addInCondition('t.instances_id', $aInstances);
+			if(Yii::app()->user->credentials['type'] != 'admin'){
+				$oCriteria->addInCondition('t.instances_id', $aInstances);
+			}
 			
 			Yii::app()->session->add('search_criteria', serialize(array('criteria' => $oCriteria, 'data' => $aPostedData)));
 
@@ -355,5 +358,45 @@ class EmployeesController extends Controller
 			Yii::app()->end();
 		}
 	}
+	
+	/**
+	 * Alter draft pdf with user details
+	 * @param CActiveRecord $oUserDraftArchive
+	 * @param CActiverecord $oDraftTemplate
+	 */
+	public function actionShowPdf($id = null){
+		$model = $this->loadModel($id);
+		$sContent = $this->renderPartial('pdf', array('model' => $model), true);
+		
+//		echo '<pre>'.print_r($sContent, true).'</pre>'; die();
+		
+		// initialize PDF object
+		$pdf = Yii::createComponent('application.extensions.tcpdf.ETcPdf', 'P', 'mm', 'A4', true, 'UTF-8');
+		$pdf->SetCreator(PDF_CREATOR);
+		$pdf->SetAuthor('Cory Coman');
+		$pdf->SetTitle($model->name.' - '.date('Y-m-d'));
+		$pdf->SetFont('dejavusans', '', 10);
+		// set default header data
+		$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
+		// set header and footer fonts
+		$pdf->setHeaderFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
+		// set default monospaced font
+		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+		//set margins
+		$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+		$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+		$pdf->setPrintHeader(true);
+		$pdf->setPrintFooter(true);
+		$pdf->AliasNbPages();
+		$pdf->AddPage();
+
+		$pdf->writeHTML($sContent, true, false, true, false, '');
+		$pdf->Output($model->name.'.pdf', 'I');
+		Yii::app()->end();
+	}
 }
