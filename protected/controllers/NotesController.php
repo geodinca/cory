@@ -31,12 +31,8 @@ class NotesController extends Controller
 	{
 		// return external action classes, e.g.:
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index',),
-				'users'=>array('*'),
-			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array(''),
+				'actions'=>array('saveNotes','loadNotes'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -57,10 +53,7 @@ class NotesController extends Controller
 	{
 	    if(isset($_POST['note']) && isset($_POST['id'])) {
 	        $employee_id = $_POST['id'];
-	        if (empty(Yii::app()->user->id) || 'admin' == Yii::app()->user->id) {
-	            $user_id = 1;
-	        }
-	        $model = $this->loadModel($employee_id,$user_id);
+	        $model = $this->loadModel($employee_id, Yii::app()->user->id);
 	        $model->note = $_POST['note'];
 	        //var_dump($model);die;
 	        $model->save();
@@ -75,13 +68,10 @@ class NotesController extends Controller
 	public function actionLoadNotes()
 	{
 	    if(isset($_POST['id'])) {
-	        if (empty(Yii::app()->user->id) || 'admin' == Yii::app()->user->id) {
-	            $user_id = 1;
-	        }
 	        $employee_id = $_POST['id'];
-	        $model = $this->loadModel($employee_id,$user_id);
+	        $model = $this->loadModel($employee_id, Yii::app()->user->id);
 	        echo $model->note;
-	        exit;
+	        Yii::app()->end();
 	    }
 	    echo 'no data';
 	}

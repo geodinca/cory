@@ -52,21 +52,8 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 	</div>
 	<div class="profile-notes">
 		<h3>Notes</h3>
-		<?php
-// 		$this->widget(
-// 				'application.extensions.jeditable.DsJEditableWidget',
-// 				array(
-// 						'model'				=>$model,
-// 						'jeditable_type' 	=> 'textarea',
-// 						'name'				=>'misc_info',
-// 						'rows'				=> 6,
-// 						'cols'				=> 118,
-// 						'saveurl'			=>'/employees/update/'.$model->id,
-// 						'data'	 			=> $model->misc_info,
-// 			))
-		?>
 		<div class="edit_area" id="<?php echo $model->id ?>">
-			<?php echo  Yii::app()->format->html(nl2br($model->notes->note))?>
+			<?php echo $this->widget('application.widgets.getUserNotes', array("iEmployeeId" => $model->id, "iUserId" => Yii::app()->user->id), true); ?>
 		</div>
 
 	</div>
@@ -78,13 +65,13 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 $(document).ready(function(){
 	$('.profile-data').jScrollPane();
 
-    $('.edit_area').editable('/notes/saveNotes', {
+    $('.edit_area').editable("<?php echo Yii::app()->createUrl('/notes/saveNotes'); ?>", {
         type      	: 'textarea',
         name	  	: 'note',
         placeholder	: 'Dubleclick to edit',
-        loadurl  	: '/notes/loadNotes',
+        loadurl  	: "<?php echo Yii::app()->createUrl('/notes/loadNotes'); ?>",
         loadtype   	: 'POST',
-        loaddata 	: {id: "<?php echo $model->id ?>"},
+        loaddata 	: {id: "<?php echo $model->id; ?>"},
         rows	  	: 6,
         cols	  	: 118,
         onblur    	: 'submit',

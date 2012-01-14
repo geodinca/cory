@@ -300,7 +300,7 @@ class EmployeesController extends Controller
 		
 		$this->render('list',array(
 			'model'=>$model,
-			'dataProvider' => $dataProvider
+			'dataProvider' => $dataProvider,
 		));
 	}
 

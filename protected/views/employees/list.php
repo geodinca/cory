@@ -13,7 +13,7 @@ $sTemplate = (Yii::app()->user->credentials['type'] == 'admin') ? '{view}{update
 
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'employees-grid',
-	'dataProvider'=>$dataProvider, //$model->search(),
+	'dataProvider'=>$dataProvider,
 	'filter'=>$model,
 	'columns'=>array(
 		array(
@@ -36,9 +36,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 		'geographical_area',
 		array(
-		    'name'       => 'note',
-		    'type'        => 'html',
-		    'value'      => '$data->notes->note'
+		    'header' => 'Note',
+		    'type'   => 'raw',
+		    'value'  => '$this->grid->controller->widget(\'application.widgets.getUserNotes\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
 		),
 		array(
 			'class'=>'CButtonColumn',
