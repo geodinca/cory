@@ -1,3 +1,4 @@
+<div id="clients-screen">
 <?php
 $this->breadcrumbs=array(
 	'Clients'=>array('index'),
@@ -15,7 +16,7 @@ $this->menu=array(
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 
 <h2>Client instances</h2>
-<?php 
+<?php
 // client instances
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'instances-grid',
@@ -36,5 +37,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'template' => '{edit}'
 		),
 	),
-)); 
+));
 ?>
+</div>

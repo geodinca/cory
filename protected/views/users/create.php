@@ -1,3 +1,4 @@
+<div id="users-screen">
 <?php
 $this->breadcrumbs=array(
 	'Users'=>array('index'),
@@ -12,3 +13,4 @@ $this->menu=array(
 <h1>Create Users</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+</div>

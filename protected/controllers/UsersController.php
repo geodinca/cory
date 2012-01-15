@@ -6,7 +6,7 @@ class UsersController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/column1';
 
 	/**
 	 * @return array action filters
@@ -26,7 +26,7 @@ class UsersController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+			array('allow', // allow authenticated user to perform 'index' and 'update' actions
 				'actions'=>array('index','update'),
 				'users'=>array('@'),
 			),
@@ -76,19 +76,21 @@ class UsersController extends Controller
 		{
 			$sOldPass = $model->password;
 			$model->attributes=$_POST['Users'];
-			
+
 			if(empty($model->expire)){
 				$model->expire = null;
 			}
 			if(empty($model->password)){
 				$model->password = $sOldPass;
+			} else {
+				$model->password = md5($model->password);
 			}
-		
+
 			if($model->save()){
 				$this->redirect(array('admin'));
 			}
 		}
-		
+
 		// hide password content
 		unset($model->password);
 

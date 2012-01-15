@@ -15,17 +15,17 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/smoothness/jquery-ui-1.8.17.custom.css" />
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
-	
-	<?php 
+
+	<?php
 		$cs=Yii::app()->clientScript;
 		$cs->scriptMap=array(
-		    'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-		    'jqueryui.js' => Yii::app()->request->baseUrl.'/js/jquery-ui-1.8.16.custom.min.js',
-		); 
+			'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+			'jqueryui.js' => Yii::app()->request->baseUrl.'/js/jquery-ui-1.8.16.custom.min.js',
+		);
 		$cs->registerScriptFile('jquery.js',CClientScript::POS_HEAD);
 		$cs->registerScriptFile('jqueryui.js',CClientScript::POS_HEAD);
 	?>
-	
+
 	<script type="text/javascript">
 		$(function() {
 			$( ".datepicker" ).datepicker();
@@ -37,42 +37,95 @@
 <body>
 <div class="container" id="page">
 	<div>
-		
-		
-		<?php 
+
+
+		<?php
 			// common menu section
 			$aMenu = array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				
-				array('label'=>'Search Tips', 'url'=>array('/site/page', 'view'=>'searchtips'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Search Screen', 'url'=>array('/employees/admin'), 'visible'=>!Yii::app()->user->isGuest),
-				
-				array('label'=>'Users', 'url'=>array('/users/index'), 'visible'=>!Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+				array(
+					'label'=>'Home',
+					'url'=>array('/site/index')
+				),
+				array(
+					'label'=>'About',
+					'url'=>array('/site/page', 'view'=>'about')
+				),
+				array(
+					'label'=>'Contact',
+					'url'=>array('/site/contact')
+				),
+				array(
+					'label'=>'Search Tips',
+					'url'=>array('/site/page', 'view'=>'searchtips'),
+					'visible'=>!Yii::app()->user->isGuest
+				),
+//				array(
+//					'label'=>'Search Screen',
+//					'url'=>array('/employees/admin'),
+//					'visible'=>!Yii::app()->user->isGuest
+//				),
+				array(
+					'label'=>'Users',
+					'url'=>array('/users/index'),
+					'visible'=>!Yii::app()->user->isGuest
+				),
 			);
-		
+
 			// admin section
 			if(!Yii::app()->user->isGuest && (Yii::app()->user->credentials['type'] == 'admin')){
+				unset($aMenu[4]); //remove client User menu entry
+				$aMenu[] = array(
+					'label'=>'Users',
+					'url'=>array('/users/admin'),
+					'visible'=>!Yii::app()->user->isGuest,
+					'items' => array(
+						array(
+							'label'=>'Create Users',
+							'url'=>array('/users/create'),
+							'visible'=>!Yii::app()->user->isGuest
+						),
+					)
+				);
+
 				$aMenu[] = array(
 					'label' => 'Admin',
 					'url' => '#',
 					'items' => array(
-						array('label'=>'Import data', 'url'=>array('/imports/admin'), 'visible'=>!Yii::app()->user->isGuest),
 						array(
-								'label'=>'Clients', 
-								'url'=>array('/clients/admin'), 
+							'label'=>'Import data',
+							'url'=>array('/imports/admin'),
+							'visible'=>!Yii::app()->user->isGuest
+						),
+						array(
+								'label'=>'Clients',
+								'url'=>array('/clients/admin'),
 								'visible'=>!Yii::app()->user->isGuest,
-								'items' => array(array('label'=>'Create Client', 'url'=>array('/clients/create'))
-						)),
-						array('label'=>'Instances', 'url'=>array('/instances/admin'), 'visible'=>!Yii::app()->user->isGuest),
+								'items' => array(
+									array(
+										'label'=>'Create Client',
+										'url'=>array('/clients/create')
+									),
+								)
+						),
+						array(
+							'label'=>'Instances',
+							'url'=>array('/instances/admin'),
+							'visible'=>!Yii::app()->user->isGuest
+						),
 					)
 				);
 			}
-			$this->widget('ext.CDropDownMenu.CDropDownMenu',array(
-				'items' => $aMenu
-			)); 
+			//Always put Logout at the end
+			$aMenu[] = array(
+					'label'=>'Logout ('.Yii::app()->user->name.')',
+					'url'=>array('/site/logout'),
+					'visible'=>!Yii::app()->user->isGuest
+				);
+			$this->widget(
+				'ext.CDropDownMenu.CDropDownMenu',
+				array(
+					'items' => $aMenu
+			));
 		?>
 	</div><!-- mainmenu -->
 	<div id="header">
@@ -85,15 +138,15 @@
 		<div id="application-title"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 	</div><!-- header -->
 
-	
+
 	<?php //if(isset($this->breadcrumbs)):?>
 		<?php //$this->widget('zii.widgets.CBreadcrumbs', array(
 			//'links'=>$this->breadcrumbs,
 		//)); ?><!-- breadcrumbs -->
 	<?php //endif?>
-	
+
 	<div class="clear"></div>
-	
+
 	<?php echo $content; ?>
 
 	<div id="footer">

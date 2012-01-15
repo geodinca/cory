@@ -1,3 +1,4 @@
+<div id="clients-screen">
 <?php
 $this->breadcrumbs=array(
 	'Clients'=>array('index'),
@@ -13,3 +14,4 @@ $this->menu=array(
 <h1>Create Clients</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+</div>

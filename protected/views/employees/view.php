@@ -17,10 +17,16 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		<span style="float: left">1/21</span>
 		<span style="float: right"> &laquo; Previous | Next &raquo;</span>
 		<span style="float: right">
-			<?php echo CHtml::button('Save PDF', array('onclick' => 'openPdf("'.Yii::app()->createUrl('/employees/showPdf', array('id' => $model->id)).'","'.$model->id.'");')); ?>
+			<?php echo CHtml::button('Save PDF', array(
+				'onclick' => 'openPdf("'.Yii::app()->createUrl('/employees/showPdf', array('id' => $model->id)).'","'.$model->id.'");'
+			)); ?>
 		</span>
-		<span style="float: right"><?php echo CHtml::button('Print'); ?></span>
-		<span style="float: right"><?php echo CHtml::checkBox('Mark profile',false,array()).' Mark profile'?></span>
+		<span style="float: right">
+			<?php echo CHtml::button('Print'); ?>
+		</span>
+		<span style="float: right">
+			<?php echo CHtml::checkBox('Mark profile',false,array()).' Mark profile'?>
+		</span>
 	</div>
 	<div class="clear"></div>
 	<div id="profile-<?php echo $model->id?>" class="profile-data"  style="height: 340px; ">
@@ -60,19 +66,19 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 $(document).ready(function(){
 	$('.profile-data').jScrollPane();
 
-    $('.edit_area').editable("<?php echo Yii::app()->createUrl('/notes/saveNotes'); ?>", {
-        type      	: 'textarea',
-        name	  	: 'note',
-        placeholder	: 'Dubleclick to edit',
-        loadurl  	: "<?php echo Yii::app()->createUrl('/notes/loadNotes'); ?>",
-        loadtype   	: 'POST',
-        loaddata 	: {id: "<?php echo $model->id ?>"},
-        rows	  	: 5,
-        cols	  	: 117,
-        onblur    	: 'submit',
-        event	  	: 'dblclick',
-        tooltip   	: 'Dubleclick to edit...'
-    });
+	$('.edit_area').editable("<?php echo Yii::app()->createUrl('/notes/saveNotes'); ?>", {
+		type      	: 'textarea',
+		name	  	: 'note',
+		placeholder	: 'Dubleclick to edit',
+		loadurl  	: "<?php echo Yii::app()->createUrl('/notes/loadNotes'); ?>",
+		loadtype   	: 'POST',
+		loaddata 	: {id: "<?php echo $model->id ?>"},
+		rows	  	: 5,
+		cols	  	: 117,
+		onblur    	: 'submit',
+		event	  	: 'dblclick',
+		tooltip   	: 'Dubleclick to edit...'
+	});
 });
 //-->
 </script>

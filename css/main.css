@@ -242,7 +242,7 @@ div.search-form
 	text-align: center;
 	width: 50%;
 	font-size:2em;
-	
+
 }
 
 input[type="text"], input[type="password"] {
@@ -261,7 +261,7 @@ table thead input[type="text"] {
 	font-family: Tahoma, Geneva, sans-serif;
 }
 
-.tabmenu 
+.tabmenu
 {
 	background: #FFF url(bg.gif) repeat-x left top;
 }
@@ -277,7 +277,7 @@ table thead input[type="text"] {
 	display: inline;
 }
 
-.tabmenu  ul li a 
+.tabmenu  ul li a
 {
 	color: white;
 	background-color: transparent;
@@ -287,14 +287,14 @@ table thead input[type="text"] {
 	padding: 5px 8px;
 }
 
-.profile-view 
+.profile-view
 {
 	margin-left: 15%;
 	margin-right: 15%;
 	max-width: 100%;
 }
 
-.profile-view h3 
+.profile-view h3
 {
 	padding: 10px 0 0 0;
 	margin-bottom: 0.3em;
@@ -311,7 +311,7 @@ table thead input[type="text"] {
 	background: #ccc;
 	line-height:25px;
 	overflow: hidden;
-	margin-bottom: 4px;	
+	margin-bottom: 4px;
 }
 
 .profile-actions span
@@ -322,7 +322,7 @@ table thead input[type="text"] {
 
 .profile-data
 {
-    padding: 0px 10px 10px 10px;	
+	padding: 0px 10px 10px 10px;
 }
 
 .jspVerticalBar
@@ -343,13 +343,13 @@ table thead input[type="text"] {
 #footer
 {
 	position: fixed;
-    bottom: 0;
-    padding: 5px;
-    margin: 0 16px;
+	bottom: 0;
+	padding: 5px;
+	margin: 0 16px;
 	width: 96%;
-    font-size: 0.7em;
-    text-align: center;
-    border-top: 1px solid #C9E0ED;
+	font-size: 0.7em;
+	text-align: center;
+	border-top: 1px solid #C9E0ED;
 	background: #EFEFEF;
 }
 
@@ -359,15 +359,15 @@ table thead input[type="text"] {
 	width: 98%;
 }
 
-#import-screen, #home-screen, #static-page {
+#import-screen, #home-screen, #static-page, #clients-screen, #users-screen, #instances-screen {
 	padding: 0 20px;
 }
 
-.tooltip 
+.tooltip
 {
 	background-color:#EEE;
 	padding: 15px;
-	border: 1px #ccc solid;	
+	border: 1px #ccc solid;
 	width: 500px;
 }
 

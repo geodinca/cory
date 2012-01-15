@@ -121,7 +121,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * header title
 	 */
-	define ('PDF_HEADER_TITLE', 'Cory Coman');
+	define ('PDF_HEADER_TITLE', 'Cory Coman Web Application');
 
 	/**
 	 * header description string
@@ -131,12 +131,12 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * image logo
 	 */
-	define ('PDF_HEADER_LOGO', 'namcologo.png');
+	define ('PDF_HEADER_LOGO', '_blank.png');
 
 	/**
 	 * header logo image width [mm]
 	 */
-	define ('PDF_HEADER_LOGO_WIDTH', 25);
+	define ('PDF_HEADER_LOGO_WIDTH', 1);
 
 	/**
 	 *  document unit of measure [pt=point, mm=millimeter, cm=centimeter, in=inch]

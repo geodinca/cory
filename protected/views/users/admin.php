@@ -1,3 +1,4 @@
+<div id="users-screen">
 <?php
 $this->breadcrumbs=array(
 	'Users'=>array('index'),
@@ -45,3 +46,4 @@ $this->menu=array(
 		),
 	),
 )); ?>
+</div>

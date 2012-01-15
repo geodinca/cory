@@ -6,13 +6,13 @@
  */
 class NotesController extends Controller
 {
-    /**
-     * @var string the default layout for the views. Defaults to '//layouts/column1', meaning
-     * using one-column layout. See 'protected/views/layouts/column1.php'.
-     */
-    public $layout='//layouts/column1';
+	/**
+	 * @var string the default layout for the views. Defaults to '//layouts/column1', meaning
+	 * using one-column layout. See 'protected/views/layouts/column1.php'.
+	 */
+	public $layout='//layouts/column1';
 
-    public function actionIndex()
+	public function actionIndex()
 	{
 		$this->render('index');
 	}
@@ -27,7 +27,7 @@ class NotesController extends Controller
 		);
 	}
 
-	public function actions()
+	public function accessRuless()
 	{
 		// return external action classes, e.g.:
 		return array(
@@ -51,14 +51,14 @@ class NotesController extends Controller
 	 */
 	public function actionSaveNotes()
 	{
-	    if(isset($_POST['note']) && isset($_POST['id'])) {
-	        $employee_id = $_POST['id'];
-	        $model = $this->loadModel($employee_id, Yii::app()->user->id);
-	        $model->note = $_POST['note'];
-	        //var_dump($model);die;
-	        $model->save();
-	        echo nl2br($model->note);
-	    }
+		if(isset($_POST['note']) && isset($_POST['id'])) {
+			$employee_id = $_POST['id'];
+			$model = $this->loadModel($employee_id, Yii::app()->user->id);
+			$model->note = $_POST['note'];
+			//var_dump($model);die;
+			$model->save();
+			echo nl2br($model->note);
+		}
 	}
 
 	/**
@@ -67,13 +67,13 @@ class NotesController extends Controller
 	 */
 	public function actionLoadNotes()
 	{
-	    if(isset($_POST['id'])) {
-	        $employee_id = $_POST['id'];
-	        $model = $this->loadModel($employee_id, Yii::app()->user->id);
-	        echo $model->note;
-	        Yii::app()->end();
-	    }
-	    echo 'no data';
+		if(isset($_POST['id'])) {
+			$employee_id = $_POST['id'];
+			$model = $this->loadModel($employee_id, Yii::app()->user->id);
+			echo $model->note;
+			Yii::app()->end();
+		}
+		echo 'no data';
 	}
 
 	/**
@@ -83,20 +83,20 @@ class NotesController extends Controller
 	 */
 	public function loadModel($employee_id,$user_id)
 	{
-	    $model = Notes::model()->findByAttributes(array(
-	            'employee_id' => $employee_id,
-	            'user_id'     => $user_id,
-	    ));
+		$model = Notes::model()->findByAttributes(array(
+				'employee_id' => $employee_id,
+				'user_id'     => $user_id,
+		));
 
-	    if($model===null) {
-	        $model              = new Notes();
-	        //create a empty line if no one exists
-	        $model->user_id     = $user_id;
-	        $model->employee_id = $employee_id;
-	        $model->note        = '';
-	        $model->save();
-	    }
-	    return $model;
+		if($model===null) {
+			$model              = new Notes();
+			//create a empty line if no one exists
+			$model->user_id     = $user_id;
+			$model->employee_id = $employee_id;
+			$model->note        = '';
+			$model->save();
+		}
+		return $model;
 	}
 
 }

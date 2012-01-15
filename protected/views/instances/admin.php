@@ -1,3 +1,4 @@
+<div id="instances-screen">
 <?php
 $this->breadcrumbs=array(
 	'Instances'=>array('index'),
@@ -32,3 +33,4 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		),
 	),
 )); ?>
+</div>
