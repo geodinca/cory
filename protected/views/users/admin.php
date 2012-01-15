@@ -21,7 +21,7 @@ $this->menu=array(
 		'id',
 		array(
 			'name' => 'client_id',
-			'value' => '$data->client->name',
+			'value' => 'isset($data->client) ? $data->client->name : null',
 			'filter' => CHtml::listData(Clients::model()->findAll(array('order' => 'name ASC')), 'id', 'name')
 		),
 		'username',
