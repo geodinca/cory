@@ -6,12 +6,35 @@
 
 
 /**
- * Functia permite adaugarea unei valori la cookie-ul 'key',
- * in cookie este un array
+ * Functia adauga o valoare la cookie-ul 'cookieKey',
+ * in cookie este stocat un array
  */
-jQuery.addToCookie = function (key, value) {
+jQuery.pushCookie = function (cookieKey, value) {
+	console.log(value);
+	console.log(cookieKey);
 	var data = [];
-	data = jQuery.cookie(key);
-	data.push(value);
-	jQuery.cookie(key, data);
+	cookie = jQuery.cookie(cookieKey);
+	console.log(cookie);
+	data.concat(cookie,value);
+	console.log(data);
+	jQuery.cookie(cookieKey, data);
+}
+
+/**
+ * Functia scoate o valoare din cookie-ul 'cookieKey' de la indexul 'popIndex',
+ * in cookie este stocat un array
+ */
+jQuery.popCookie = function (cookieKey,popIndex) {
+	var data = [];
+	data = jQuery.cookie(cookieKey);
+	data.splice(popIndex, 1);
+	jQuery.cookie(cookieKey, data);
+}
+
+/**
+ * Check type if it is array
+ */
+function isArray(a)
+{
+	return Object.prototype.toString.apply(a) === '[object Array]';
 }

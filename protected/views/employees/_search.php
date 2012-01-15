@@ -8,10 +8,12 @@
 
 	<div class="row">
 		<?php echo Chtml::label('Boolean Search:', 'boolean_search'); ?>
-		<?php echo CHtml::textField('Search[boolean_search]', isset($aPostedData['Search']['boolean_search']) ? $aPostedData['Search']['boolean_search'] : '', array(
-				'size'=>50,
-				'maxlength'=>256,
-				'class' => 'search_form',
+		<?php echo CHtml::textField('Search[boolean_search]',
+				isset($aPostedData['Search']['boolean_search']) ? $aPostedData['Search']['boolean_search'] : '',
+				array(
+					'size'=>50,
+					'maxlength'=>256,
+					'class' => 'search_form',
 				)); ?>
 		<p class="hint">
 			Hint: Boolean Search.
@@ -20,7 +22,9 @@
 
 	<div class="row">
 		<?php echo Chtml::label('Present Employer:', 'present_employer'); ?>
-		<?php echo CHtml::hiddenField('Search[present_employer]', isset($aPostedData['Search']['present_employer']) ? $aPostedData['Search']['present_employer'] : ''); ?>
+		<?php echo CHtml::hiddenField('Search[present_employer]',
+				isset($aPostedData['Search']['present_employer']) ? $aPostedData['Search']['present_employer'] : ''
+			); ?>
 		<?php
 			$aCompanies = CHtml::ListData(Companies::model()->findAll(), 'id', 'name');
 			$this->widget('application.extensions.multicomplete.MultiComplete', array(
@@ -69,7 +73,9 @@
 
 	<div class="row">
 		<?php echo Chtml::label('Code area:', 'contact_info'); ?>
-		<?php echo CHtml::textField('Search[contact_info]', isset($aPostedData['Search']['contact_info']) ? $aPostedData['Search']['contact_info'] : ''); ?>
+		<?php echo CHtml::textField('Search[contact_info]',
+				isset($aPostedData['Search']['contact_info']) ? $aPostedData['Search']['contact_info'] : ''
+			); ?>
 		<p class="hint">
 			Hint: Use telephone prefixes.
 		</p>

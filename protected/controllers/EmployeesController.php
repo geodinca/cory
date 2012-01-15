@@ -136,14 +136,14 @@ class EmployeesController extends Controller
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-		
+
 		$aPostedData = array();
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
-		
+
 		if(!empty($aSession['data'])){
 			$aPostedData = $aSession['data'];
 		}
-		
+
 		$this->render('admin',array(
 			'model'=>$model,
 			'aPostedData' => $aPostedData
@@ -157,7 +157,7 @@ class EmployeesController extends Controller
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-		
+
 		// get allowed instances
 		$aInstances = CHtml::listData(Instances::model()->findAll('client_id = :clId', array(':clId' => Yii::app()->user->credentials['client_id'])), 'id', 'id');
 
@@ -209,7 +209,7 @@ class EmployeesController extends Controller
 			$oCriteria = new CDbCriteria;
 			$aSearchFields = array('geographical_area', 'contact_info', 'profile', 'name', 'title');
 			$aPostedData = $_POST;
-			
+
 			if($_POST['Search']['boolean_search']){
 				// prepare condition string
 				$sConditionalString = str_replace(array("'", 'OR ', 'AND ', 'ANDNOT ', 'NOT '), array('"', '', '+', '-', '-'), trim($_POST['Search']['boolean_search']));
@@ -233,7 +233,7 @@ class EmployeesController extends Controller
 				if($_POST['Search']['country_state']){
 					$oCriteria->addInCondition('t.geographical_area', explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -2)), 'AND');
 				}
-	
+
 				if($_POST['Search']['any_word']){
 					$oCriteria1 = new CDbCriteria;
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
@@ -246,7 +246,7 @@ class EmployeesController extends Controller
 					}
 					$oCriteria->mergeWith($oCriteria1);
 				}
-	
+
 				if($_POST['Search']['all_word']){
 					$oCriteria1 = new CDbCriteria;
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['all_word']));
@@ -259,7 +259,7 @@ class EmployeesController extends Controller
 					}
 					$oCriteria->mergeWith($oCriteria1);
 				}
-	
+
 				if($_POST['Search']['none_word']){
 					$oCriteria1 = new CDbCriteria;
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
@@ -273,16 +273,17 @@ class EmployeesController extends Controller
 					$oCriteria->mergeWith($oCriteria1);
 				}
 			}
-			
+
 			// instance
 			if(Yii::app()->user->credentials['type'] != 'admin'){
 				$oCriteria->addInCondition('t.instances_id', $aInstances);
 			}
-			
+
 			Yii::app()->session->add('search_criteria', serialize(array('criteria' => $oCriteria, 'data' => $aPostedData)));
 
-// 			echo '<pre>'.print_r($oCriteria, true).'</pre>';die;
+//			echo '<pre>'.print_r($oCriteria, true).'</pre>';die;
 //			echo '<pre>'.print_r($_POST, true).'</pre>'; die();
+//			var_dump($aPostedData);die;
 
 			$dataProvider = new CActiveDataProvider($model, array(
 				'criteria'=>$oCriteria,
@@ -297,35 +298,35 @@ class EmployeesController extends Controller
 				));
 			} else {
 				$model->instances_id = $aInstances;
-		    	$dataProvider = $model->search();
+				$dataProvider = $model->search();
 			}
 		}
-		
+
 		$this->render('list',array(
 			'model'=>$model,
 			'dataProvider' => $dataProvider,
 		));
 	}
 
-	public function actionSaveNotes()
-	{
-		if(isset($_POST['misc_info']) && isset($_POST['id'])) {
-			$model = $this->loadModel($_POST['id']);
-			$model->misc_info = $_POST['misc_info'];
-			$model->save();
-			echo nl2br($model->misc_info);
-		}
-	}
-
-	public function actionLoadNotes()
-	{
-		if(isset($_POST['id'])) {
-			$model = $this->loadModel($_POST['id']);
-			echo $model->misc_info;
-			exit;
-		}
-		echo 'no data';
-	}
+//	public function actionSaveNotes()
+//	{
+//		if(isset($_POST['misc_info']) && isset($_POST['id'])) {
+//			$model = $this->loadModel($_POST['id']);
+//			$model->misc_info = $_POST['misc_info'];
+//			$model->save();
+//			echo nl2br($model->misc_info);
+//		}
+//	}
+//
+//	public function actionLoadNotes()
+//	{
+//		if(isset($_POST['id'])) {
+//			$model = $this->loadModel($_POST['id']);
+//			echo $model->misc_info;
+//			exit;
+//		}
+//		echo 'no data';
+//	}
 
 	public function getTooltip($data,$row)
 	{
@@ -358,7 +359,7 @@ class EmployeesController extends Controller
 			Yii::app()->end();
 		}
 	}
-	
+
 	/**
 	 * Alter draft pdf with user details
 	 * @param CActiveRecord $oUserDraftArchive
@@ -367,9 +368,9 @@ class EmployeesController extends Controller
 	public function actionShowPdf($id = null){
 		$model = $this->loadModel($id);
 		$sContent = $this->renderPartial('pdf', array('model' => $model), true);
-		
+
 //		echo '<pre>'.print_r($sContent, true).'</pre>'; die();
-		
+
 		// initialize PDF object
 		$pdf = Yii::createComponent('application.extensions.tcpdf.ETcPdf', 'P', 'mm', 'A4', true, 'UTF-8');
 		$pdf->SetCreator(PDF_CREATOR);

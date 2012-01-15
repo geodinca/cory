@@ -26,15 +26,15 @@ class CompaniesController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
+			array('allow',  // allow all users to perform actions
 				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','getTooltip'),
+			array('allow', // allow authenticated user to perform actions
+				'actions'=>array('create','update','getTooltip', 'doChecked'),
 				'users'=>array('@'),
 			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+			array('allow', // allow admin user to perform actions
 				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
 			),
@@ -147,7 +147,7 @@ class CompaniesController extends Controller
 			'model'=>$model,
 		));
 	}
-	
+
 	public function getTooltip($data,$row)
 	{
 		$model = Companies::model()->findByPk($data->id);
@@ -177,6 +177,30 @@ class CompaniesController extends Controller
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
+		}
+	}
+
+	public function actionDoChecked()
+	{
+		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+		if(!empty($aSession['data'])){
+			$aPostedData = $aSession['data'];
+		}
+		if(isset($_POST['companies-grid_c0'])) {
+			$aSearchNames = $aSearchIds = array();
+			foreach($_POST['companies-grid_c0'] as $compani_id) {
+				//do staff
+				$company = $this->loadModel($compani_id);
+				$aSearchNames[] = $company->name;
+				$aSearchIds[] = $compani_id;
+			}
+
+			$aPostedData['Search']['present_employer'] = $aPostedData['Search']['present_employer'].','.implode(',',$aSearchIds);
+			$aPostedData['present_employer'] = $aPostedData['present_employer'].'::'.implode(',',$aSearchNames);
+			Yii::app()->session->add('search_criteria',serialize(array('criteria' => $aSession['criteria'], 'data' => $aPostedData)));
+			$this->redirect(array('../employees/admin'));
+		} else {
+			$this->redirect(array('/'));
 		}
 	}
 }
