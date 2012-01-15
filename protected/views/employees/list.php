@@ -52,17 +52,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	),
 ));
 ?>
-<script>
 
+<script type="text/javascript">
 // initialize tooltip
-$(".ttip").tooltip({
-
-	// tweak the position
-	offset: [1, 1],
-
-	// use the "slide" effect
-	effect: 'slide'
-
-// add dynamic plugin with optional configuration for bottom edge
-}).dynamic({ bottom: { direction: 'down', bounce: true } });
+$(function(){
+	$(".ttip").live("mouseover", function(){
+		$(this).tooltip({
+			// tweak the position
+			offset: [1, 1],
+			// use the "slide" effect
+			effect: 'slide'
+		}).dynamic({ bottom: { direction: 'down', bounce: true } });
+	});
+});
 </script>
