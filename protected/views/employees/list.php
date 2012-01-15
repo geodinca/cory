@@ -43,7 +43,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		array(
 			'header' => 'Note',
 			'type'   => 'raw',
-			'value'  => '$this->grid->controller->widget(\'application.widgets.getUserNotes\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
+			'value'  => '$this->grid->controller->widget(\'application.widgets.GetUserNotes\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
 		),
 		array(
 			'class'=>'CButtonColumn',
