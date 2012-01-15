@@ -5,7 +5,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.too
 
 <?php
 // tab menu
-$this->renderPartial('_menu',array('action'=>'search_screen'));
+$this->renderPartial('_menu',array('action'=>'search_result'));
 ?>
 
 <div class="profile-actions">
