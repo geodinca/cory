@@ -126,52 +126,54 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 /*<![CDATA[*/
 $(document).ready(function(){
 	//set cookie for checkboxes
-	console.log('doc ready');
-	cookieArray = $.cookie('company_check');
-	if (isArray(cookieArray)) {
-		$.cookie('company_check','test',{
-			expires: 1,
-			//path: '/',
-			//domain: 'example.com',
-			//secure: true,
-			raw: true
-		});
-	} else if (!cookieArray) {
-		var aEmpty = [0,1,2];
-		$.cookie('company_check',aEmpty,{
-			expires: 1,
-			//path: '/',
-			//domain: 'example.com',
-			//secure: true,
-			raw: true
-		});
-	}
+//	console.log('doc ready');
+//	cookieArray = $.cookie('company_check');
+//	if (isArray(cookieArray)) {
+//		$.cookie('company_check','test',{
+//			expires: 1,
+//			//path: '/',
+//			//domain: 'example.com',
+//			//secure: true,
+//			raw: true
+//		});
+//	} else if (!cookieArray) {
+//		var aEmpty = [0,1,2];
+//		$.cookie('company_check',aEmpty,{
+//			expires: 1,
+//			//path: '/',
+//			//domain: 'example.com',
+//			//secure: true,
+//			raw: true
+//		});
+//	}
 
 	// initialize tooltip
-	$(".ttip").tooltip({
-		// tweak the position
-		offset: [1, 1],
-		// use the "slide" effect
-		effect: 'slide'
-	// add dynamic plugin with optional configuration for bottom edge
-	}).dynamic({
-		bottom: {
-			direction: 'down',
-			bounce: true
-		}
+	$(".ttip").live("mouseover", function(){
+		$(this).tooltip({
+			// tweak the position
+			offset: [1, 1],
+			// use the "slide" effect
+			effect: 'slide'
+		// add dynamic plugin with optional configuration for bottom edge
+		}).dynamic({
+			bottom: {
+				direction: 'down',
+				bounce: true
+			}
+		});
 	});
 });
 
 
-jQuery(function($) {
-
-	$("input[name='companies-grid_c0\[\]']").live('click', function() {
-		$.pushCookie('company_check',$(this).val());
-		console.log($(this).val());
-
-		//$('#companies-grid_c0_all').attr('checked', $("input[name='companies-grid_c0\[\]']").length==$("input[name='companies-grid_c0\[\]']:checked").length);
-	});
-});
+//jQuery(function($) {
+//
+//	$("input[name='companies-grid_c0\[\]']").live('click', function() {
+//		$.pushCookie('company_check',$(this).val());
+//		console.log($(this).val());
+//
+//		//$('#companies-grid_c0_all').attr('checked', $("input[name='companies-grid_c0\[\]']").length==$("input[name='companies-grid_c0\[\]']:checked").length);
+//	});
+//});
 /*]]>*/
 
 </script>

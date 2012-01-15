@@ -182,6 +182,7 @@ class CompaniesController extends Controller
 
 	public function actionDoChecked()
 	{
+		//@TODO: to interpret to what field to send data present/past
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 		if(!empty($aSession['data'])){
 			$aPostedData = $aSession['data'];
@@ -194,9 +195,9 @@ class CompaniesController extends Controller
 				$aSearchNames[] = $company->name;
 				$aSearchIds[] = $compani_id;
 			}
-
+			//@TODO: make uniq value in array of companies
 			$aPostedData['Search']['present_employer'] = $aPostedData['Search']['present_employer'].','.implode(',',$aSearchIds);
-			$aPostedData['present_employer'] = $aPostedData['present_employer'].'::'.implode(',',$aSearchNames);
+			$aPostedData['present_employer'] = $aPostedData['present_employer'].'::'.implode(':: ',$aSearchNames);
 			Yii::app()->session->add('search_criteria',serialize(array('criteria' => $aSession['criteria'], 'data' => $aPostedData)));
 			$this->redirect(array('../employees/admin'));
 		} else {
