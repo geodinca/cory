@@ -375,10 +375,11 @@ table thead input[type="text"] {
 {
 	float: left;
 	position: relative;
-	top: -15px;
-	margin: 0 0 -10px 0;
+	top: -40px;
+	margin: 0 0 -20px 0 !important;
 }
 
-.profile-actions .search-button {
+.profile-actions .search-button, .profile-actions .show-selected
+{
 	float:right;
 }

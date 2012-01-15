@@ -50,8 +50,10 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 	</div>
 	<div class="profile-notes" >
 		<h3>Notes</h3>
-		<div class="edit_area" id="<?php echo $model->id ?>">
-			<?php echo $this->widget('application.widgets.getUserNotes', array("iEmployeeId" => $model->id, "iUserId" => Yii::app()->user->id), true); ?>
+		<div class="profile-notes-scroll"  style="height: 80px;">
+			<div class="edit_area" id="<?php echo $model->id ?>">
+				<?php echo $this->widget('application.widgets.getUserNotes', array("iEmployeeId" => $model->id, "iUserId" => Yii::app()->user->id), true); ?>
+			</div>
 		</div>
 	</div>
 </div>

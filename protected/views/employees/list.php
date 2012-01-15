@@ -4,9 +4,14 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.too
 ?>
 
 <?php
-// search form
+// tab menu
 $this->renderPartial('_menu',array('action'=>'search_screen'));
 ?>
+
+<div class="profile-actions">
+	<?php echo CHtml::button('Show only selected',array('class'=>'show-selected')); ?>
+</div>
+
 <?php
 
 $sTemplate = (Yii::app()->user->credentials['type'] == 'admin') ? '{view}{update}{delete}' : '{view}';
@@ -28,7 +33,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		'title',
 		array(
 			'header'      => 'Employer',
-		    'name'        => 'companies_id',
+			'name'        => 'companies_id',
 			'htmlOptions' => array('class' => 'company_title', ),
 			'type'        => 'html',
 			'value'       => array($this, 'getTooltip'),
@@ -36,9 +41,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 		'geographical_area',
 		array(
-		    'header' => 'Note',
-		    'type'   => 'raw',
-		    'value'  => '$this->grid->controller->widget(\'application.widgets.getUserNotes\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
+			'header' => 'Note',
+			'type'   => 'raw',
+			'value'  => '$this->grid->controller->widget(\'application.widgets.getUserNotes\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
 		),
 		array(
 			'class'=>'CButtonColumn',
@@ -52,11 +57,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 // initialize tooltip
 $(".ttip").tooltip({
 
-    // tweak the position
-    offset: [1, 1],
+	// tweak the position
+	offset: [1, 1],
 
-    // use the "slide" effect
-    effect: 'slide'
+	// use the "slide" effect
+	effect: 'slide'
 
 // add dynamic plugin with optional configuration for bottom edge
 }).dynamic({ bottom: { direction: 'down', bounce: true } });
