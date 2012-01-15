@@ -1,10 +1,11 @@
 
 <?php if(Yii::app()->user->isGuest) {
-	// search form 
+	// login form
 	$this->renderPartial('login',array('model'=>$model));
 } else {
-	$this->redirect(Yii::app()->request->baseUrl.'/employees/admin');
-} 
+	// search form
+	$this->redirect(Yii::app()->getBaseUrl().'/employees/admin');
+}
 ?>
 
 
