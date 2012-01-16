@@ -57,34 +57,34 @@ class EmployeesController extends Controller
 		$model = $this->loadModel($id);
 
 		//rebuild toolbar session according with current id
-		$aToolbar = unserialize(Yii::app()->session->get('toolbar'));
-		$aEmployees = $aToolbar['employees'];
-		switch ($this->toolbarDirection) {
-			case 'next':
-				$aToolbar['prevId'] = $aToolbar['currentId'];
-				$aToolbar['currentId'] = $id;
-				$aToolbar['currentIndex'] = $this
-											->searchIndex($aEmployees, $id);
-				if ($aToolbar['currentIndex'] == $aToolbar['total_count'] ) {
-					$aToolbar['nextId'] = null;
-				} else {
-					$aToolbar['nextId'] = $aEmployees[$aToolbar['currentIndex']+1]->id;
-				}
-				break;
-			case 'prev':
-				$aToolbar['nextId'] = $aToolbar['currentId'];
-				$aToolbar['currentId'] = $id;
-				$aToolbar['currentIndex'] = $this
-											->searchIndex($aEmployees, $id);
-				if ($aToolbar['currentIndex'] == 1 ) {
-					$aToolbar['prevId'] = null;
-				} else {
-					$aToolbar['prevId'] = $aEmployees[$aToolbar['currentIndex']-1]->id;
-				}
-				break;
-		}
-
-		Yii::app()->session->add('toolbar',serialize($aToolbar));
+//		$aToolbar = unserialize(Yii::app()->session->get('toolbar'));
+//		$aEmployees = $aToolbar['employees'];
+//		switch ($this->toolbarDirection) {
+//			case 'next':
+//				$aToolbar['prevId'] = $aToolbar['currentId'];
+//				$aToolbar['currentId'] = $id;
+//				$aToolbar['currentIndex'] = $this
+//											->searchIndex($aEmployees, $id);
+//				if ($aToolbar['currentIndex'] == $aToolbar['total_count'] ) {
+//					$aToolbar['nextId'] = null;
+//				} else {
+//					$aToolbar['nextId'] = $aEmployees[$aToolbar['currentIndex']+1]->id;
+//				}
+//				break;
+//			case 'prev':
+//				$aToolbar['nextId'] = $aToolbar['currentId'];
+//				$aToolbar['currentId'] = $id;
+//				$aToolbar['currentIndex'] = $this
+//											->searchIndex($aEmployees, $id);
+//				if ($aToolbar['currentIndex'] == 1 ) {
+//					$aToolbar['prevId'] = null;
+//				} else {
+//					$aToolbar['prevId'] = $aEmployees[$aToolbar['currentIndex']-1]->id;
+//				}
+//				break;
+//		}
+//
+//		Yii::app()->session->add('toolbar',serialize($aToolbar));
 
 		$this->render('view',array(
 			'model' => $model,
@@ -284,8 +284,10 @@ class EmployeesController extends Controller
 			} else {
 
 				if($_POST['Search']['present_employer']){
-					$oCriteria->addInCondition('t.companies_id', explode(',', $_POST['Search']['present_employer']));
+					$oCriteria->with = array('present_employer');
+					$oCriteria->addInCondition('present_employer.name', explode(':: ', substr(trim($_POST['Search']['present_employer']), 0, -2)));
 				}
+
 				if($_POST['Search']['present_or_past_employer']){
 					$oCriteria->addInCondition('t.profile', explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -2)));
 				}
@@ -295,7 +297,7 @@ class EmployeesController extends Controller
 				if($_POST['Search']['country_state']){
 					$oCriteria->addInCondition('t.geographical_area', explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -2)), 'AND');
 				}
-				//var_dump($oCriteria);die;
+
 				if($_POST['Search']['any_word']){
 					$oCriteria1 = new CDbCriteria;
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
@@ -334,9 +336,11 @@ class EmployeesController extends Controller
 					}
 					$oCriteria->mergeWith($oCriteria1);
 				}
+
+//				echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
 			}
 
-			// instance
+			// instance condition
 			if(Yii::app()->user->credentials['type'] != 'admin'){
 				$oCriteria->addInCondition('t.instances_id', $aInstances);
 			}
@@ -361,18 +365,18 @@ class EmployeesController extends Controller
 		}
 
 		//build toolbar session
-		$aEmployees = $dataProvider->getData();
-		$aKeysList = $dataProvider->getKeys();
-		var_dump($aKeysList);
-		var_dump($dataProvider->getPagination());die;
-		$aToolbar = array();
-		$aToolbar['total_count'] = $dataProvider->getTotalItemCount();
-		$aToolbar['currentIndex'] = 1;
-		$aToolbar['currentId'] = $aEmployees[$aToolbar['currentIndex']]->id;
-		$aToolbar['prevId'] = null;
-		$aToolbar['nextId'] = $aEmployees[$aToolbar['currentIndex']+1]->id;
-		$aToolbar['employees'] = $aEmployees;
-		Yii::app()->session->add('toolbar',serialize($aToolbar));
+//		$aEmployees = $dataProvider->getData();
+//		$aKeysList = $dataProvider->getKeys();
+//		var_dump($aKeysList);
+//		var_dump($dataProvider->getPagination());die;
+//		$aToolbar = array();
+//		$aToolbar['total_count'] = $dataProvider->getTotalItemCount();
+//		$aToolbar['currentIndex'] = 1;
+//		$aToolbar['currentId'] = $aEmployees[$aToolbar['currentIndex']]->id;
+//		$aToolbar['prevId'] = null;
+//		$aToolbar['nextId'] = $aEmployees[$aToolbar['currentIndex']+1]->id;
+//		$aToolbar['employees'] = $aEmployees;
+//		Yii::app()->session->add('toolbar',serialize($aToolbar));
 
 		$this->render('list',array(
 			'model'=>$model,

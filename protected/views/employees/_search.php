@@ -22,12 +22,19 @@
 
 	<div class="row">
 		<?php echo Chtml::label('Present Employer:', 'present_employer'); ?>
-		<?php echo CHtml::hiddenField('Search[present_employer]',
-				isset($aPostedData['Search']['present_employer']) ? $aPostedData['Search']['present_employer'] : ''
-			); ?>
+		<?php //echo CHtml::hiddenField('Search[present_employer]', isset($aPostedData['Search']['present_employer']) ? $aPostedData['Search']['present_employer'] : ''); ?>
 		<?php
-			$aCompanies = CHtml::ListData(Companies::model()->findAll(), 'id', 'name');
-			$this->widget('application.extensions.multicomplete.MultiComplete', array(
+			$aCompanies = CHtml::ListData(Companies::model()->findAll(), 'name', 'name');
+			echo CHtml::textField('Search[present_employer]', 
+				isset($aPostedData['Search']['present_employer']) ? $aPostedData['Search']['present_employer'] : '',
+				array(
+					'size'=>50,
+					'maxlength'=>256,
+					'class' => 'search_form',
+				)
+			);
+			echo '&nbsp;';
+			$this->widget('application.extensions.multicomplete.MultiCompleteCompany', array(
 					'updater' => 'Search_present_employer',
 					'splitter'=>'::',
 					'source'=>$aCompanies,
@@ -38,9 +45,9 @@
 						'size'=>'60',
 						'name' => 'present_employer',
 						'id' => 'present_employer',
-						'class' => 'search_form',
+						'onclick' => '$(this).val("");'
 					),
-					'value' => isset($aPostedData['present_employer']) ? $aPostedData['present_employer'] : ''
+					'value' => 'Search company here...'
 			));
 		?>
 		<p class="hint">
@@ -51,7 +58,17 @@
 	<div class="row">
 		<?php echo Chtml::label('Present or Past Employer:', 'present_or_past_employer'); ?>
 		<?php
-			$this->widget('application.extensions.multicomplete.MultiComplete', array(
+			echo CHtml::textField('Search[present_or_past_employer]', 
+				isset($aPostedData['Search']['present_or_past_employer']) ? $aPostedData['Search']['present_or_past_employer'] : '',
+				array(
+					'size'=>50,
+					'maxlength'=>256,
+					'class' => 'search_form',
+				)
+			);
+			echo '&nbsp;';
+			$this->widget('application.extensions.multicomplete.MultiCompleteCompany', array(
+					'updater' => 'Search_present_or_past_employer',
 					'splitter'=>'::',
 					'source'=>$aCompanies,
 					'options'=>array(
@@ -59,11 +76,11 @@
 					),
 					'htmlOptions'=>array(
 						'size'=>'60',
-						'name' => 'Search[present_or_past_employer]',
-						'id' => 'Search_present_or_past_employer',
-						'class' => 'search_form',
+						'name' => 'present_or_past_employer',
+						'id' => 'present_or_past_employer',
+						'onclick' => '$(this).val("");'
 					),
-					'value' => isset($aPostedData['Search']['present_or_past_employer']) ? $aPostedData['Search']['present_or_past_employer'] : ''
+					'value' => 'Search company here...'
 			));
 		?>
 		<p class="hint">
@@ -72,7 +89,7 @@
 	</div>
 
 	<div class="row">
-		<?php echo Chtml::label('Code area:', 'contact_info'); ?>
+		<?php echo Chtml::label('Area code:', 'contact_info'); ?>
 		<?php echo CHtml::textField('Search[contact_info]',
 				isset($aPostedData['Search']['contact_info']) ? $aPostedData['Search']['contact_info'] : ''
 			); ?>

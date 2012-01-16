@@ -31,7 +31,7 @@ class UsersController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('index','admin','delete','create','update'),
+				'actions'=>array('index','admin','delete','create','update','getInstanceByClient'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -56,6 +56,21 @@ class UsersController extends Controller
 				$model->expire = null;
 			}
 			if($model->save()){
+				// add instances
+				$bSavedInstances = true;
+				foreach($_POST['Users']['instances'] as $iInstanceId){
+					$oInstances = new InstancesUsers;
+					$oInstances->attributes = array(
+						'instance_id' => (int)$iInstanceId,
+						'user_id' => $model->id
+					);
+					if(!$oInstances->save()){
+						$bSavedInstances = false;
+					}
+				}
+				if(!$bSavedInstances){
+					$model->delete();
+				}
 				$this->redirect(array('admin'));
 			}
 		}
@@ -170,5 +185,21 @@ class UsersController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	/**
+	 * Get user instances by client
+	 * - client id sent by POST
+	 * @return string html select box
+	 */
+	public function actionGetInstanceByClient(){
+		if(isset($_POST['Users'])){
+			$iClientId = (int)$_POST['Users']['client_id'];
+			$aInstances = CHtml::listData(Instances::model()->findAll(array('condition' => 'client_id = :clID', 'params' => array(':clID' => $iClientId), 'order' => 'name ASC')), 'id', 'name');
+			foreach($aInstances as $iSessionId => $sSessionName){
+				echo CHtml::tag('option', array('value'=>$iSessionId),CHtml::encode($sSessionName),true);
+			}
+		}
+		Yii::app()->end();
 	}
 }
