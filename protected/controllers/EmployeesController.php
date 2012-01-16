@@ -295,7 +295,7 @@ class EmployeesController extends Controller
 				if($_POST['Search']['country_state']){
 					$oCriteria->addInCondition('t.geographical_area', explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -2)), 'AND');
 				}
-
+				//var_dump($oCriteria);die;
 				if($_POST['Search']['any_word']){
 					$oCriteria1 = new CDbCriteria;
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
@@ -362,6 +362,10 @@ class EmployeesController extends Controller
 
 		//build toolbar session
 		$aEmployees = $dataProvider->getData();
+		$aKeysList = $dataProvider->getKeys();
+		var_dump($aKeysList);
+		var_dump($dataProvider->getPagination());die;
+		$aToolbar = array();
 		$aToolbar['total_count'] = $dataProvider->getTotalItemCount();
 		$aToolbar['currentIndex'] = 1;
 		$aToolbar['currentId'] = $aEmployees[$aToolbar['currentIndex']]->id;
