@@ -284,8 +284,10 @@ class EmployeesController extends Controller
 			} else {
 
 				if($_POST['Search']['present_employer']){
-					$oCriteria->addInCondition('t.companies_id', explode(',', $_POST['Search']['present_employer']));
+					$oCriteria->with = array('present_employer');
+					$oCriteria->addInCondition('present_employer.name', explode(':: ', substr(trim($_POST['Search']['present_employer']), 0, -2)));
 				}
+				
 				if($_POST['Search']['present_or_past_employer']){
 					$oCriteria->addInCondition('t.profile', explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -2)));
 				}
@@ -334,9 +336,11 @@ class EmployeesController extends Controller
 					}
 					$oCriteria->mergeWith($oCriteria1);
 				}
+				
+//				echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
 			}
 
-			// instance
+			// instance condition
 			if(Yii::app()->user->credentials['type'] != 'admin'){
 				$oCriteria->addInCondition('t.instances_id', $aInstances);
 			}
@@ -361,14 +365,14 @@ class EmployeesController extends Controller
 		}
 
 		//build toolbar session
-		$aEmployees = $dataProvider->getData();
-		$aToolbar['total_count'] = $dataProvider->getTotalItemCount();
-		$aToolbar['currentIndex'] = 1;
-		$aToolbar['currentId'] = $aEmployees[$aToolbar['currentIndex']]->id;
-		$aToolbar['prevId'] = null;
-		$aToolbar['nextId'] = $aEmployees[$aToolbar['currentIndex']+1]->id;
-		$aToolbar['employees'] = $aEmployees;
-		Yii::app()->session->add('toolbar',serialize($aToolbar));
+//		$aEmployees = $dataProvider->getData();
+//		$aToolbar['total_count'] = $dataProvider->getTotalItemCount();
+//		$aToolbar['currentIndex'] = 1;
+//		$aToolbar['currentId'] = $aEmployees[$aToolbar['currentIndex']]->id;
+//		$aToolbar['prevId'] = null;
+//		$aToolbar['nextId'] = $aEmployees[$aToolbar['currentIndex']+1]->id;
+//		$aToolbar['employees'] = $aEmployees;
+//		Yii::app()->session->add('toolbar',serialize($aToolbar));
 
 		$this->render('list',array(
 			'model'=>$model,
