@@ -14,15 +14,27 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 <!-- PROFILE: START -->
 <div class="profile-view">
 	<div class="profile-actions">
-		<span style="float: left">1/21</span>
-		<span style="float: right"> &laquo; Previous | Next &raquo;</span>
+	<?php $aToolbar = unserialize(Yii::app()->session->get('toolbar'));?>
+	<?php //var_dump($aToolbar['currentIndex'])?>
+		<span style="float: left"><?php echo $aToolbar['currentIndex'].'/'.$aToolbar['total_count'] ?></span>
+		<span style="float: right"> &laquo;
+			<?php
+			if (!is_null($aToolbar['prevId'])) echo CHtml::link('Previous','/employees/prev/'.$aToolbar['prevId']);
+			else echo 'Previous';
+			?>
+			|
+			<?php
+			if (!is_null($aToolbar['nextId'])) echo CHtml::link('Next','/employees/next/'.$aToolbar['nextId']);
+			else echo 'Next';
+			?>
+		&raquo;</span>
 		<span style="float: right">
 			<?php echo CHtml::button('Save PDF', array(
 				'onclick' => 'openPdf("'.Yii::app()->createUrl('/employees/showPdf', array('id' => $model->id)).'","'.$model->id.'");'
 			)); ?>
 		</span>
 		<span style="float: right">
-			<?php echo CHtml::button('Print'); ?>
+			<?php //echo CHtml::button('Print'); ?>
 		</span>
 		<span style="float: right">
 			<?php echo CHtml::checkBox('Mark profile',false,array()).' Mark profile'?>

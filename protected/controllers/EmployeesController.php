@@ -10,6 +10,7 @@ class EmployeesController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column1';
+	public $toolbarDirection = 'next';
 
 	/**
 	 * @return array action filters
@@ -29,8 +30,16 @@ class EmployeesController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','list','view','saveNotes','loadNotes','getTooltip', 'showPdf'),
+			array('allow', // allow authenticated user to perform actions
+				'actions'=>array(
+					'admin',
+					'list',
+					'view',
+					'next',
+					'prev',
+					'getTooltip',
+					'showPdf'
+				),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -46,9 +55,62 @@ class EmployeesController extends Controller
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
+
+		//rebuild toolbar session according with current id
+		$aToolbar = unserialize(Yii::app()->session->get('toolbar'));
+		$aEmployees = $aToolbar['employees'];
+		switch ($this->toolbarDirection) {
+			case 'next':
+				$aToolbar['prevId'] = $aToolbar['currentId'];
+				$aToolbar['currentId'] = $id;
+				$aToolbar['currentIndex'] = $this
+											->searchIndex($aEmployees, $id);
+				if ($aToolbar['currentIndex'] == $aToolbar['total_count'] ) {
+					$aToolbar['nextId'] = null;
+				} else {
+					$aToolbar['nextId'] = $aEmployees[$aToolbar['currentIndex']+1]->id;
+				}
+				break;
+			case 'prev':
+				$aToolbar['nextId'] = $aToolbar['currentId'];
+				$aToolbar['currentId'] = $id;
+				$aToolbar['currentIndex'] = $this
+											->searchIndex($aEmployees, $id);
+				if ($aToolbar['currentIndex'] == 1 ) {
+					$aToolbar['prevId'] = null;
+				} else {
+					$aToolbar['prevId'] = $aEmployees[$aToolbar['currentIndex']-1]->id;
+				}
+				break;
+		}
+
+		Yii::app()->session->add('toolbar',serialize($aToolbar));
+
 		$this->render('view',array(
 			'model' => $model,
 		));
+	}
+
+	public function actionNext($id)
+	{
+		$this->toolbarDirection = 'next';
+		$this->actionView($id);
+	}
+
+	public function actionPrev($id)
+	{
+		$this->toolbarDirection = 'prev';
+		$this->actionView($id);
+	}
+
+	public function searchIndex($aEmployees, $id)
+	{
+		foreach ($aEmployees as $key => $oEmployee) {
+			if ($id == $oEmployee->id) {
+				return $key+1;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -281,10 +343,6 @@ class EmployeesController extends Controller
 
 			Yii::app()->session->add('search_criteria', serialize(array('criteria' => $oCriteria, 'data' => $aPostedData)));
 
-//			echo '<pre>'.print_r($oCriteria, true).'</pre>';die;
-//			echo '<pre>'.print_r($_POST, true).'</pre>'; die();
-//			var_dump($aPostedData);die;
-
 			$dataProvider = new CActiveDataProvider($model, array(
 				'criteria'=>$oCriteria,
 			));
@@ -302,31 +360,21 @@ class EmployeesController extends Controller
 			}
 		}
 
+		//build toolbar session
+		$aEmployees = $dataProvider->getData();
+		$aToolbar['total_count'] = $dataProvider->getTotalItemCount();
+		$aToolbar['currentIndex'] = 1;
+		$aToolbar['currentId'] = $aEmployees[$aToolbar['currentIndex']]->id;
+		$aToolbar['prevId'] = null;
+		$aToolbar['nextId'] = $aEmployees[$aToolbar['currentIndex']+1]->id;
+		$aToolbar['employees'] = $aEmployees;
+		Yii::app()->session->add('toolbar',serialize($aToolbar));
+
 		$this->render('list',array(
 			'model'=>$model,
 			'dataProvider' => $dataProvider,
 		));
 	}
-
-//	public function actionSaveNotes()
-//	{
-//		if(isset($_POST['misc_info']) && isset($_POST['id'])) {
-//			$model = $this->loadModel($_POST['id']);
-//			$model->misc_info = $_POST['misc_info'];
-//			$model->save();
-//			echo nl2br($model->misc_info);
-//		}
-//	}
-//
-//	public function actionLoadNotes()
-//	{
-//		if(isset($_POST['id'])) {
-//			$model = $this->loadModel($_POST['id']);
-//			echo $model->misc_info;
-//			exit;
-//		}
-//		echo 'no data';
-//	}
 
 	public function getTooltip($data,$row)
 	{
