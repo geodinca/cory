@@ -11,11 +11,6 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-// $this->menu=array(
-// 	array('label'=>'List Companies', 'url'=>array('index')),
-// 	array('label'=>'Create Companies', 'url'=>array('create')),
-// );
-
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -37,7 +32,22 @@ $('.addsearch-present-button').click(function(){
 	}
 	else
 	{
-		document.getElementById('companies-form').action='doChecked';
+		document.getElementById('companies-form').action='doCheckedPresent';
+		document.getElementById('companies-form').submit();
+	}
+
+});
+
+$('.addsearch-past-button').click(function(){
+	var atLeastOneIsChecked = $('input[name=\"companies-grid_c0[]\"]:checked').length > 0;
+
+	if (!atLeastOneIsChecked)
+	{
+		alert('Please select atleast one Company');
+	}
+	else
+	{
+		document.getElementById('companies-form').action='doCheckedPast';
 		document.getElementById('companies-form').submit();
 	}
 
