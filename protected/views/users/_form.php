@@ -11,8 +11,29 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'client_id'); ?>
-		<?php echo $form->dropDownList($model, 'client_id', CHtml::listData(Clients::model()->findAll(array('order' => 'name ASC')), 'id', 'name')); ?>
+		<?php
+			if(isset($model->id)){
+				echo isset($model->client->name) ? $model->client->name : 'admin';
+			} else {
+				echo $form->dropDownList($model, 
+					'client_id', 
+					CHtml::listData(Clients::model()->findAll(array('order' => 'name ASC')), 'id', 'name'),
+					array(
+						'ajax' => array(
+							'type' => 'POST', 
+							'url' => Yii::app()->createUrl('/users/getInstanceByClient'),
+							'update' => '#user_instances',
+						)
+					)
+				);
+			} 
+		?>
 		<?php echo $form->error($model,'client_id'); ?>
+	</div>
+	
+	<div id="instances" class="row">
+		<?php echo CHtml::label('Instance(s)', 'instances'); ?>
+		<?php echo Chtml::dropDownList('Users[instances][]', CHtml::listData(InstancesUsers::model()->findAll(array('condition' => 'user_id = :uID', 'params' => array(':uID' => $model->id))), 'instance_id', 'instance_id'), CHtml::listData(Instances::model()->findAll(array('condition' => 'client_id = :clID', 'params' => array(':clID' => $model->client_id), 'order' => 'name ASC')), 'id', 'name'), array('id' => 'user_instances', 'multiple' => 'true', 'size' => 3)); ?>
 	</div>
 
 	<div class="row">
