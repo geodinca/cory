@@ -42,23 +42,39 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 	</div>
 	<div class="clear"></div>
 	<div id="profile-area" class="profile-data" style="height: 340px; ">
+
+		<?php if (!empty($model->name)): ?>
 		<h3>Name</h3>
 		<span><?php echo $model->name; ?></span>
+		<?php endif; ?>
+
+		<?php if (!empty($model->geographical_area)): ?>
 
 		<h3>Geographical Area</h3>
 		<span><?php echo Yii::app()->format->html(nl2br($model->geographical_area)); ?></span>
+		<?php endif; ?>
 
+		<?php if (!empty($model->title)): ?>
 		<h3>Curent title</h3>
 		<span><?php echo $model->title; ?></span>
+		<?php endif; ?>
+
+		<?php if (!empty($model->present_employer->name)): ?>
 
 		<h3>Present Employer</h3>
 		<span><?php echo $model->present_employer->name; ?></span>
+		<?php endif; ?>
 
+		<?php if (!empty($model->contact_info)): ?>
 		<h3>Company info</h3>
 		<span><?php echo Yii::app()->format->html(nl2br($model->contact_info)); ?></span>
+		<?php endif; ?>
 
+		<?php if (!empty($model->profile)): ?>
 		<h3>Profile/Biography/Past employers</h3>
 		<span><?php echo Yii::app()->format->html(nl2br($model->profile)); ?></span>
+		Yii::app()->format->html(nl2br($model->contact_info)); ?></span>
+		<?php endif; ?>
 	</div>
 	<div class="profile-notes" >
 		<h3>Notes</h3>
@@ -78,7 +94,7 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 <script type="text/javascript">
 //<!--
 $(document).ready(function(){
-	$('#profile-area').height($(window).height() - 334);
+	$('#profile-area').height($(window).height() - 337);
 
 	$('.profile-data').jScrollPane();
 	$('.profile-notes-scroll').jScrollPane();

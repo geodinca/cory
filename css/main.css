@@ -332,11 +332,15 @@ table thead input[type="text"] {
 .profile-data
 {
 	padding: 0px 10px 10px 10px;
+	border: 1px solid #666666;
+	width: 877px;
+	margin-bottom: 2px;
 }
 
-.jspVerticalBar
+#profile-area .jspVerticalBar
 {
 	right: 20px !important;
+	margin-right: -19px !important;
 }
 
 .profile-notes
@@ -347,6 +351,7 @@ table thead input[type="text"] {
 	width: 877px;
 	background: white;
 	padding: 0 10px;
+	border: 1px solid #666666;
 }
 
 #footer
@@ -393,12 +398,19 @@ table thead input[type="text"] {
 	float:right;
 }
 
+#notes-area
+{
+	width: 900px;
+}
+
 #notes-area .jspVerticalBar
 {
 	position: absolute;
 	top: 0;
-	right: 0;
+	margin-right: 14px;
 	width: 16px;
 	height: 100%;
 	background: red;
 }
+
+.grid-view table.items tr td {cursor: pointer}
