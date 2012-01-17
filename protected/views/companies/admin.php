@@ -57,7 +57,7 @@ $('.addsearch-past-button').click(function(){
 ?>
 
 <?php
-// search form
+// tab menu
 $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 ?>
 <div class="profile-actions">
