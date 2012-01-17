@@ -41,7 +41,7 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		</span>
 	</div>
 	<div class="clear"></div>
-	<div id="profile-<?php echo $model->id?>" class="profile-data"  style="height: 340px; ">
+	<div id="profile-area" class="profile-data" style="height: 340px; ">
 		<h3>Name</h3>
 		<span><?php echo $model->name; ?></span>
 
@@ -62,9 +62,9 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 	</div>
 	<div class="profile-notes" >
 		<h3>Notes</h3>
-		<div class="profile-notes-scroll"  style="height: 80px;">
+		<div class="profile-notes-scroll" id="notes-area" style="height: 80px;">
 			<div class="edit_area" id="<?php echo $model->id ?>">
-				<?php echo $this->widget('application.widgets.GetUserNotes', array("iEmployeeId" => $model->id, "iUserId" => Yii::app()->user->id), true); ?>
+				<?php echo nl2br($this->widget('application.widgets.GetUserNotes', array("iEmployeeId" => $model->id, "iUserId" => Yii::app()->user->id), true)); ?>
 			</div>
 		</div>
 	</div>
@@ -78,7 +78,10 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 <script type="text/javascript">
 //<!--
 $(document).ready(function(){
+	$('#profile-area').height($(window).height() - 334);
+
 	$('.profile-data').jScrollPane();
+	$('.profile-notes-scroll').jScrollPane();
 
 	$('.edit_area').editable("<?php echo Yii::app()->createUrl('/notes/saveNotes'); ?>", {
 		type      	: 'textarea',
