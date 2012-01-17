@@ -392,3 +392,13 @@ table thead input[type="text"] {
 {
 	float:right;
 }
+
+#notes-area .jspVerticalBar
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 16px;
+	height: 100%;
+	background: red;
+}

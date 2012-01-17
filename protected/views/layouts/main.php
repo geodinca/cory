@@ -19,7 +19,8 @@
 	<?php
 		$cs=Yii::app()->clientScript;
 		$cs->scriptMap=array(
-			'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+			//'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+			'jquery.js' => Yii::app()->request->baseUrl.'/js/jquery.min.js',
 			'jqueryui.js' => Yii::app()->request->baseUrl.'/js/jquery-ui-1.8.16.custom.min.js',
 		);
 		$cs->registerScriptFile('jquery.js',CClientScript::POS_HEAD);
