@@ -9,3 +9,6 @@ protected/runtime/*
 *.swp
 yii/*
 /sources
+/nbproject/private/
+nbproject/*
+protected/extensions/GetUserNotes.php
