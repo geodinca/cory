@@ -5,7 +5,7 @@
 	'method'=>'get',
 )); ?>
 
-<!-- 	<div class="row"> 
+<!-- 	<div class="row">
 		<?php echo $form->label($model,'id'); ?>
 		<?php echo $form->textField($model,'id'); ?>
 		</div> -->
@@ -59,7 +59,7 @@
 		<?php echo $form->label($model,'sales'); ?>
 		<?php echo $form->textField($model,'sales',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
- -->
+-->
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

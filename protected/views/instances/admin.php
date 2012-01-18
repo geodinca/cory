@@ -17,6 +17,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'id'=>'instances-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
+	'selectableRows'=>1,
+	'selectionChanged'=>'function(id){ location.href = "'.$this->createUrl('update').'/id/"+$.fn.yiiGridView.getSelection(id);}',
 	'columns'=>array(
 		'id',
 		'name',

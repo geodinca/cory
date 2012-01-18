@@ -35,6 +35,17 @@ body
 	margin-bottom: 30px;
 }
 
+#import-screen,
+#home-screen,
+#static-page,
+#clients-screen,
+#users-screen,
+#instances-screen,
+#search-screen
+{
+	padding: 0 20px;
+}
+
 #sidebar
 {
 	padding: 20px 20px 20px 0;
@@ -245,6 +256,30 @@ div.search-form
 
 }
 
+#serch-screen-form label {
+	width: 200px;
+}
+
+#serch-screen-form select {
+	width: 800px;
+}
+
+#serch-screen-form input[type="text"] {
+	width: 800px;
+}
+
+#search-present-employer,
+#search-past-employer
+{
+	width: 500px !important;
+}
+
+#search-present-employer-auto,
+#search-past-employer-auto
+{
+	width: 280px !important;
+}
+
 input[type="text"], input[type="password"] {
 	width: 300px;
 	padding: 5px 5px 5px;
@@ -375,10 +410,6 @@ table thead input[type="text"] {
 .grid-view {
 	padding: 15px !important;
 	width: 98%;
-}
-
-#import-screen, #home-screen, #static-page, #clients-screen, #users-screen, #instances-screen {
-	padding: 0 20px;
 }
 
 .tooltip

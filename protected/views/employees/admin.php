@@ -22,12 +22,14 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
+<div id=search-screen">
 <?php
-// search form 
-$this->renderPartial('_menu',array('action'=>'search_screen')); 
+// search form
+$this->renderPartial('_menu',array('action'=>'search_screen'));
 ?>
 <?php
-// search form 
-$this->renderPartial('_search',array('model'=>$model, 'aPostedData' => $aPostedData)); 
+// search form
+$this->renderPartial('_search',array('model'=>$model, 'aPostedData' => $aPostedData));
 ?>
+</div>
 

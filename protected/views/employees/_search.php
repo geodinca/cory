@@ -1,4 +1,4 @@
-<div class="wide form">
+<div class="wide form" id="serch-screen-form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'action'=>Yii::app()->createUrl('/employees/list'),
@@ -7,9 +7,9 @@
 
 	<div class="row">
 		<?php echo Chtml::label('Select instance:', 'Search_instances_id'); ?>
-		<?php echo CHtml::dropDownList('Search[instances_id]', 
+		<?php echo CHtml::dropDownList('Search[instances_id]',
 				isset($aPostedData['Search']['instances_id']) ? $aPostedData['Search']['instances_id'] : '',
-				CHtml::listData(InstancesUsers::model()->findAll('user_id = :uID', array(':uID' => Yii::app()->user->id)), 'instance_id', 'instance.name'), 
+				CHtml::listData(InstancesUsers::model()->findAll('user_id = :uID', array(':uID' => Yii::app()->user->id)), 'instance_id', 'instance.name'),
 				array('class' => 'search_form')
 			);
 		?>
@@ -33,12 +33,13 @@
 		<?php echo Chtml::label('Present Employer:', 'present_employer'); ?>
 		<?php
 			$aCompanies = CHtml::ListData(Companies::model()->findAll(), 'name', 'name');
-			echo CHtml::textField('Search[present_employer]', 
+			echo CHtml::textField('Search[present_employer]',
 				isset($aPostedData['Search']['present_employer']) ? $aPostedData['Search']['present_employer'] : '',
 				array(
 					'size'=>50,
 					'maxlength'=>256,
 					'class' => 'search_form',
+					'id'    => 'search-present-employer'
 				)
 			);
 			echo '&nbsp;';
@@ -52,10 +53,10 @@
 					'htmlOptions'=>array(
 						'size'=>'60',
 						'name' => 'present_employer',
-						'id' => 'present_employer',
+						'id' => 'search-present-employer-auto',
 						'onclick' => '$(this).val("");'
 					),
-					'value' => 'Search company here...'
+					'value' => 'Search company here...',
 			));
 		?>
 		<p class="hint">
@@ -66,12 +67,13 @@
 	<div class="row">
 		<?php echo Chtml::label('Present or Past Employer:', 'present_or_past_employer'); ?>
 		<?php
-			echo CHtml::textField('Search[present_or_past_employer]', 
+			echo CHtml::textField('Search[present_or_past_employer]',
 				isset($aPostedData['Search']['present_or_past_employer']) ? $aPostedData['Search']['present_or_past_employer'] : '',
 				array(
 					'size'=>50,
 					'maxlength'=>256,
 					'class' => 'search_form',
+					'id'    => 'search-past-employer'
 				)
 			);
 			echo '&nbsp;';
@@ -85,7 +87,7 @@
 					'htmlOptions'=>array(
 						'size'=>'60',
 						'name' => 'present_or_past_employer',
-						'id' => 'present_or_past_employer',
+						'id' => 'search-past-employer-auto',
 						'onclick' => '$(this).val("");'
 					),
 					'value' => 'Search company here...'
@@ -179,31 +181,31 @@ function resetSearch(){
 $(function(){
 	// hightlight autocomplete search
 	$.ui.autocomplete.prototype._renderItem = function( ul, item){
-	  var term = this.term.split(" ").join("|");
-	  var re = new RegExp("(" + term + ")", "gi") ;
-	  var t = item.label.replace(re,"<b>$1</b>");
-	  return $( "<li></li>" )
-	     .data( "item.autocomplete", item )
-	     .append( "<a>" + t + "</a>" )
-	     .appendTo( ul );
+	var term = this.term.split(" ").join("|");
+	var re = new RegExp("(" + term + ")", "gi") ;
+	var t = item.label.replace(re,"<b>$1</b>");
+	return $( "<li></li>" )
+		.data( "item.autocomplete", item )
+		.append( "<a>" + t + "</a>" )
+		.appendTo( ul );
 	};
 
 	String.prototype.score=function(m,s){if(this==m){return 1}if(m==""){return 0}var f=0,q=m.length,g=this,p=g.length,o,k,e=1,j;for(var d=0,r,n,h,a,b,l;d<q;++d){h=m.charAt(d);a=g.indexOf(h.toLowerCase());b=g.indexOf(h.toUpperCase());l=Math.min(a,b);n=(l>-1)?l:Math.max(a,b);if(n===-1){if(s){e+=1-s;continue}else{return 0}}else{r=0.1}if(g[n]===h){r+=0.1}if(n===0){r+=0.6;if(d===0){o=1}}else{if(g.charAt(n-1)===" "){r+=0.8}}g=g.substring(n+1,p);f+=r}k=f/q;j=((k*(q/p))+k)/2;j=j/e;if(o&&(j+0.15<1)){j+=0.15}return j};
 
 	// sort by scoring
 	$.ui.autocomplete.filter = function(source, term){
-        var filtered_and_sorted_list =  
-          $.map(source, function(item){
-            var curItemValue = item.value.toLowerCase();
-            term = term.toLowerCase();
-            var score = curItemValue.score(term);
+		var filtered_and_sorted_list =
+		$.map(source, function(item){
+			var curItemValue = item.value.toLowerCase();
+			term = term.toLowerCase();
+			var score = curItemValue.score(term);
 
-            // relevance change this to upper value for bigger accuracy
-            if(score > 0.4)
-              return { label: item.value, value: score }
-          }).sort(function(a, b){ return b.value - a.value });
-        
+			// relevance change this to upper value for bigger accuracy
+			if(score > 0.4)
+			return { label: item.value, value: score }
+		}).sort(function(a, b){ return b.value - a.value });
+
 		return filtered_and_sorted_list;
-      };
+	};
 });
 </script>
