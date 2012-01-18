@@ -44,7 +44,7 @@
 			$aMenu = array(
 				array(
 					'label'=>'Home',
-					'url'=>array('../'),
+					'url'=>array('/'),
 				),
 				array(
 					'label'=>'About',
