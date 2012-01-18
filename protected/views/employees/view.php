@@ -49,7 +49,6 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		<?php endif; ?>
 
 		<?php if (!empty($model->geographical_area)): ?>
-
 		<h3>Geographical Area</h3>
 		<span><?php echo Yii::app()->format->html(nl2br($model->geographical_area)); ?></span>
 		<?php endif; ?>
@@ -60,7 +59,6 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		<?php endif; ?>
 
 		<?php if (!empty($model->present_employer->name)): ?>
-
 		<h3>Present Employer</h3>
 		<span><?php echo $model->present_employer->name; ?></span>
 		<?php endif; ?>
@@ -73,7 +71,6 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		<?php if (!empty($model->profile)): ?>
 		<h3>Profile/Biography/Past employers</h3>
 		<span><?php echo Yii::app()->format->html(nl2br($model->profile)); ?></span>
-		Yii::app()->format->html(nl2br($model->contact_info)); ?></span>
 		<?php endif; ?>
 	</div>
 	<div class="profile-notes" >

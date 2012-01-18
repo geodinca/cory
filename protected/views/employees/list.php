@@ -20,6 +20,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'employees-grid',
 	'dataProvider'=>$dataProvider,
 	'filter'=>$model,
+	'selectableRows'=>1,
+	'selectionChanged'=>'function(id){ location.href = "'.$this->createUrl('view').'/id/"+$.fn.yiiGridView.getSelection(id);}',
 	'columns'=>array(
 		array(
 			'class'=>'CCheckBoxColumn',
