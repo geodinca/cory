@@ -249,7 +249,6 @@ input[type="text"], input[type="password"] {
 	width: 300px;
 	padding: 5px 5px 5px;
 	color: #636363;
-	font-size: 18px;
 	font-family: Tahoma, Geneva, sans-serif;
 }
 
@@ -257,7 +256,6 @@ table thead input[type="text"] {
 	width: 98% !important;
 	padding: 2px;
 	color: #636363;
-	font-size: 12px;
 	font-family: Tahoma, Geneva, sans-serif;
 }
 
