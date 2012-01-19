@@ -39,7 +39,7 @@ class EmployeesController extends Controller
 					'prev',
 					'getTooltip',
 					'showPdf',
-					'reset'
+					'showSelected',
 				),
 				'users'=>array('@'),
 			),
@@ -221,6 +221,9 @@ class EmployeesController extends Controller
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
 
+		// get allowed instances
+		$aInstances = CHtml::listData(Instances::model()->findAll('client_id = :clId', array(':clId' => Yii::app()->user->credentials['client_id'])), 'id', 'id');
+
 		if(Yii::app()->request->isAjaxRequest){
 			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 
@@ -229,6 +232,7 @@ class EmployeesController extends Controller
 					'criteria'=>$aSession['criteria'],
 				));
 			} else {
+				$model->instances_id = $aInstances;
 				$dataProvider = $model->search();
 			}
 		}
@@ -264,7 +268,7 @@ class EmployeesController extends Controller
 			}
 		}
 
-		if(isset($_POST['Search']) && (isset($_POST['Search']['instances_id']) && $this->checkIfAllowedInstance($_POST['Search']['instances_id']) || (Yii::app()->user->credentials['type'] == 'admin'))){
+		if(isset($_POST['Search'])){
 			$oCriteria = new CDbCriteria;
 			$aSearchFields = array('geographical_area', 'contact_info', 'profile', 'name', 'title');
 			$aPostedData = $_POST;
@@ -339,7 +343,7 @@ class EmployeesController extends Controller
 
 			// instance condition
 			if(Yii::app()->user->credentials['type'] != 'admin'){
-				$oCriteria->addSearchCondition('t.instances_id', $_POST['Search']['instances_id'], false);
+				$oCriteria->addInCondition('t.instances_id', $aInstances);
 			}
 
 			Yii::app()->session->add('search_criteria', serialize(array('criteria' => $oCriteria, 'data' => $aPostedData)));
@@ -356,16 +360,16 @@ class EmployeesController extends Controller
 					'criteria' => $aSession['criteria'],
 				));
 			} else {
-				$aInstances = CHtml::listData(InstancesUsers::model()->findAll('user_id = :uID', array(':uID' => Yii::app()->user->id)), 'instance_id', 'instance_id');
 				$model->instances_id = $aInstances;
 				$dataProvider = $model->search();
 			}
 		}
 
 		//build toolbar session
-//		$aEmployees = $dataProvider->getData();
+
 //		$aKeysList = $dataProvider->getKeys();
-//		var_dump($aKeysList);
+		$aEmployees = CHtml::listData(Employees::model()->findAll($dataProvider->criteria),'id','name');
+		//var_dump($aEmployees);die('a');
 //		var_dump($dataProvider->getPagination());die;
 //		$aToolbar = array();
 //		$aToolbar['total_count'] = $dataProvider->getTotalItemCount();
@@ -380,18 +384,6 @@ class EmployeesController extends Controller
 			'model'=>$model,
 			'dataProvider' => $dataProvider,
 		));
-	}
-	
-	/**
-	 * Check if user is allowed to search this instance
-	 * @param int $iInstanceId
-	 * @return boolean
-	 */
-	protected function checkIfAllowedInstance($iInstanceId){
-		if(InstancesUsers::model()->find('instance_id = :iID AND user_id = :uID', array(':iID' => $iInstanceId, ':uID' => Yii::app()->user->id))){
-			return true;
-		}
-		return false;
 	}
 
 	public function getTooltip($data,$row)
@@ -425,14 +417,6 @@ class EmployeesController extends Controller
 			Yii::app()->end();
 		}
 	}
-	
-	/**
-	 * Reset search
-	 */
-	public function actionReset(){
-		Yii::app()->session->remove('search_criteria');
-		Yii::app()->end();
-	} 
 
 	/**
 	 * Alter draft pdf with user details
@@ -473,5 +457,19 @@ class EmployeesController extends Controller
 		$pdf->writeHTML($sContent, true, false, true, false, '');
 		$pdf->Output($model->name.'.pdf', 'I');
 		Yii::app()->end();
+	}
+
+	public function actionShowSelected() {
+		$aChecked = array();
+		if(Yii::app()->request->isAjaxRequest){
+			if(isset($_POST['ids'])) {
+				foreach($_POST['ids'] as $val) {
+						$aChecked[] = $val;
+				}
+			}
+		}
+		//var_dump($aChecked);
+		if (!empty($aChecked)) return serialize($aChecked);
+		else return '';
 	}
 }

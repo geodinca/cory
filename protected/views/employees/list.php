@@ -9,7 +9,43 @@ $this->renderPartial('_menu',array('action'=>'search_result'));
 ?>
 
 <div class="profile-actions">
-	<?php echo CHtml::button('Show only selected',array('class'=>'show-selected')); ?>
+<?php
+//echo CHtml::button('Show only selected',array(
+//	'class'=>'show-selected',
+//	'onclick' => '$.updateGridView("employees-grid","chk_grid")'
+//));
+//
+//Yii::app()->clientScript->registerScript('search', "
+//$.updateGridView = function(gridID, name) {
+//	var postData = \"{ids:$.fn.yiiGridView.getChecked('employees-grid','chk_grid')}\";
+//	$.fn.yiiGridView.update(gridID, {
+//		type:'POST',
+//		data:JSON.stringify(postData),
+//		url:'showSelected',
+//		success:function(data) {
+//			console.log('aaa '+data);
+//			$.fn.yiiGridView.update('employees-grid');
+//			//afterDelete(th,true,data);
+//		},
+//		error:function(XHR) {
+//			//return afterDelete(th,false,XHR);
+//		}
+//	});
+//}
+//", CClientScript::POS_READY);
+
+	echo CHtml::ajaxLink("Show Selected",
+			$this->createUrl('showSelected'),
+			array(
+				"type" => "post",
+				"data" => "js:{ids:$.fn.yiiGridView.getChecked('employees-grid','chk_grid')}",
+				'success' => "function( data )
+					{
+						$.fn.yiiGridView.update('employees-grid',{data:});
+					}"
+			)
+		);
+	?>
 </div>
 
 <?php
@@ -20,12 +56,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'employees-grid',
 	'dataProvider'=>$dataProvider,
 	'filter'=>$model,
-	'selectableRows'=>1,
+	'selectableRows'=>2,
 	'selectionChanged'=>'function(id){ location.href = "'.$this->createUrl('view').'/id/"+$.fn.yiiGridView.getSelection(id);}',
 	'columns'=>array(
 		array(
 			'class'=>'CCheckBoxColumn',
-			'selectableRows' => 2
+			'selectableRows' => 2,
+			'id' => 'chk_grid'
 		),
 		array(
 			'header' => '#',
