@@ -44,7 +44,7 @@
 			);
 			echo '&nbsp;';
 			$this->widget('application.extensions.multicomplete.MultiCompleteCompany', array(
-					'updater' => 'Search_present_employer',
+					'updater' => 'search-present-employer',
 					'splitter'=>'::',
 					'source'=>$aCompanies,
 					'options'=>array(
@@ -78,7 +78,7 @@
 			);
 			echo '&nbsp;';
 			$this->widget('application.extensions.multicomplete.MultiCompleteCompany', array(
-					'updater' => 'Search_present_or_past_employer',
+					'updater' => 'search-past-employer',
 					'splitter'=>'::',
 					'source'=>$aCompanies,
 					'options'=>array(
@@ -181,14 +181,13 @@ function resetSearch(){
 $(function(){
 	// hightlight autocomplete search
 	$.ui.autocomplete.prototype._renderItem = function( ul, item){
-		console.log(this.term);
-	var term = this.term.split(" ").join("|");
-	var re = new RegExp("(" + term + ")", "gi") ;
-	var t = item.label.replace(re,"<b>$1</b>");
-	return $( "<li></li>" )
-		.data( "item.autocomplete", item )
-		.append( "<a>" + t + "</a>" )
-		.appendTo( ul );
+		var term = this.term.split(" ").join("|");
+		var re = new RegExp("(" + term + ")", "gi") ;
+		var t = item.label.replace(re,"<b>$1</b>");
+		return $( "<li></li>" )
+			.data( "item.autocomplete", item )
+			.append( "<a>" + t + "</a>" )
+			.appendTo( ul );
 	};
 
 	String.prototype.score=function(m,s){
@@ -224,7 +223,7 @@ $(function(){
 		k=f/q;
 		j=((k*(q/p))+k)/2;j=j/e;
 		if(o&&(j+0.15<1)){j+=0.15}
-		return j
+		return j;
 	};
 
 	// sort by scoring
