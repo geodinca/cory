@@ -34,17 +34,17 @@ $this->renderPartial('_menu',array('action'=>'search_result'));
 //}
 //", CClientScript::POS_READY);
 
-	echo CHtml::ajaxLink("Show Selected",
-			$this->createUrl('showSelected'),
-			array(
-				"type" => "post",
-				"data" => "js:{ids:$.fn.yiiGridView.getChecked('employees-grid','chk_grid')}",
-				'success' => "function( data )
-					{
-						$.fn.yiiGridView.update('employees-grid',{data:});
-					}"
-			)
-		);
+//	echo CHtml::ajaxLink("Show Selected",
+//			$this->createUrl('showSelected'),
+//			array(
+//				"type" => "post",
+//				"data" => "js:{ids:$.fn.yiiGridView.getChecked('employees-grid','chk_grid')}",
+//				'success' => "function( data )
+//					{
+//						$.fn.yiiGridView.update('employees-grid',{data:});
+//					}"
+//			)
+//		);
 	?>
 </div>
 
@@ -62,7 +62,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		array(
 			'class'=>'CCheckBoxColumn',
 			'selectableRows' => 2,
-			'id' => 'chk_grid'
+			'id' => 'chk_grid',
+			'checked' => 'in_array($data->id, $this->grid->controller->selectedEmployees)'
 		),
 		array(
 			'header' => '#',
@@ -93,6 +94,23 @@ $this->widget('zii.widgets.grid.CGridView', array(
 ?>
 
 <script type="text/javascript">
+$(function(){
+	$('input[id^="chk_grid"]').live('click', function(){
+		var action = '';
+		if($(this).is(':checked')){
+			action = 'add';
+		} else {
+			action = 'remove';
+		}
+
+		$.post(
+			"<?php echo Yii::app()->createUrl('/employees/selection'); ?>",
+			{id: $(this).val(), action: action}
+		);
+	});
+});
+
+
 // initialize tooltip
 $(function(){
 	$(".ttip").live("mouseover", function(){
@@ -101,7 +119,7 @@ $(function(){
 			offset: [1, 1],
 			// use the "slide" effect
 			effect: 'slide'
-		}).dynamic({ bottom: { direction: 'down', bounce: true } });
+		}); //.dynamic({ bottom: { direction: 'down', bounce: true } });
 	});
 });
 </script>
