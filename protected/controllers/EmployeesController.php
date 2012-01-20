@@ -11,6 +11,7 @@ class EmployeesController extends Controller
 	 */
 	public $layout='//layouts/column1';
 	public $toolbarDirection = 'next';
+	public $selectedEmployees = array();
 
 	/**
 	 * @return array action filters
@@ -40,6 +41,7 @@ class EmployeesController extends Controller
 					'getTooltip',
 					'showPdf',
 					'showSelected',
+					'selection'
 				),
 				'users'=>array('@'),
 			),
@@ -85,6 +87,35 @@ class EmployeesController extends Controller
 		$this->render('view',array(
 			'model' => $model,
 		));
+	}
+	
+	/**
+	 * Add/remove employee from selection
+	 */
+	public function actionSelection(){
+		$aSelectedEmployees = array();
+		
+		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+		if(isset($aSession['employees'])){
+			$aSelectedEmployees = $aSession['employees'];
+		}
+		
+		// add employee
+		if($_POST['action'] == 'add'){
+			$aSelectedEmployees[] = $_POST['id'];
+		}
+		
+		// add employee
+		if($_POST['action'] == 'remove'){
+			$aSelectedEmployees = array_flip($aSelectedEmployees);
+			unset($aSelectedEmployees[$_POST['id']]);
+			$aSelectedEmployees = array_flip($aSelectedEmployees);
+		}
+		
+		$aSession['employees'] = $aSelectedEmployees;
+		echo '<pre>'.print_r($aSession, true).'</pre>';
+		Yii::app()->session->add('search_criteria', serialize($aSession));
+		Yii::app()->end();
 	}
 
 	public function actionNext($id)
@@ -223,9 +254,13 @@ class EmployeesController extends Controller
 		// get allowed instances
 		$aInstances = CHtml::listData(Instances::model()->findAll('client_id = :clId', array(':clId' => Yii::app()->user->credentials['client_id'])), 'id', 'id');
 
+		// get stored session data
+		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+		
+		// get selected employees to use in cgridview
+		$this->selectedEmployees = isset($aSession['employees']) ? $aSession['employees'] : array();
+		
 		if(Yii::app()->request->isAjaxRequest){
-			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
-
 			if($aSession){
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria'=>$aSession['criteria'],
@@ -237,8 +272,6 @@ class EmployeesController extends Controller
 		}
 
 		if(isset($_GET['Employees'])){
-			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
-
 			if($aSession){
 				$oCriteria = $aSession['criteria'];
 
@@ -375,7 +408,7 @@ class EmployeesController extends Controller
 
 		$this->render('list',array(
 			'model'=>$model,
-			'dataProvider' => $dataProvider,
+			'dataProvider' => $dataProvider
 		));
 	}
 

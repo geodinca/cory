@@ -95,7 +95,7 @@ class MultiComplete extends CJuiAutoComplete
                     // remove the current input
                     terms.pop();
                     // add the selected item
-                    terms.push( ui.item.value );
+                    terms.push( ui.item.label );
                     '.$this->updater.'.push( ui.item.id );
                     // add placeholder to get the comma-and-space at the end
                     terms.push( "" );
