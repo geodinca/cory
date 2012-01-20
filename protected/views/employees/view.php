@@ -15,16 +15,27 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 <div class="profile-view">
 	<div class="profile-actions">
 	<?php $aToolbar = unserialize(Yii::app()->session->get('toolbar'));?>
-	<?php var_dump($aToolbar['currentIndex'])?>
-		<span style="float: left"><?php echo ($aToolbar['currentIndex']+1).'/'.($aToolbar['total_count']+1) ?></span>
+		<span style="float: left"><?php echo ($aToolbar['currentIndex']+1).'/'.($aToolbar['total_count']) ?></span>
 		<span style="float: right"> &laquo;
 			<?php
-			if ($aToolbar['currentIndex'] != 0) echo CHtml::link('Previous','/employees/prev/'.($aToolbar['currentIndex']-1));
+			if ($aToolbar['currentIndex'] > 0) {
+				echo CHtml::link(
+					'Previous',
+					'/employees/prev/'.($aToolbar['employees'][$aToolbar['currentIndex']-1]['id']),
+					array('title' => $aToolbar['employees'][$aToolbar['currentIndex']-1]['name'])
+				);
+			}
 			else echo 'Previous';
 			?>
 			|
 			<?php
-			if ($aToolbar['currentIndex'] != $aToolbar['total_count']) echo CHtml::link('Next','/employees/next/'.($aToolbar['currentIndex']+1));
+			if ($aToolbar['currentIndex'] < ($aToolbar['total_count']-1)) {
+				echo CHtml::link(
+					'Next',
+					'/employees/next/'.($aToolbar['employees'][$aToolbar['currentIndex']+1]['id']),
+					array('title' => $aToolbar['employees'][$aToolbar['currentIndex']+1]['name'])
+				);
+			}
 			else echo 'Next';
 			?>
 		&raquo;</span>

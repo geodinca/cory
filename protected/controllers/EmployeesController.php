@@ -10,7 +10,6 @@ class EmployeesController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column1';
-	public $toolbarDirection = 'next';
 	public $selectedEmployees = array();
 
 	/**
@@ -59,79 +58,81 @@ class EmployeesController extends Controller
 	{
 		$model = $this->loadModel($id);
 
-//		switch ($this->toolbarDirection) {
-//			case 'next':
-//				$aToolbar['prevId'] = $aToolbar['currentId'];
-//				$aToolbar['currentId'] = $id;
-//				$aToolbar['currentIndex'] = $this
-//											->searchIndex($aEmployees, $id);
-//				if ($aToolbar['currentIndex'] == $aToolbar['total_count'] ) {
-//					$aToolbar['nextId'] = null;
-//				} else {
-//					$aToolbar['nextId'] = $aEmployees[$aToolbar['currentIndex']+1]->id;
-//				}
-//				break;
-//			case 'prev':
-//				$aToolbar['nextId'] = $aToolbar['currentId'];
-//				$aToolbar['currentId'] = $id;
-//				$aToolbar['currentIndex'] = $this
-//											->searchIndex($aEmployees, $id);
-//				if ($aToolbar['currentIndex'] == 1 ) {
-//					$aToolbar['prevId'] = null;
-//				} else {
-//					$aToolbar['prevId'] = $aEmployees[$aToolbar['currentIndex']-1]->id;
-//				}
-//				break;
-//		}
-//
+		//calculate current position of employee in 'toolbar' session array by ID
+		$aToolbar = unserialize(Yii::app()->session->get('toolbar'));
+		foreach($aToolbar['employees'] as $idx => $aEmployee) {
+			if ($id == $aEmployee['id']) {
+				$aToolbar['currentIndex'] = $idx;
+				break;
+			}
+		}
+		Yii::app()->session->add('toolbar',serialize($aToolbar));
+
 		$this->render('view',array(
 			'model' => $model,
 		));
 	}
-	
+
+	/**
+	 * Set toolbarsession data for next employee in array
+	 */
+	public function actionNext($id)
+	{
+		//rebuild toolbar session according with current id
+		$aToolbar = unserialize(Yii::app()->session->get('toolbar'));
+		if($aToolbar['currentIndex'] < $aToolbar['total_count']) {
+			$aEmployees = $aToolbar['employees'];
+			$aToolbar['currentIndex'] = $aToolbar['currentIndex']+1;
+			$aToolbar['currentId'] = $id;
+			Yii::app()->session->add('toolbar',serialize($aToolbar));
+		}
+		$this->actionView($id);
+	}
+
+
+	/**
+	 * Set toolbarsession data for previous employee in array
+	 */
+	public function actionPrev($id)
+	{
+		//rebuild toolbar session according with current id
+		$aToolbar = unserialize(Yii::app()->session->get('toolbar'));
+		if($aToolbar['currentIndex'] > 0) {
+			$aEmployees = $aToolbar['employees'];
+			$aToolbar['currentIndex'] = $aToolbar['currentIndex']-1;
+			$aToolbar['currentId'] = $id;
+			Yii::app()->session->add('toolbar',serialize($aToolbar));
+		}
+		$this->actionView($id);
+	}
+
 	/**
 	 * Add/remove employee from selection
 	 */
 	public function actionSelection(){
 		$aSelectedEmployees = array();
-		
+
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 		if(isset($aSession['employees'])){
 			$aSelectedEmployees = $aSession['employees'];
 		}
-		
+
 		// add employee
 		if($_POST['action'] == 'add'){
 			$aSelectedEmployees[] = $_POST['id'];
 		}
-		
+
 		// add employee
 		if($_POST['action'] == 'remove'){
 			$aSelectedEmployees = array_flip($aSelectedEmployees);
 			unset($aSelectedEmployees[$_POST['id']]);
 			$aSelectedEmployees = array_flip($aSelectedEmployees);
 		}
-		
+
 		$aSession['employees'] = $aSelectedEmployees;
 		echo '<pre>'.print_r($aSession, true).'</pre>';
 		Yii::app()->session->add('search_criteria', serialize($aSession));
 		Yii::app()->end();
-	}
-
-	public function actionNext($id)
-	{
-		$this->toolbarDirection = 'next';
-		//rebuild toolbar session according with current id
-//		$aToolbar = unserialize(Yii::app()->session->get('toolbar'));
-//		$aEmployees = $aToolbar['employees'];
-//		Yii::app()->session->add('toolbar',serialize($aToolbar));
-		$this->actionView($id);
-	}
-
-	public function actionPrev($id)
-	{
-		$this->toolbarDirection = 'prev';
-		$this->actionView($id);
 	}
 
 	public function searchIndex($aEmployees, $id)
@@ -256,10 +257,10 @@ class EmployeesController extends Controller
 
 		// get stored session data
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
-		
+
 		// get selected employees to use in cgridview
 		$this->selectedEmployees = isset($aSession['employees']) ? $aSession['employees'] : array();
-		
+
 		if(Yii::app()->request->isAjaxRequest){
 			if($aSession){
 				$dataProvider = new CActiveDataProvider($model, array(
@@ -399,11 +400,17 @@ class EmployeesController extends Controller
 
 		//build toolbar session
 		$aEmployees = CHtml::listData(Employees::model()->findAll($dataProvider->criteria),'id','name');
+
 		$aToolbar = array();
+		foreach($aEmployees as $id=>$sEmployeeName) {
+			$aToolbar['employees'][] = array(
+				'id' =>$id,
+				'name' => $sEmployeeName
+			);
+		}
 		$aToolbar['total_count'] = count($aEmployees);
-		$aToolbar['currentIndex'] = 1;
-		$aToolbar['currentId'] = $aEmployees[$aToolbar['currentIndex']]->id;
-		$aToolbar['employees'] = $aEmployees;
+		$aToolbar['currentIndex'] = 0;
+		$aToolbar['currentId'] = $aToolbar['employees'][0];
 		Yii::app()->session->add('toolbar',serialize($aToolbar));
 
 		$this->render('list',array(
