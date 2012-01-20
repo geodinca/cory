@@ -57,9 +57,6 @@ class EmployeesController extends Controller
 	{
 		$model = $this->loadModel($id);
 
-		//rebuild toolbar session according with current id
-//		$aToolbar = unserialize(Yii::app()->session->get('toolbar'));
-//		$aEmployees = $aToolbar['employees'];
 //		switch ($this->toolbarDirection) {
 //			case 'next':
 //				$aToolbar['prevId'] = $aToolbar['currentId'];
@@ -85,8 +82,6 @@ class EmployeesController extends Controller
 //				break;
 //		}
 //
-//		Yii::app()->session->add('toolbar',serialize($aToolbar));
-
 		$this->render('view',array(
 			'model' => $model,
 		));
@@ -95,6 +90,10 @@ class EmployeesController extends Controller
 	public function actionNext($id)
 	{
 		$this->toolbarDirection = 'next';
+		//rebuild toolbar session according with current id
+//		$aToolbar = unserialize(Yii::app()->session->get('toolbar'));
+//		$aEmployees = $aToolbar['employees'];
+//		Yii::app()->session->add('toolbar',serialize($aToolbar));
 		$this->actionView($id);
 	}
 
@@ -366,19 +365,13 @@ class EmployeesController extends Controller
 		}
 
 		//build toolbar session
-
-//		$aKeysList = $dataProvider->getKeys();
 		$aEmployees = CHtml::listData(Employees::model()->findAll($dataProvider->criteria),'id','name');
-		//var_dump($aEmployees);die('a');
-//		var_dump($dataProvider->getPagination());die;
-//		$aToolbar = array();
-//		$aToolbar['total_count'] = $dataProvider->getTotalItemCount();
-//		$aToolbar['currentIndex'] = 1;
-//		$aToolbar['currentId'] = $aEmployees[$aToolbar['currentIndex']]->id;
-//		$aToolbar['prevId'] = null;
-//		$aToolbar['nextId'] = $aEmployees[$aToolbar['currentIndex']+1]->id;
-//		$aToolbar['employees'] = $aEmployees;
-//		Yii::app()->session->add('toolbar',serialize($aToolbar));
+		$aToolbar = array();
+		$aToolbar['total_count'] = count($aEmployees);
+		$aToolbar['currentIndex'] = 1;
+		$aToolbar['currentId'] = $aEmployees[$aToolbar['currentIndex']]->id;
+		$aToolbar['employees'] = $aEmployees;
+		Yii::app()->session->add('toolbar',serialize($aToolbar));
 
 		$this->render('list',array(
 			'model'=>$model,
