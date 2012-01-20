@@ -130,7 +130,10 @@
 	</div><!-- mainmenu -->
 	<div id="header">
 		<div id="logo-tag">
-			CLIENT: <strong>Demo</strong><br />
+			<?php if(!Yii::app()->user->isGuest): ?>
+			<?php $oUser = Users::model()->findAllByPk(Yii::app()->user->id); ?>
+			CLIENT: <strong><?php echo $oUser[0]->client->name?></strong><br />
+			<?php endif;?>
 			DEVELOPER: Cory Coman<br />
 			cory@innovatorscircle.com<br />
 			Please do not hesitate to write

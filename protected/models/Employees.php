@@ -72,9 +72,9 @@ class Employees extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array(
-			    'name, title, geographical_area, note, company_name',
-			    'safe',
-			    'on'=>'search'
+				'name, title, geographical_area, note, company_name',
+				'safe',
+				'on'=>'search'
 			),
 		);
 	}
@@ -88,7 +88,8 @@ class Employees extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'present_employer' => array(self::BELONGS_TO, 'Companies', 'companies_id'),
-		    'notes' => array(self::HAS_ONE, 'Notes', 'employee_id')
+			'notes' => array(self::HAS_ONE, 'Notes', 'employee_id'),
+			'instances' => array(self::BELONGS_TO, 'Instances', 'instances_id')
 		);
 	}
 
@@ -119,7 +120,7 @@ class Employees extends CActiveRecord
 			'date_update' => 'Date Update',
 			'note' => 'Notes',
 			'import' => 'Upload files',
-		    'company_name' => 'Company'
+			'company_name' => 'Company'
 		);
 	}
 
@@ -140,15 +141,15 @@ class Employees extends CActiveRecord
 		$criteria->compare('geographical_area',$this->geographical_area,true);
 		if($this->note)
 		{
-		    $criteria->together  =  true;
-		    $criteria->with = array('notes');
-		    $criteria->compare('notes.note',$this->note,true);
+			$criteria->together  =  true;
+			$criteria->with = array('notes');
+			$criteria->compare('notes.note',$this->note,true);
 		}
 		if($this->company_name)
 		{
-		    $criteria->together  =  true;
-		    $criteria->with = array('present_employer');
-		    $criteria->compare('present_employer.name',$this->company_name,true);
+			$criteria->together  =  true;
+			$criteria->with = array('present_employer');
+			$criteria->compare('present_employer.name',$this->company_name,true);
 		}
 
 		return new CActiveDataProvider($this, array(

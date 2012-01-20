@@ -1,6 +1,6 @@
 <?php
 /**
- * Management instances, controller 
+ * Management instances, controller
  * @author cmarin
  *
  */
@@ -56,19 +56,26 @@ class InstancesController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Instances']))
 		{
+			if (isset($_POST['Hint'])) {
+				$aPostedData = $_POST['Hint'];
+				$jsonData = CJSON::encode($aPostedData);
+			}
+			$_POST['Instances']['hints'] = serialize($jsonData);
 			$model->attributes=$_POST['Instances'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('admin'));
+		} else {
+			$aPostedData = CJSON::decode(unserialize($model->hints));
 		}
 
 		$this->render('update',array(
 			'model'=>$model,
+			'aPostedData' => $aPostedData,
 		));
 	}
 

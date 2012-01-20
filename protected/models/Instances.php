@@ -7,6 +7,7 @@
  * @property string $id
  * @property string $name
  * @property string $client_id
+ * @property string $hints
  * @property string $created
  * @property string $expire
  */
@@ -40,9 +41,14 @@ class Instances extends CActiveRecord
 			array('name, client_id, created, expire', 'required'),
 			array('name', 'length', 'max'=>255),
 			array('client_id', 'length', 'max'=>10),
+			array('hints', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, client_id, created, expire', 'safe', 'on'=>'search'),
+			array(
+				'id, name, client_id, created, expire',
+				'safe',
+				'on'=>'search'
+			),
 		);
 	}
 
@@ -64,11 +70,12 @@ class Instances extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'name' => 'Instance Name',
+			'id'        => 'ID',
+			'name'      => 'Instance Name',
 			'client_id' => 'Instance Client',
-			'created' => 'Created',
-			'expire' => 'Instance Expiration Date',
+			'hints'     => 'Hints',
+			'created'   => 'Created',
+			'expire'    => 'Instance Expiration Date',
 		);
 	}
 

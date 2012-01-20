@@ -4,17 +4,12 @@
 	'action'=>Yii::app()->createUrl('/employees/list'),
 	'method'=>'post',
 )); ?>
-
-	<div class="row">
-		<?php echo Chtml::label('Select instance:', 'Search_instances_id'); ?>
-		<?php echo CHtml::dropDownList('Search[instances_id]',
-				isset($aPostedData['Search']['instances_id']) ? $aPostedData['Search']['instances_id'] : '',
-				CHtml::listData(InstancesUsers::model()->findAll('user_id = :uID', array(':uID' => Yii::app()->user->id)), 'instance_id', 'instance.name'),
-				array('class' => 'search_form')
-			);
-		?>
-	</div>
-
+	<?php
+		echo CHtml::hiddenField(
+			'Search[instances_id]',
+			isset($iActiveInstance) ? $iActiveInstance : ''
+		);
+	?>
 	<div class="row">
 		<?php echo Chtml::label('Boolean Search:', 'boolean_search'); ?>
 		<?php echo CHtml::textField('Search[boolean_search]',

@@ -230,7 +230,7 @@ class EmployeesController extends Controller
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-
+		$iActiveInstance = '';
 		$aPostedData = array();
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 
@@ -238,9 +238,14 @@ class EmployeesController extends Controller
 			$aPostedData = $aSession['data'];
 		}
 
+		if (isset($_POST['Search']['instances_id'])) {
+			$iActiveInstance = $_POST['Search']['instances_id'];
+		}
+
 		$this->render('admin',array(
 			'model'=>$model,
-			'aPostedData' => $aPostedData
+			'aPostedData' => $aPostedData,
+			'iActiveInstance' => $iActiveInstance
 		));
 	}
 
@@ -376,7 +381,8 @@ class EmployeesController extends Controller
 
 			// instance condition
 			if(Yii::app()->user->credentials['type'] != 'admin'){
-				$oCriteria->addInCondition('t.instances_id', $aInstances);
+				//$oCriteria->addInCondition('t.instances_id', $aInstances);
+				$oCriteria->addSearchCondition('t.instances_id', $_POST['Search']['instances_id']);
 			}
 
 			Yii::app()->session->add('search_criteria', serialize(array('criteria' => $oCriteria, 'data' => $aPostedData)));
@@ -501,7 +507,6 @@ class EmployeesController extends Controller
 				}
 			}
 		}
-		//var_dump($aChecked);
 		if (!empty($aChecked)) return serialize($aChecked);
 		else return '';
 	}

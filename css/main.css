@@ -256,8 +256,21 @@ div.search-form
 
 }
 
+div.form label
+{
+	font-weight: bold;
+	font-size: 0.9em;
+	display: block;
+	float: left;
+	width: 200px;
+	text-align: right;
+	padding: 5px 10px 0 0;
+}
+
+div.wide.form label,
 #serch-screen-form label {
 	width: 200px;
+	font-size: 1em;
 }
 
 #serch-screen-form select {
@@ -420,7 +433,7 @@ table thead input[type="text"] {
 	width: 500px;
 }
 
-.summary
+#companies-grid .summary
 {
 	float: left;
 	position: relative;

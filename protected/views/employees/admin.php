@@ -24,12 +24,39 @@ $('.search-form form').submit(function(){
 ?>
 <div id=search-screen">
 <?php
-// search form
+// tab menu
 $this->renderPartial('_menu',array('action'=>'search_screen'));
 ?>
+<?php if (!$iActiveInstance) :?>
+<div class="wide form">
+<?php $form=$this->beginWidget('CActiveForm', array(
+	'action'=>Yii::app()->createUrl('/employees/admin'),
+	'method'=>'post',
+)); ?>
 <?php
-// search form
-$this->renderPartial('_search',array('model'=>$model, 'aPostedData' => $aPostedData));
+	$oUser = Users::model()->findAllByPk(Yii::app()->user->id);
+	$iClientId = $oUser[0]->client_id;
+?>
+	<div class="row">
+		<?php echo Chtml::label('Select instance:', 'Search_instances_id'); ?>
+		<?php echo CHtml::dropDownList('Search[instances_id]',
+				isset($aPostedData['Search']['instances_id']) ? $aPostedData['Search']['instances_id'] : '',
+				CHtml::listData(Instances::model()->findAll('client_id = :cID', array(':cID' => $iClientId)), 'id', 'name'),
+				array('class' => 'search_form')
+			);
+		?>
+		<?php echo CHtml::submitButton('Go to search'); ?>
+	</div>
+
+<?php $this->endWidget(); ?>
+</div>
+<?php endif;?>
+
+<?php
+// search form displayed after a instance is seleted
+if ($iActiveInstance) {
+	$this->renderPartial('_search',array('model'=>$model, 'aPostedData' => $aPostedData, 'iActiveInstance' => $iActiveInstance));
+}
 ?>
 </div>
 
