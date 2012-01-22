@@ -40,7 +40,8 @@ class EmployeesController extends Controller
 					'getTooltip',
 					'showPdf',
 					'showSelected',
-					'selection'
+					'selection',
+					'reset',
 				),
 				'users'=>array('@'),
 			),
@@ -308,7 +309,7 @@ class EmployeesController extends Controller
 			}
 		}
 
-		if(isset($_POST['Search'])){
+		if(isset($_POST['Search'])) {
 			$oCriteria = new CDbCriteria;
 			$aSearchFields = array('geographical_area', 'contact_info', 'profile', 'name', 'title');
 			$aPostedData = $_POST;
@@ -383,7 +384,6 @@ class EmployeesController extends Controller
 
 			// instance condition
 			if(Yii::app()->user->credentials['type'] != 'admin'){
-				//$oCriteria->addInCondition('t.instances_id', $aInstances);
 				$oCriteria->addSearchCondition('t.instances_id', $_POST['Search']['instances_id']);
 			}
 
@@ -513,5 +513,27 @@ class EmployeesController extends Controller
 		}
 		if (!empty($aChecked)) return serialize($aChecked);
 		else return '';
+	}
+
+	/**
+	*  Reset search
+	*/
+	public function actionReset()
+	{
+		Yii::app()->session->remove('search_criteria');
+		Yii::app()->end();
+	}
+
+	/**
+	* Check if user is allowed to search this instance
+	* @param int $iInstanceId
+	* @return boolean
+	*/
+	protected function checkIfAllowedInstance($iInstanceId)
+	{
+		if(InstancesUsers::model()->find('instance_id = :iID AND user_id = :uID', array(':iID' => $iInstanceId, ':uID' => Yii::app()->user->id))){
+			return true;
+		}
+		return false;
 	}
 }

@@ -175,7 +175,9 @@
 <script type="text/javascript">
 function resetSearch(){
 	$.post("<?php echo Yii::app()->createUrl('/employees/reset'); ?>", null, function(data){
-		location.reload();
+		$('input:text').each(function(index) {
+			$(this).val('');
+		});
 	});
 }
 
