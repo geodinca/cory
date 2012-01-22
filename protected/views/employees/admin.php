@@ -45,8 +45,9 @@ $this->renderPartial('_menu',array('action'=>'search_screen'));
 				array('class' => 'search_form')
 			);
 		?>
-		<p class="hint">Hint: Select the profile collection you intend to search in.</p>
 		<?php echo CHtml::submitButton('Go to search'); ?>
+		<p class="hint">Hint: Select the profile collection you intend to search in.</p>
+
 	</div>
 
 <?php $this->endWidget(); ?>

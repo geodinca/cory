@@ -38,13 +38,12 @@
 <body>
 <div class="container" id="page">
 	<div id="top-menu">
-
 		<?php
 			// common menu section
 			$aMenu = array(
 				array(
 					'label'=>'Home',
-					'url'=>array('/'),
+					'url'=>array('/employees/admin'),
 				),
 				array(
 					'label'=>'About',

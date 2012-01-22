@@ -69,8 +69,17 @@ class EmployeesController extends Controller
 		}
 		Yii::app()->session->add('toolbar',serialize($aToolbar));
 
+		//check if the profile was checked
+		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+		$isMarked = false;
+		if(isset($aSession['employees'])){
+			$aSelectedEmployees = $aSession['employees'];
+			$isMarked = array_search($id, $aSelectedEmployees);
+		}
+
 		$this->render('view',array(
 			'model' => $model,
+			'isMarked' => $isMarked,
 		));
 	}
 
@@ -121,6 +130,7 @@ class EmployeesController extends Controller
 		// add employee
 		if($_POST['action'] == 'add'){
 			$aSelectedEmployees[] = $_POST['id'];
+			$aSelectedEmployees = array_unique($aSelectedEmployees);
 		}
 
 		// add employee

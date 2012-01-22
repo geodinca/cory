@@ -48,7 +48,10 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 			<?php //echo CHtml::button('Print'); ?>
 		</span>
 		<span style="float: right">
-			<?php echo CHtml::checkBox('Mark profile',false,array()).' Mark profile'?>
+			<?php //read ckeck state
+				if ($isMarked !== false ) $isMarked = true;
+			?>
+			<?php echo CHtml::checkBox('mark_profile',$isMarked,array()).' Mark profile'?>
 		</span>
 	</div>
 	<div class="clear"></div>
@@ -101,6 +104,22 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 <!-- PROFILE: END -->
 <script type="text/javascript">
 //<!--
+$(function(){
+	$('input[id^="mark_profile"]').live('click', function(){
+		var action = '';
+		if($(this).is(':checked')){
+			action = 'add';
+		} else {
+			action = 'remove';
+		}
+
+		$.post(
+			"<?php echo Yii::app()->createUrl('/employees/selection'); ?>",
+			{id: <?php echo $aToolbar['currentIndex']+1 ?>, action: action}
+		);
+	});
+});
+
 $(document).ready(function(){
 	$('#profile-area').height($(window).height() - 337);
 

@@ -92,7 +92,7 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 		'htmlOptions'=>array('enctype' => 'multipart/form-data')
 ));
 ?>
-
+<?php $sTemplate = (Yii::app()->user->credentials['type'] == 'admin') ? '{view}{update}{delete}' : '{view}';?>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'companies-grid',
 	'dataProvider'=>$model->search(),
@@ -128,6 +128,7 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 		*/
 		array(
 			'class'=>'CButtonColumn',
+			'template' => $sTemplate,
 		),
 	),
 )); ?>

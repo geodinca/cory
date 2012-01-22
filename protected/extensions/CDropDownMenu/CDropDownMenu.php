@@ -10,7 +10,7 @@
  * CDropDownMenu is an extension to CMenu that supports Drop-Down Menus using the
  * superfish jquery-plugin.
  *
- * Please be sure to also read the CMenu API Documentation to understand how this 
+ * Please be sure to also read the CMenu API Documentation to understand how this
  * menu works.
  *
  */
@@ -39,16 +39,16 @@ class CDropDownMenu extends CMenu
 	protected function cssClass() {
 		$class = 'sf-menu';
 		if($this->style == 'vertical')
-			$class .= ' sf-vertical';		
+			$class .= ' sf-vertical';
 		if($this->style == 'navbar')
-			$class .= ' sf-navbar';		
+			$class .= ' sf-navbar';
 		return $class;
 	}
 
 	protected function renderDropDownMenu($items)
 	{
 		if(isset($this->htmlOptions['class']))
-			$this->htmlOptions['class'] .= ' '.$this->cssClass(); 
+			$this->htmlOptions['class'] .= ' '.$this->cssClass();
 		else
 			$this->htmlOptions['class'] = $this->cssClass();
 
@@ -64,11 +64,11 @@ class CDropDownMenu extends CMenu
 
 		$cs = Yii::app()->clientScript;
 		$cs->registerCoreScript('jquery');
-		$cs->registerCssFile($baseUrl . '/css/' . $this->cssFile); 
+		$cs->registerCssFile($baseUrl . '/css/' . $this->cssFile);
 		if($this->style == 'navbar')
-			$cs->registerCssFile($baseUrl . '/css/' . 'superfish-navbar.css'); 
+			$cs->registerCssFile($baseUrl . '/css/' . 'superfish-navbar.css');
 		if($this->style == 'vertical')
-			$cs->registerCssFile($baseUrl . '/css/' . 'superfish-vertical.css'); 
+			$cs->registerCssFile($baseUrl . '/css/' . 'superfish-vertical.css');
 		$cs->registerScriptFile($baseUrl . '/js/' . 'superfish.js',$this->position);
 		$cs->registerScriptFile($baseUrl . '/js/' . 'hoverIntent.js',$this->position);
 		$cs->registerScriptFile($baseUrl . '/js/' . 'CDropDownMenu.js',$this->position);

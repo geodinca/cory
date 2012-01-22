@@ -50,7 +50,7 @@ div.form fieldset
 	border: 1px solid #DDD;
 	padding: 10px;
 	margin: 0 0 10px 0;
-    -moz-border-radius:7px;
+	-moz-border-radius:7px;
 }
 
 div.form label
@@ -141,12 +141,12 @@ div.form .errorSummary ul
 
 div.wide.form label
 {
-    float: left;
-    margin-right: 10px;
-    padding-top: 10px;
-    position: relative;
-    text-align: right;
-    width: 300px;
+	float: left;
+	margin-right: 10px;
+	padding-top: 10px;
+	position: relative;
+	text-align: right;
+	width: 290px;
 }
 
 div.wide.form .row
@@ -160,13 +160,13 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 	padding-left: 110px;
 }
 
-div.wide.form .search_form 
+div.wide.form .search_form
 {
 	width: 600px;
 }
 
-div.wide.form .hint 
-{ 
+div.wide.form .hint
+{
 	padding-left: 310px;
 	margin-bottom: 15px;
 }

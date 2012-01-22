@@ -32,7 +32,8 @@ class CompaniesController extends Controller
 			),
 			array('allow', // allow authenticated user to perform actions
 				'actions'=>array(
-					'create',
+					'admin',
+					//'create',
 					'update',
 					'getTooltip',
 					'doCheckedPresent',
