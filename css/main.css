@@ -472,3 +472,5 @@ table thead input[type="text"] {
 .grid-view table.items tr td {cursor: pointer}
 
 #yw0 {position: relative; top: 20px;}
+#top-menu #yw0 {top:0px;}
+.search-word {color:#0C0;font-weight: bold;}

@@ -8,6 +8,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.mou
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.jscrollpane.min.js');
 //load jEditable JS
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.jeditable.mini.js');
+//load tooltip js
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.tools.min.js');
 // search form
 $this->renderPartial('_menu',array('action'=>'selected_profile'));
 ?>
@@ -56,35 +58,41 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 	</div>
 	<div class="clear"></div>
 	<div id="profile-area" class="profile-data" style="height: 340px; ">
-
+		<?php
+			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+			$aTextReplace = Yii::app()->format->explode($aSession['data']['Search']);
+		?>
 		<?php if (!empty($model->name)): ?>
 		<h3>Name</h3>
-		<span><?php echo $model->name; ?></span>
+		<span><?php echo Yii::app()->format->search($model->name,$aTextReplace); ?></span>
 		<?php endif; ?>
 
 		<?php if (!empty($model->geographical_area)): ?>
 		<h3>Geographical Area</h3>
-		<span><?php echo Yii::app()->format->html(nl2br($model->geographical_area)); ?></span>
+		<span><?php echo Yii::app()->format->html(nl2br(Yii::app()->format->search($model->geographical_area,$aTextReplace))); ?></span>
 		<?php endif; ?>
 
 		<?php if (!empty($model->title)): ?>
 		<h3>Curent title</h3>
-		<span><?php echo $model->title; ?></span>
+		<span><?php echo Yii::app()->format->search($model->title,$aTextReplace); ?></span>
 		<?php endif; ?>
 
 		<?php if (!empty($model->present_employer->name)): ?>
 		<h3>Present Employer</h3>
-		<span><?php echo $model->present_employer->name; ?></span>
+		<?php $this->renderPartial('../companies/tooltip',array(
+			'model' => $model->present_employer,
+			'aTextReplace' => $aTextReplace,
+		));?>
 		<?php endif; ?>
 
 		<?php if (!empty($model->contact_info)): ?>
 		<h3>Company info</h3>
-		<span><?php echo Yii::app()->format->html(nl2br($model->contact_info)); ?></span>
+		<span><?php echo Yii::app()->format->html(nl2br($model->contact_info,$aTextReplace)); ?></span>
 		<?php endif; ?>
 
 		<?php if (!empty($model->profile)): ?>
 		<h3>Profile/Biography/Past employers</h3>
-		<span><?php echo Yii::app()->format->html(nl2br($model->profile)); ?></span>
+		<span><?php echo nl2br(Yii::app()->format->search($model->profile,$aTextReplace)); ?></span>
 		<?php endif; ?>
 	</div>
 	<div class="profile-notes" >
@@ -138,6 +146,22 @@ $(document).ready(function(){
 		onblur    	: 'submit',
 		event	  	: 'dblclick',
 		tooltip   	: 'Dubleclick to edit...'
+	});
+
+	// initialize tooltip
+	$(".ttip").live("mouseover", function(){
+		$(this).tooltip({
+			// tweak the position
+			offset: [1, 1],
+			// use the "slide" effect
+			effect: 'slide'
+		// add dynamic plugin with optional configuration for bottom edge
+		}).dynamic({
+			bottom: {
+				direction: 'down',
+				bounce: true
+			}
+		});
 	});
 });
 //-->

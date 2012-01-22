@@ -13,7 +13,8 @@ $companyInfo = "<h3>Company name: $model->name</h3>
 </p>";
 
 ?>
+<?php if (isset($aTextReplace)) :?>
+<span class="ttip" title="<?php echo $companyInfo?>"><?php echo Yii::app()->format->search($model->name,$aTextReplace)?></span>
+<?php else: ?>
 <span class="ttip" title="<?php echo $companyInfo?>"><?php echo $model->name?></span>
-
-
-
+<?php endif;?>

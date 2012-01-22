@@ -80,7 +80,7 @@ class PFormatter extends CFormatter
 	{
 		return date($this->datetimeFormat,strtotime($value));
 	}
-	
+
 	/**
 	 * Formats the value as a n,nnn.nn
 	 * @param mixed $value the value to be formatted
@@ -90,8 +90,8 @@ class PFormatter extends CFormatter
 	{
 		return number_format($value, 2, '.', ',');
 	}
-	
-	
+
+
 	/**
 	 * Format enum database fields as array for slect box
 	 * @return array
@@ -101,7 +101,7 @@ class PFormatter extends CFormatter
 		asort($tmp[1]);
 		return array_combine($tmp[1], $tmp[1]);
 	}
-	
+
 	/**
 	 * Jedit selectbox
 	 * @param CActiveRecord $value
@@ -111,7 +111,69 @@ class PFormatter extends CFormatter
 		$sResult = '';
 		$iId = $value->ballance->id;
 		$sStatus = $value->ballance->status;
-		
+
 		return '<div id="'.$iId.'" class="edit_select">'.$sStatus.'</div';
 	}
+
+	public function formatSearch($sProfile, $aWords)
+	{
+		//$words = self::formatExplode($aWords);
+		foreach ($aWords as $word) {
+			$sWord = '/'.$word.'/';
+			$sReplaceWord = '<span class="search-word">'.$word.'</span>';
+			$sProfile = preg_replace($sWord, $sReplaceWord ,$sProfile);
+		}
+		return $sProfile;
+	}
+
+	public function formatExplode($aText)
+	{
+		unset($aText['instances_id']);
+		$aResult = array();
+
+		if (!empty($aText['boolean_search'])) {
+			$aText['boolean_search'] = preg_replace(array('/AND/', '/OR/', '/NOT/', '/ANDNOT/', '/"/'),'',$aText['boolean_search']);
+			$aText['boolean_search'] = preg_replace('/\s\s+/', ' ', $aText['boolean_search']);
+			$aText['boolean_search'] = explode(' ', trim($aText['boolean_search']));
+			$aResult = array_merge($aResult,$aText['boolean_search']);
+		}
+
+		if (!empty($aText['present_employer'])) {
+			$aText['present_employer'] = explode(':: ', substr(trim($aText['present_employer']), 0, -2));
+			$aResult = array_merge($aResult,$aText['present_employer']);
+		}
+
+		if (!empty($aText['present_or_past_employer'])) {
+			$aText['present_or_past_employer'] = explode(':: ', substr(trim($aText['present_or_past_employer']), 0, -2));
+			$aResult = array_merge($aResult,$aText['present_or_past_employer']);
+		}
+
+		if (!empty($aText['contact_info'])) {
+			$aText['contact_info'] = explode(' ', trim($aText['contact_info']));
+			$aResult = array_merge($aResult,$aText['contact_info']);
+		}
+
+		if (!empty($aText['country_state'])) {
+			$aText['country_state'] = explode(':: ', substr(trim($aText['country_state']), 0, -2));
+			$aResult = array_merge($aResult,$aText['country_state']);
+		}
+
+		if (!empty($aText['any_word'])) {
+			$aText['any_word'] = explode(' ', trim($aText['any_word']));
+			$aResult = array_merge($aResult,$aText['any_word']);
+		}
+
+		if (!empty($aText['all_word'])) {
+			$aText['all_word'] = explode(' ', trim($aText['all_word']));
+			$aResult = array_merge($aResult,$aText['all_word']);
+		}
+
+		if (!empty($aText['none_word'])) {
+			$aText['none_word'] = explode(' ', trim($aText['none_word']));
+			$aResult = array_merge($aResult,$aText['none_word']);
+		}
+
+		return $aResult;
+	}
+
 }
