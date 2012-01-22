@@ -281,6 +281,11 @@ div.wide.form label,
 	width: 800px;
 }
 
+#serch-screen-form .hint
+{
+	padding-left: 220px;
+}
+
 #search-present-employer,
 #search-past-employer
 {

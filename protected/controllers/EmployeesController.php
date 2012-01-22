@@ -240,12 +240,14 @@ class EmployeesController extends Controller
 
 		if (isset($_POST['Search']['instances_id'])) {
 			$iActiveInstance = $_POST['Search']['instances_id'];
+			$aHints = Instances::model()->getHints($iActiveInstance);
 		}
 
 		$this->render('admin',array(
 			'model'=>$model,
 			'aPostedData' => $aPostedData,
-			'iActiveInstance' => $iActiveInstance
+			'iActiveInstance' => $iActiveInstance,
+			'aHints' => $aHints,
 		));
 	}
 

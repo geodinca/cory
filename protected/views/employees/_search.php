@@ -20,7 +20,7 @@
 					'class' => 'search_form',
 				)); ?>
 		<p class="hint">
-			Hint: Boolean Search.
+			<?php echo $aHints['boolean_search']?>.
 		</p>
 	</div>
 
@@ -55,7 +55,7 @@
 			));
 		?>
 		<p class="hint">
-			Hint: Present Employer with autocomplete.
+			<?php echo $aHints['present_employer']?>.
 		</p>
 	</div>
 
@@ -89,7 +89,7 @@
 			));
 		?>
 		<p class="hint">
-			Hint: Present or Past Employer with autocomplete.
+			<?php echo $aHints['present_or_past_employer']?>.
 		</p>
 	</div>
 
@@ -99,7 +99,7 @@
 				isset($aPostedData['Search']['contact_info']) ? $aPostedData['Search']['contact_info'] : ''
 			); ?>
 		<p class="hint">
-			Hint: Use telephone prefixes.
+			<?php echo $aHints['contact_info']?>.
 		</p>
 	</div>
 
@@ -122,7 +122,7 @@
 			));
 		?>
 		<p class="hint">
-			Hint: Countries AND/OR US States.
+			<?php echo $aHints['country_state']?>.
 		</p>
 	</div>
 
@@ -134,7 +134,9 @@
 				'class' => 'search_form',
 				));
 		?>
-		<p class="hint">Hint: ANY of this words</p>
+		<p class="hint">
+			<?php echo $aHints['any_word']?>.
+		</p>
 	</div>
 
 	<div class="row">
@@ -144,7 +146,9 @@
 				'maxlength'=>256,
 				'class' => 'search_form',
 				)); ?>
-		<p class="hint">Hint: ALL of this words</p>
+		<p class="hint">
+			<?php echo $aHints['all_word']?>.
+		</p>
 	</div>
 
 	<div class="row">
@@ -154,7 +158,9 @@
 				'maxlength'=>256,
 				'class' => 'search_form',
 				)); ?>
-		<p class="hint">Hint: NONE of this words</p>
+		<p class="hint">
+			<?php echo $aHints['none_word']?>.
+		</p>
 	</div>
 
 	<div class="row buttons">

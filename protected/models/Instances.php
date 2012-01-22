@@ -100,4 +100,15 @@ class Instances extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	/**
+	 * Extract from Intance model Hints JSON and convert to array
+	 * @param int $id (instance id)
+	 * @return array() - hints
+	 */
+	public function getHints($id)
+	{
+		$oResult = $this->findAllByPk($id);
+		return CJSON::decode(unserialize($oResult[0]->hints));
+	}
 }

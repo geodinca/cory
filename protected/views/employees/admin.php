@@ -45,6 +45,7 @@ $this->renderPartial('_menu',array('action'=>'search_screen'));
 				array('class' => 'search_form')
 			);
 		?>
+		<p class="hint">Hint: Select the profile collection you intend to search in.</p>
 		<?php echo CHtml::submitButton('Go to search'); ?>
 	</div>
 
@@ -55,7 +56,12 @@ $this->renderPartial('_menu',array('action'=>'search_screen'));
 <?php
 // search form displayed after a instance is seleted
 if ($iActiveInstance) {
-	$this->renderPartial('_search',array('model'=>$model, 'aPostedData' => $aPostedData, 'iActiveInstance' => $iActiveInstance));
+	$this->renderPartial('_search',array(
+		'model'=>$model,
+		'aPostedData' => $aPostedData,
+		'iActiveInstance' => $iActiveInstance,
+		'aHints' => $aHints,
+	));
 }
 ?>
 </div>
