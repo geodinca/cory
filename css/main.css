@@ -19,9 +19,17 @@ body
 
 #header
 {
+	border-bottom: 1px solid #FFFFFF;
+	border-top: 1px solid #FFFFFF;
+	display: block;
+	height: 80px;
 	margin: 0;
 	padding: 0;
-	border-top: 3px solid #C9E0ED;
+}
+
+#top-menu
+{
+	background: #C9E0ED;
 }
 
 .sf-menu {
@@ -239,7 +247,7 @@ div.search-form
 
 #logo-tag
 {
-	padding: 10px 20px;
+	padding: 10px 20px 0;
 	width: 200px;
 	clear:right;
 	float:left;

@@ -57,8 +57,7 @@ ul.sf-menu li li li.sfHover ul {
 	float:			left;
 }
 .sf-menu a {
-	border-left:	2px solid #fff;
-	border-top:		2px solid #fff;
+	border-left:	1px solid #fff;
 	padding: 		5px 10px;;
 	text-decoration: none;
 }
@@ -66,7 +65,7 @@ ul.sf-menu li li li.sfHover ul {
 	color:			black;
 }
 .sf-menu li {
-	background:		silver;
+	//background:		silver;
 }
 .sf-menu li li {
 	background:		silver;
