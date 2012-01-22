@@ -87,7 +87,7 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 
 		<?php if (!empty($model->contact_info)): ?>
 		<h3>Company info</h3>
-		<span><?php echo Yii::app()->format->html(nl2br($model->contact_info,$aTextReplace)); ?></span>
+		<span><?php echo nl2br(Yii::app()->format->search($model->contact_info,$aTextReplace)); ?></span>
 		<?php endif; ?>
 
 		<?php if (!empty($model->profile)): ?>
