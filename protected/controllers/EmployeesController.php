@@ -391,6 +391,7 @@ class EmployeesController extends Controller
 
 			$dataProvider = new CActiveDataProvider($model, array(
 				'criteria'=>$oCriteria,
+				'pagination'=>array('pageSize'=>50),
 			));
 		}
 
@@ -399,6 +400,7 @@ class EmployeesController extends Controller
 			if(!empty($aSession)){
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria' => $aSession['criteria'],
+					'pagination'=>array('pageSize'=>50),
 				));
 			} else {
 				$model->instances_id = $aInstances;
