@@ -180,7 +180,7 @@ class PFormatter extends CFormatter
 	 * @return string
 	 */
 	public function formatSlug($sText){
-		return preg_replace("/[^a-zA-Z0-9\s]/", "-", strtolower($sText));
+		return preg_replace("/[^a-zA-Z0-9]/", "-", strtolower($sText));
 	}
 
 }
