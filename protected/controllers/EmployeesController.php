@@ -345,13 +345,28 @@ class EmployeesController extends Controller
 				}
 
 				if($_POST['Search']['present_or_past_employer']){
-					$oCriteria->addInCondition('t.profile', explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -2)));
+					$aCond = explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -2));
+					if(count($aCond) > 1){
+						$oCriteria->addInCondition('t.profile', $aCond);
+					} else {
+						$oCriteria->addSearchCondition('t.profile', $aCond[0], true);
+					}
 				}
 				if($_POST['Search']['contact_info']){
-					$oCriteria->addInCondition('t.contact_info', explode(',', trim($_POST['Search']['contact_info'])), 'AND');
+					$aCond = explode(',', trim($_POST['Search']['contact_info']));
+					if(count($aCond) > 1){
+						$oCriteria->addInCondition('t.contact_info', $aCond, 'AND');
+					} else {
+						$oCriteria->addSearchCondition('t.contact_info', $aCond[0], true, 'AND');
+					}
 				}
 				if($_POST['Search']['country_state']){
-					$oCriteria->addInCondition('t.geographical_area', explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -2)), 'AND');
+					$aCond = explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -2));
+					if(count($aCond) > 1){
+						$oCriteria->addInCondition('t.geographical_area', $aCond, 'AND');
+					} else {
+						$oCriteria->addSearchCondition('t.geographical_area', $aCond[0], true, 'AND');
+					}
 				}
 
 				if($_POST['Search']['any_word']){
@@ -402,7 +417,7 @@ class EmployeesController extends Controller
 			}
 
 			Yii::app()->session->add('search_criteria', serialize(array('criteria' => $oCriteria, 'data' => $aPostedData)));
-
+			
 			$dataProvider = new CActiveDataProvider($model, array(
 				'criteria'=>$oCriteria,
 				'pagination'=>array('pageSize'=>50),
@@ -434,7 +449,7 @@ class EmployeesController extends Controller
 		}
 		$aToolbar['total_count'] = count($aEmployees);
 		$aToolbar['currentIndex'] = 0;
-		$aToolbar['currentId'] = $aToolbar['employees'][0];
+		$aToolbar['currentId'] = isset($aToolbar['employees'][0]) ? $aToolbar['employees'][0] : null;
 		Yii::app()->session->add('toolbar',serialize($aToolbar));
 
 		$this->render('list',array(
