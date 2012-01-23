@@ -175,5 +175,14 @@ class PFormatter extends CFormatter
 
 		return $aResult;
 	}
+	
+	/**
+	 * Build slug from text
+	 * @param string $sText
+	 * @return string
+	 */
+	public function formatSlug($sText){
+		return preg_replace("/[^a-zA-Z0-9\s]/", "-", strtolower($sText));
+	}
 
 }
