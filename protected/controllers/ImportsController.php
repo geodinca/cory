@@ -83,10 +83,14 @@ class ImportsController extends Controller
 	            
 	            // get already saved companies
 				$aSavedCompanies = CHtml::listData(Companies::model()->findAll(), 'name', 'id');
+				foreach($aSavedCompanies as $sCName => $iCId){
+					$aSavedCompaniesUrls[$sCName] = CHtml::link($sCName, array('/companies/'.$iCId));
+				}
 				
 				// already imported companies
 				$iOldCompanies = count($aSavedCompanies);
 				
+				// import companies
 	            for ($row = 2; $row <= $highestRow; ++$row) {
 					$sCompanyName = strtolower($objWorksheet->getCellByColumnAndRow(2, $row)->getValue());
 					if(!array_key_exists($sCompanyName, $aSavedCompanies)){
@@ -111,11 +115,18 @@ class ImportsController extends Controller
 			            
 			            if($oCompanyModel->save()){
 			            	$aSavedCompanies[$sCompanyName] = $oCompanyModel->id;
+			            	$aSavedCompaniesUrls[ucwords($sCompanyName)] = CHtml::link(ucwords($sCompanyName), array('/companies/'.$oCompanyModel->id));
 			            }
 					} 
-					// get company id to save into employees table
-					$iCompanyId = $aSavedCompanies[$sCompanyName];
-					
+	            }
+	            
+	            // import employees
+	            for ($row = 2; $row <= $highestRow; ++$row) {
+	            	$sCompanyName = strtolower($objWorksheet->getCellByColumnAndRow(2, $row)->getValue());
+	            	
+	            	// get company id to save into employees table
+	            	$iCompanyId = $aSavedCompanies[$sCompanyName];
+	            	
 					if($iCompanyId){
 						$sEmployeeName = ucwords($objWorksheet->getCellByColumnAndRow(0, $row)->getValue());
 						
@@ -126,6 +137,9 @@ class ImportsController extends Controller
 						} else {
 							$iUpdatedEmployees++;	
 						}
+						
+						$sProfile = str_replace(array_keys($aSavedCompaniesUrls), $aSavedCompaniesUrls, $objWorksheet->getCellByColumnAndRow(21, $row)->getValue());
+//						echo '<pre>'.print_r(CHtml::encode($sProfile), true).'</pre>'; die();
 						
 						$oEmployeesModel->attributes = array(
 							'companies_id' => $iCompanyId,
@@ -143,7 +157,7 @@ class ImportsController extends Controller
 							'actual_location_street' => $objWorksheet->getCellByColumnAndRow(17, $row)->getValue(),
 							'actual_location_city' => $objWorksheet->getCellByColumnAndRow(18, $row)->getValue(),
 							'actual_location_state' => $objWorksheet->getCellByColumnAndRow(19, $row)->getValue(),
-							'profile' => $objWorksheet->getCellByColumnAndRow(21, $row)->getValue(),
+							'profile' => $sProfile,
 							'date_entered' => date('Y-m-d H:i:s'),
 							'misc_info' => $objWorksheet->getCellByColumnAndRow(26, $row)->getValue()
 						);
