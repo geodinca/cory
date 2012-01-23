@@ -119,9 +119,7 @@ class PFormatter extends CFormatter
 	{
 		//$words = self::formatExplode($aWords);
 		foreach ($aWords as $word) {
-			$sWord = '/'.$word.'/';
-			$sReplaceWord = '<span class="search-word">'.$word.'</span>';
-			$sProfile = preg_replace($sWord, $sReplaceWord ,$sProfile);
+			$sProfile = preg_replace("/($word)/i","<span class=\"search-word\">$1</span>",$sProfile);
 		}
 		return $sProfile;
 	}
