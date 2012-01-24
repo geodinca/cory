@@ -37,7 +37,9 @@ class CompaniesController extends Controller
 					'update',
 					'getTooltip',
 					'doCheckedPresent',
-					'doCheckedPast'),
+					'doCheckedPast',
+					'getCompany'
+				),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform actions
@@ -230,5 +232,30 @@ class CompaniesController extends Controller
 		} else {
 			$this->redirect(array('/'));
 		}
+	}
+	
+	/**
+	 * Ajax request get company for autocomplete
+	 * @return json
+	 */
+	public function actionGetCompany(){
+		$aResult = array();
+		$sTerm = trim($_GET['term']);
+		
+		$oCriteria = new CDbCriteria;
+		$oCriteria->addCondition('t.name LIKE "'.$sTerm.'%"');
+		$oCriteria->order = 't.name ASC';
+		$oCriteria->limit = 15;
+		$aCompanies = Companies::model()->findAll($oCriteria);
+		foreach($aCompanies as $iKey => $aCompany){
+			$aResult[] = array(
+				'item' => $aCompany['name'],
+				'value' => $aCompany['name'],
+				'title' => CHtml::encode(nl2br($aCompany['products']))
+			);
+		}
+		
+		echo CJSON::encode($aResult);
+		Yii::app()->end();
 	}
 }

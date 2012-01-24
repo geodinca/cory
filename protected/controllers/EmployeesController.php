@@ -42,6 +42,7 @@ class EmployeesController extends Controller
 					'showSelected',
 					'selection',
 					'reset',
+					'getCountryState',
 				),
 				'users'=>array('@'),
 			),
@@ -550,6 +551,31 @@ class EmployeesController extends Controller
 	public function actionReset()
 	{
 		Yii::app()->session->remove('search_criteria');
+		Yii::app()->end();
+	}
+	
+	/**
+	 * Ajax request get country/state for autocomplete
+	 * @return json
+	 */
+	public function actionGetCountryState(){
+		$aResult = array();
+		$sTerm = trim($_GET['term']);
+		
+		$oCriteria = new CDbCriteria;
+		$oCriteria->addCondition('t.geographical_area LIKE "'.$sTerm.'%"');
+		$oCriteria->order = 't.geographical_area ASC';
+		$oCriteria->group = 't.geographical_area';
+		$oCriteria->limit = 15;
+		$aGeoAreas = Employees::model()->findAll($oCriteria);
+		foreach($aGeoAreas as $iKey => $aGeoArea){
+			$aResult[] = array(
+				'item' => $aGeoArea['geographical_area'],
+				'value' => $aGeoArea['geographical_area']
+			);
+		}
+		
+		echo CJSON::encode($aResult);
 		Yii::app()->end();
 	}
 

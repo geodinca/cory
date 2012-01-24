@@ -22,9 +22,11 @@
 			//'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
 			'jquery.js' => Yii::app()->request->baseUrl.'/js/jquery.min.js',
 			'jqueryui.js' => Yii::app()->request->baseUrl.'/js/jquery-ui-1.8.16.custom.min.js',
+			'tools.js' => Yii::app()->request->baseUrl.'/js/jquery.tools.min.js',
 		);
 		$cs->registerScriptFile('jquery.js',CClientScript::POS_HEAD);
 		$cs->registerScriptFile('jqueryui.js',CClientScript::POS_HEAD);
+		$cs->registerScriptFile('tools.js',CClientScript::POS_HEAD);
 	?>
 
 	<script type="text/javascript">
