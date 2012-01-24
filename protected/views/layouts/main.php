@@ -58,11 +58,6 @@
 					'url'=>array('/site/page', 'view'=>'searchtips'),
 					'visible'=>!Yii::app()->user->isGuest
 				),
-//				array(
-//					'label'=>'Search Screen',
-//					'url'=>array('/employees/admin'),
-//					'visible'=>!Yii::app()->user->isGuest
-//				),
 				array(
 					'label'=>'Users',
 					'url'=>array('/users/index'),
@@ -126,6 +121,7 @@
 					'items' => $aMenu
 			));
 		?>
+
 	</div><!-- mainmenu -->
 	<div id="header">
 		<div id="logo-tag">

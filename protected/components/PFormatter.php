@@ -115,6 +115,11 @@ class PFormatter extends CFormatter
 		return '<div id="'.$iId.'" class="edit_select">'.$sStatus.'</div';
 	}
 
+	/**
+	 * Highlight searched words in profile text
+	 * @param string $sProfile
+	 * @param array $aWords - values from search form
+	 */
 	public function formatSearch($sProfile, $aWords)
 	{
 		//$words = self::formatExplode($aWords);
@@ -124,6 +129,10 @@ class PFormatter extends CFormatter
 		return $sProfile;
 	}
 
+	/**
+	 * Expode in one single array the search POST form array
+	 * @param array $aText
+	 */
 	public function formatExplode($aText)
 	{
 		unset($aText['instances_id']);
@@ -173,7 +182,7 @@ class PFormatter extends CFormatter
 
 		return $aResult;
 	}
-	
+
 	/**
 	 * Build slug from text
 	 * @param string $sText
