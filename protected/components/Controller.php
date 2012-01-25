@@ -20,4 +20,11 @@ class Controller extends CController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
+
+	/**
+	 * This variable will be displayed in H1 and change acrding with
+	 * current profile collection selected in homepage
+	 * @var string
+	 */
+	public $dbTitle = null;
 }

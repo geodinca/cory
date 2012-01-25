@@ -240,22 +240,27 @@ class EmployeesController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Employees('search');
-		$model->unsetAttributes();  // clear any default values
 		$iActiveInstance = '';
-		$aPostedData = array();
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 
+		if (!empty($aSession['current_instance_id'])) {
+			$iActiveInstance = $aSession['current_instance_id'];
+			$aHints = Instances::model()->getHints($iActiveInstance);
+
+			$i = Instances::model()->findByPk($iActiveInstance);
+			$this->dbTitle = $i->name;
+		} else {
+			//go back to set an instance
+			$this->redirect('/site/index');
+		}
+
+		$aPostedData = array();
 		if(!empty($aSession['data'])){
 			$aPostedData = $aSession['data'];
 		}
 
-		if (isset($_POST['Search']['instances_id'])) {
-			$iActiveInstance = $_POST['Search']['instances_id'];
-			$aHints = Instances::model()->getHints($iActiveInstance);
-		} else {
-			$aHints = array();
-		}
+		$model=new Employees('search');
+		$model->unsetAttributes();  // clear any default values
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -417,8 +422,12 @@ class EmployeesController extends Controller
 				$oCriteria->addSearchCondition('t.instances_id', $_POST['Search']['instances_id']);
 			}
 
-			Yii::app()->session->add('search_criteria', serialize(array('criteria' => $oCriteria, 'data' => $aPostedData)));
-			
+			Yii::app()->session->add('search_criteria', serialize(array(
+				'criteria' => $oCriteria,
+				'data' => $aPostedData,
+				'current_instance_id'=>$_POST['Search']['instances_id'],
+			)));
+
 			$dataProvider = new CActiveDataProvider($model, array(
 				'criteria'=>$oCriteria,
 				'pagination'=>array('pageSize'=>50),
@@ -553,7 +562,7 @@ class EmployeesController extends Controller
 		Yii::app()->session->remove('search_criteria');
 		Yii::app()->end();
 	}
-	
+
 	/**
 	 * Ajax request get country/state for autocomplete
 	 * @return json
@@ -561,7 +570,7 @@ class EmployeesController extends Controller
 	public function actionGetCountryState(){
 		$aResult = array();
 		$sTerm = trim($_GET['term']);
-		
+
 		$oCriteria = new CDbCriteria;
 		$oCriteria->addCondition('t.geographical_area LIKE "'.$sTerm.'%"');
 		$oCriteria->order = 't.geographical_area ASC';
@@ -574,7 +583,7 @@ class EmployeesController extends Controller
 				'value' => $aGeoArea['geographical_area']
 			);
 		}
-		
+
 		echo CJSON::encode($aResult);
 		Yii::app()->end();
 	}

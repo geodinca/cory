@@ -67,27 +67,31 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 		array(
 			'header' => '#',
+			'headerHtmlOptions' => array('width' => '2%'),
 			'value'	 => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row + 1)'
 		),
-		'name',
-		'title',
+		array('name'=>'name','headerHtmlOptions' => array('width' => '12%')),
+		array('name'=>'title','headerHtmlOptions' => array('width' => '14%')),
 		array(
 			'header'      => 'Employer',
 			'name'        => 'companies_id',
-			'htmlOptions' => array('class' => 'company_title', ),
+			'htmlOptions' => array('class' => 'company_title'),
+			'headerHtmlOptions' => array('width' => '14%'),
 			'type'        => 'html',
 			'value'       => array($this, 'getTooltip'),
 			'filter'	=> CHtml::listData(Companies::model()->findAll(array('order' => 'name ASC')), 'id', 'name')
 		),
-		'geographical_area',
+		array('name'=>'geographical_area','headerHtmlOptions' => array('width' => '12%')),
 		array(
 			'header' => 'Note',
 			'type'   => 'raw',
+			'headerHtmlOptions' => array('width' => '40%'),
 			'value'  => '$this->grid->controller->widget(\'application.widgets.GetUserNotes\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
 		),
 		array(
 			'class'=>'CButtonColumn',
-			'template' => $sTemplate
+			'template' => $sTemplate,
+			'headerHtmlOptions' => array('width' => '5%'),
 		),
 	),
 ));

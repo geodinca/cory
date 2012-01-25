@@ -45,7 +45,7 @@
 			$aMenu = array(
 				array(
 					'label'=>'Home',
-					'url'=>array('/employees/admin'),
+					'url'=>array('/site/index'),
 				),
 				array(
 					'label'=>'About',
@@ -134,7 +134,12 @@
 			cory@innovatorscircle.com<br />
 			Please do not hesitate to write
 		</div>
-		<div id="application-title"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		<?php if(isset($this->dbTitle)):?>
+			<div id="application-title"><?php echo $this->dbTitle; ?></div>
+		<?php else: ?>
+			<div id="application-title"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		<?php endif;?>
+
 	</div><!-- header -->
 
 

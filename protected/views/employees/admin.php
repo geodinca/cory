@@ -27,32 +27,6 @@ $('.search-form form').submit(function(){
 // tab menu
 $this->renderPartial('_menu',array('action'=>'search_screen'));
 ?>
-<?php if (!$iActiveInstance) :?>
-<div class="wide form">
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'action'=>Yii::app()->createUrl('/employees/admin'),
-	'method'=>'post',
-)); ?>
-<?php
-	$oUser = Users::model()->findAllByPk(Yii::app()->user->id);
-	$iClientId = $oUser[0]->client_id;
-?>
-	<div class="row">
-		<?php echo Chtml::label('Select instance:', 'Search_instances_id'); ?>
-		<?php echo CHtml::dropDownList('Search[instances_id]',
-				isset($aPostedData['Search']['instances_id']) ? $aPostedData['Search']['instances_id'] : '',
-				CHtml::listData(Instances::model()->findAll('client_id = :cID', array(':cID' => $iClientId)), 'id', 'name'),
-				array('class' => 'search_form')
-			);
-		?>
-		<?php echo CHtml::submitButton('Go to search'); ?>
-		<p class="hint">Hint: Select the profile collection you intend to search in.</p>
-
-	</div>
-
-<?php $this->endWidget(); ?>
-</div>
-<?php endif;?>
 
 <?php
 // search form displayed after a instance is seleted

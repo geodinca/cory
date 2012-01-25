@@ -1,3 +1,8 @@
+<?php
+//load tooltip js
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.tools.min.js');
+?>
+
 <div class="wide form" id="serch-screen-form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -181,17 +186,29 @@ function resetSearch(){
 }
 
 $(function(){
-	$("a[title]").tooltip();
-			
+
 	// hightlight autocomplete search
 	$.ui.autocomplete.prototype._renderItem = function( ul, item){
 		var term = this.term.split(" ").join("|");
 		var re = new RegExp("(" + term + ")", "gi") ;
-		var t = item.label.replace(re,"<b>$1</b>");
+		var t = item.label.replace(re,"<span class=\"ui-state-highlight\">$1</span>");
 		return $( "<li></li>" )
 			.data( "item.autocomplete", item )
-			.append( '<a title="' + item.title + '">' + t + '</a>' )
+			.append( '<a class=\"ttip\" title="' + item.title + '">' + t + '</a>' )
 			.appendTo( ul );
 	};
+});
+
+$(document).ready(function(){
+	$(".ttip").live("mouseover", function(){
+		$(this).tooltip({
+			position:"center left",
+			// tweak the position
+			offset: [10, -1],
+			// use the "slide" effect
+			//effect: 'slide'
+		// add dynamic plugin with optional configuration for bottom edge
+		})
+	});
 });
 </script>

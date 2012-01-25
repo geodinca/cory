@@ -44,12 +44,25 @@ class SiteController extends Controller
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login()) {
-				//$this->redirect(Yii::app()->user->returnUrl);
-				$this->redirect('employees/admin');
+
 			}
 		}
+
+		if (!Yii::app()->user->isGuest) {
+			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+			$aPostedData = $aSession['data'];
+			if(isset($_GET['id'])) {
+				//add instance to session
+				$aSession['current_instance_id'] = $_GET['id'];
+				$aSession['data']['Search']['instances_id'] = $_GET['id'];
+				Yii::app()->session->add('search_criteria', serialize($aSession));
+
+				$this->redirect('/employees/admin');
+			}
+		}
+
 		// display the login form
-		$this->render('index',array('model'=>$model));
+		$this->render('index',array('model'=>$model, 'aPostedData'=>$aPostedData));
 	}
 
 	/**
