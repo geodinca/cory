@@ -436,7 +436,7 @@ class EmployeesController extends Controller
 
 		if(empty($dataProvider)){
 			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
-			if(!empty($aSession)){
+			if(!empty($aSession) && isset($aSession['criteria'])){
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria' => $aSession['criteria'],
 					'pagination'=>array('pageSize'=>50),
