@@ -299,7 +299,22 @@ class EmployeesController extends Controller
 			}
 		}
 
+		//show selected button action
+		if (isset($_GET['showSelected']) && !empty($aSession['employees'])) {
+			//$oCriteria = $aSession['criteria'];
+
+			$oCriteria1 = new CDbCriteria;
+			$oCriteria1->addInCondition('t.id',$aSession['employees']);
+			//$oCriteria->mergeWith($oCriteria1);
+
+			$dataProvider = new CActiveDataProvider($model, array(
+				'criteria'=>$oCriteria1,
+				'pagination'=>array('pageSize'=>50),
+			));
+		}
+
 		if(isset($_GET['Employees'])){
+
 			if($aSession){
 				$oCriteria = $aSession['criteria'];
 

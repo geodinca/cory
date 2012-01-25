@@ -10,41 +10,17 @@ $this->renderPartial('_menu',array('action'=>'search_result'));
 
 <div class="profile-actions">
 <?php
-//echo CHtml::button('Show only selected',array(
-//	'class'=>'show-selected',
-//	'onclick' => '$.updateGridView("employees-grid","chk_grid")'
-//));
-//
-//Yii::app()->clientScript->registerScript('search', "
-//$.updateGridView = function(gridID, name) {
-//	var postData = \"{ids:$.fn.yiiGridView.getChecked('employees-grid','chk_grid')}\";
-//	$.fn.yiiGridView.update(gridID, {
-//		type:'POST',
-//		data:JSON.stringify(postData),
-//		url:'showSelected',
-//		success:function(data) {
-//			console.log('aaa '+data);
-//			$.fn.yiiGridView.update('employees-grid');
-//			//afterDelete(th,true,data);
-//		},
-//		error:function(XHR) {
-//			//return afterDelete(th,false,XHR);
-//		}
-//	});
-//}
-//", CClientScript::POS_READY);
-
-//	echo CHtml::ajaxLink("Show Selected",
-//			$this->createUrl('showSelected'),
-//			array(
-//				"type" => "post",
-//				"data" => "js:{ids:$.fn.yiiGridView.getChecked('employees-grid','chk_grid')}",
-//				'success' => "function( data )
-//					{
-//						$.fn.yiiGridView.update('employees-grid',{data:});
-//					}"
-//			)
-//		);
+	if(!isset($_GET['showSelected'])) {
+		echo CHtml::link(
+			"Show Selected",
+			Yii::app()->createUrl('/employees/list',array('showSelected'=>1))
+		);
+	} else {
+		echo CHtml::link(
+			"Show All",
+			Yii::app()->createUrl('/employees/list')
+		);
+	}
 	?>
 </div>
 
