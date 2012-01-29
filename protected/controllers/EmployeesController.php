@@ -366,20 +366,20 @@ class EmployeesController extends Controller
 				}
 
 				if($_POST['Search']['present_or_past_employer']){
+					$oCriteria1 = new CDbCriteria;
 					$aCond = explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -2));
-					if(count($aCond) > 1){
-						$oCriteria->addInCondition('t.profile', $aCond);
-					} else {
-						$oCriteria->addSearchCondition('t.profile', $aCond[0], true);
+					foreach($aCond as $sWord){
+						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
 					}
+					$oCriteria->mergeWith($oCriteria1);
 				}
 				if($_POST['Search']['contact_info']){
-					$aCond = explode(',', trim($_POST['Search']['contact_info']));
-					if(count($aCond) > 1){
-						$oCriteria->addInCondition('t.contact_info', $aCond, 'AND');
-					} else {
-						$oCriteria->addSearchCondition('t.contact_info', $aCond[0], true, 'AND');
+					$oCriteria1 = new CDbCriteria;
+					$aCond = explode(' ', trim($_POST['Search']['contact_info']));
+					foreach($aCond as $sWord){
+						$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
 					}
+					$oCriteria->mergeWith($oCriteria1);
 				}
 				if($_POST['Search']['country_state']){
 					$aCond = explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -2));
@@ -404,16 +404,18 @@ class EmployeesController extends Controller
 				}
 
 				if($_POST['Search']['all_word']){
-					$oCriteria1 = new CDbCriteria;
+					$oTmpCriteria = new CDbCriteria;
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['all_word']));
 					foreach($aWordsToBeSearched as $sWord){
+						$oCriteria1 = new CDbCriteria;
 						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.name', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.title', $sWord, true, 'OR');
+						$oTmpCriteria->mergeWith($oCriteria1);
 					}
-					$oCriteria->mergeWith($oCriteria1);
+					$oCriteria->mergeWith($oTmpCriteria);
 				}
 
 				if($_POST['Search']['none_word']){
@@ -428,9 +430,9 @@ class EmployeesController extends Controller
 					}
 					$oCriteria->mergeWith($oCriteria1);
 				}
-
-//				echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
 			}
+			
+//			echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
 
 			// instance condition
 			if(Yii::app()->user->credentials['type'] != 'admin'){
