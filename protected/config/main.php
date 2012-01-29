@@ -76,12 +76,16 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
+//				array (
+//				 	'class'=>'CProfileLogRoute',
+//				 	'report' => 'summary',
+//				 	'levels'=>'error,warning,trace,info'
+//				 ),
 				// uncomment the following to show log messages on web pages
-				/*
 				array(
 					'class'=>'CWebLogRoute',
+//					'levels' => 'error, warning'
 				),
-				*/
 			),
 		),
 	),
