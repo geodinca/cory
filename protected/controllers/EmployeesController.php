@@ -418,13 +418,13 @@ class EmployeesController extends Controller
 
 				if($_POST['Search']['none_word']){
 					$oCriteria1 = new CDbCriteria;
-					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
+					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['none_word']));
 					foreach($aWordsToBeSearched as $sWord){
-						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.name', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.title', $sWord, true, 'OR');
+						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'AND', 'NOT LIKE');
+						$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'AND', 'NOT LIKE');
+						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'AND', 'NOT LIKE');
+						$oCriteria1->addSearchCondition('t.name', $sWord, true, 'AND', 'NOT LIKE');
+						$oCriteria1->addSearchCondition('t.title', $sWord, true, 'AND', 'NOT LIKE');
 					}
 					$oCriteria->mergeWith($oCriteria1);
 				}
