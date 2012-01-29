@@ -57,7 +57,7 @@ class SiteController extends Controller
 				$aSession['data']['Search']['instances_id'] = $_GET['id'];
 				Yii::app()->session->add('search_criteria', serialize($aSession));
 
-				$this->redirect('/employees/admin');
+				$this->redirect(array('/employees/admin'));
 			}
 		}
 
