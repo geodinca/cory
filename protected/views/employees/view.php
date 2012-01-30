@@ -61,10 +61,10 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 						'#header',
 						'#top-menu',
 					),
-					'publishCss' => true,       //publish the CSS for the whole page?
+					'publishCss' => false,       //publish the CSS for the whole page?
 					'visible' => true,  //should this be visible to the current user?
 					'alt' => 'print',       //text which will appear if image can't be loaded
-					'debug' => false,            //enable the debugger to see what you will get
+					'debug' => true,            //enable the debugger to see what you will get
 					'id' => 'prin-div'         //id of the print link
 				));
 			?>
