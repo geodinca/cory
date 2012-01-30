@@ -22,7 +22,7 @@
 	<div class="profile-notes" >
 		<h3>Notes</h3>
 		<div class="edit_area" id="<?php echo $model->id ?>">
-			<?php echo $this->widget('application.widgets.getUserNotes', array("iEmployeeId" => $model->id, "iUserId" => Yii::app()->user->id), true); ?>
+			<?php echo $this->widget('application.widgets.GetUserNotes', array("iEmployeeId" => $model->id, "iUserId" => Yii::app()->user->id), true); ?>
 		</div>
 	</div>
 </div>
