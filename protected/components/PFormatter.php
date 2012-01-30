@@ -124,7 +124,10 @@ class PFormatter extends CFormatter
 	{
 		//$words = self::formatExplode($aWords);
 		foreach ($aWords as $word) {
-			$sProfile = preg_replace("/($word)/i","<span class=\"search-word\">$1</span>",$sProfile);
+			/*** quote the text for regex ***/
+			$word = preg_quote($word);
+			/*** highlight the words ***/
+			$sProfile = preg_replace("/\b($word)\b/i","<span class=\"search-word\">$1</span>",$sProfile);
 		}
 		return $sProfile;
 	}

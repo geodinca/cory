@@ -24,7 +24,7 @@ return array(
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'password',
-		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
+			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1','86.121.72.117'),
 		),
 	),
@@ -38,7 +38,7 @@ return array(
 		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',
-        	'showScriptName'=>false,
+			'showScriptName'=>false,
 			'rules'=>array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
@@ -47,11 +47,11 @@ return array(
 		),
 		'cache'=>array(
 //            'class'=>'system.caching.CMemCache',
-            'class'=>'system.caching.CDummyCache',
-        ),
-        'format'=>array(
-            'class'=>'application.components.PFormatter',
-        ),
+			'class'=>'system.caching.CDummyCache',
+		),
+		'format'=>array(
+			'class'=>'application.components.PFormatter',
+		),
 		/*
 		'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
@@ -67,8 +67,8 @@ return array(
 		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
-            'errorAction'=>'site/error',
-        ),
+//            'errorAction'=>'site/error',
+		),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
@@ -82,10 +82,12 @@ return array(
 //				 	'levels'=>'error,warning,trace,info'
 //				 ),
 				// uncomment the following to show log messages on web pages
+				/*
 				array(
 					'class'=>'CWebLogRoute',
 //					'levels' => 'error, warning'
 				),
+				*/
 			),
 		),
 	),
@@ -94,6 +96,6 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'geo@magnify.ro',
 	),
 );
