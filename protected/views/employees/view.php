@@ -47,7 +47,27 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 			)); ?>
 		</span>
 		<span style="float: right">
-			<?php //echo CHtml::button('Print'); ?>
+			<?php
+				$this->widget('ext.mPrint.mPrint', array(
+					'title' => 'Profile',        //the title of the document. Defaults to the HTML title
+					'tooltip' => 'Print',        //tooltip message of the print icon. Defaults to 'print'
+					'text' => 'Print',           //text which will appear beside the print icon. Defaults to NULL
+					'element' => '#page',        //the element to be printed.
+					'exceptions' => array(       //the element/s which will be ignored
+						'.summary',
+						'.search-form',
+						'.tabmenu',
+						'.profile-actions',
+						'#header',
+						'#top-menu',
+					),
+					'publishCss' => true,       //publish the CSS for the whole page?
+					'visible' => true,  //should this be visible to the current user?
+					'alt' => 'print',       //text which will appear if image can't be loaded
+					'debug' => false,            //enable the debugger to see what you will get
+					'id' => 'prin-div'         //id of the print link
+				));
+			?>
 		</span>
 		<span style="float: right">
 			<?php //read ckeck state
@@ -57,49 +77,51 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		</span>
 	</div>
 	<div class="clear"></div>
-	<div id="profile-area" class="profile-data" style="height: 340px; ">
-		<?php
-			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
-			$aTextReplace = Yii::app()->format->explode($aSession['data']['Search']);
-		?>
-		<?php if (!empty($model->name)): ?>
-		<h3>Name</h3>
-		<span><?php echo Yii::app()->format->search($model->name,$aTextReplace); ?></span>
-		<?php endif; ?>
+	<div id="printable">
+		<div id="profile-area" class="profile-data" style="height: 340px; ">
+			<?php
+				$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+				$aTextReplace = Yii::app()->format->explode($aSession['data']['Search']);
+			?>
+			<?php if (!empty($model->name)): ?>
+			<h3>Name</h3>
+			<span><?php echo Yii::app()->format->search($model->name,$aTextReplace); ?></span>
+			<?php endif; ?>
 
-		<?php if (!empty($model->geographical_area)): ?>
-		<h3>Geographical Area</h3>
-		<span><?php echo Yii::app()->format->html(nl2br(Yii::app()->format->search($model->geographical_area,$aTextReplace))); ?></span>
-		<?php endif; ?>
+			<?php if (!empty($model->geographical_area)): ?>
+			<h3>Geographical Area</h3>
+			<span><?php echo Yii::app()->format->html(nl2br(Yii::app()->format->search($model->geographical_area,$aTextReplace))); ?></span>
+			<?php endif; ?>
 
-		<?php if (!empty($model->title)): ?>
-		<h3>Curent title</h3>
-		<span><?php echo Yii::app()->format->search($model->title,$aTextReplace); ?></span>
-		<?php endif; ?>
+			<?php if (!empty($model->title)): ?>
+			<h3>Curent title</h3>
+			<span><?php echo Yii::app()->format->search($model->title,$aTextReplace); ?></span>
+			<?php endif; ?>
 
-		<?php if (!empty($model->present_employer->name)): ?>
-		<h3>Present Employer</h3>
-		<?php $this->renderPartial('../companies/tooltip',array(
-			'model' => $model->present_employer,
-			'aTextReplace' => $aTextReplace,
-		));?>
-		<?php endif; ?>
+			<?php if (!empty($model->present_employer->name)): ?>
+			<h3>Present Employer</h3>
+			<?php $this->renderPartial('../companies/tooltip',array(
+				'model' => $model->present_employer,
+				'aTextReplace' => $aTextReplace,
+			));?>
+			<?php endif; ?>
 
-		<?php if (!empty($model->contact_info)): ?>
-		<h3>Company info</h3>
-		<span><?php echo nl2br(Yii::app()->format->search($model->contact_info,$aTextReplace)); ?></span>
-		<?php endif; ?>
+			<?php if (!empty($model->contact_info)): ?>
+			<h3>Company info</h3>
+			<span><?php echo nl2br(Yii::app()->format->search($model->contact_info,$aTextReplace)); ?></span>
+			<?php endif; ?>
 
-		<?php if (!empty($model->profile)): ?>
-		<h3>Profile/Biography/Past employers</h3>
-		<span><?php echo nl2br(Yii::app()->format->search($model->profile,$aTextReplace)); ?></span>
-		<?php endif; ?>
-	</div>
-	<div class="profile-notes" >
-		<h3>Notes</h3>
-		<div class="profile-notes-scroll" id="notes-area" style="height: 80px;">
-			<div class="edit_area" id="<?php echo $model->id ?>">
-				<?php echo nl2br($this->widget('application.widgets.GetUserNotes', array("iEmployeeId" => $model->id, "iUserId" => Yii::app()->user->id), true)); ?>
+			<?php if (!empty($model->profile)): ?>
+			<h3>Profile/Biography/Past employers</h3>
+			<span><?php echo nl2br(Yii::app()->format->search($model->profile,$aTextReplace)); ?></span>
+			<?php endif; ?>
+		</div>
+		<div class="profile-notes" >
+			<h3>Notes</h3>
+			<div class="profile-notes-scroll" id="notes-area" style="height: 80px;">
+				<div class="edit_area" id="<?php echo $model->id ?>">
+					<?php echo nl2br($this->widget('application.widgets.GetUserNotes', array("iEmployeeId" => $model->id, "iUserId" => Yii::app()->user->id), true)); ?>
+				</div>
 			</div>
 		</div>
 	</div>
