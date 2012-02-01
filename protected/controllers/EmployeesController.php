@@ -346,7 +346,7 @@ class EmployeesController extends Controller
 
 		if(isset($_POST['Search'])) {
 			$oCriteria = new CDbCriteria;
-			$aSearchFields = array('geographical_area', 'contact_info', 'profile', 'name', 'title');
+			$aSearchFields = array('geographical_area', 'contact_info', 'profile', 'name', 'title', 'notes.note');
 			$aPostedData = $_POST;
 
 			if($_POST['Search']['boolean_search']){
@@ -357,6 +357,7 @@ class EmployeesController extends Controller
 				} else {
 					$sConditionalString = "'".$sConditionalString."'";
 				}
+				$oCriteria->with = array('notes');
 				$oCriteria->condition = 'MATCH ('.implode(',', $aSearchFields).') AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
 			} else {
 
@@ -390,8 +391,22 @@ class EmployeesController extends Controller
 					}
 				}
 
+				if($_POST['Search']['exact_word']){
+					$oCriteria1 = new CDbCriteria;
+					$oCriteria1->with = array('notes');
+					$sWord = trim($_POST['Search']['exact_word']);
+					$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.name', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('t.title', $sWord, true, 'OR');
+					$oCriteria1->addSearchCondition('notes.note', $sWord, true, 'OR');
+					$oCriteria->mergeWith($oCriteria1);
+				}
+
 				if($_POST['Search']['any_word']){
 					$oCriteria1 = new CDbCriteria;
+					$oCriteria1->with = array('notes');
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
 					foreach($aWordsToBeSearched as $sWord){
 						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
@@ -399,6 +414,7 @@ class EmployeesController extends Controller
 						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.name', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.title', $sWord, true, 'OR');
+						$oCriteria1->addSearchCondition('notes.note', $sWord, true, 'OR');
 					}
 					$oCriteria->mergeWith($oCriteria1);
 				}
@@ -408,11 +424,13 @@ class EmployeesController extends Controller
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['all_word']));
 					foreach($aWordsToBeSearched as $sWord){
 						$oCriteria1 = new CDbCriteria;
+						$oCriteria1->with = array('notes');
 						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.name', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.title', $sWord, true, 'OR');
+						$oCriteria1->addSearchCondition('notes.note', $sWord, true, 'OR');
 						$oTmpCriteria->mergeWith($oCriteria1);
 					}
 					$oCriteria->mergeWith($oTmpCriteria);
@@ -420,6 +438,7 @@ class EmployeesController extends Controller
 
 				if($_POST['Search']['none_word']){
 					$oCriteria1 = new CDbCriteria;
+					$oCriteria1->with = array('notes');
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['none_word']));
 					foreach($aWordsToBeSearched as $sWord){
 						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'AND', 'NOT LIKE');
@@ -427,11 +446,12 @@ class EmployeesController extends Controller
 						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'AND', 'NOT LIKE');
 						$oCriteria1->addSearchCondition('t.name', $sWord, true, 'AND', 'NOT LIKE');
 						$oCriteria1->addSearchCondition('t.title', $sWord, true, 'AND', 'NOT LIKE');
+						$oCriteria1->addSearchCondition('notes.note', $sWord, true, 'AND', 'NOT LIKE');
 					}
 					$oCriteria->mergeWith($oCriteria1);
 				}
 			}
-			
+
 //			echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
 
 			// instance condition

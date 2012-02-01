@@ -131,6 +131,19 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.too
 	</div>
 
 	<div class="row">
+		<?php echo Chtml::label('EXACT wording or phrase:', 'exact_word'); ?>
+		<?php echo CHtml::textField('Search[exact_word]', isset($aPostedData['Search']['exact_word']) ? $aPostedData['Search']['exact_word'] : '', array(
+				'size'=>50,
+				'maxlength'=>256,
+				'class' => 'search_form',
+				));
+		?>
+		<p class="hint">
+			<?php echo $aHints['exact_word']?>.
+		</p>
+	</div>
+
+	<div class="row">
 		<?php echo Chtml::label('ANY of this words:', 'any_word'); ?>
 		<?php echo CHtml::textField('Search[any_word]', isset($aPostedData['Search']['any_word']) ? $aPostedData['Search']['any_word'] : '', array(
 				'size'=>50,
