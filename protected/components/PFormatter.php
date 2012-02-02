@@ -142,7 +142,7 @@ class PFormatter extends CFormatter
 		$aResult = array();
 
 		if (!empty($aText['boolean_search'])) {
-			$aText['boolean_search'] = preg_replace(array('/AND/', '/OR/', '/NOT/', '/ANDNOT/', '/"/'),'',$aText['boolean_search']);
+			$aText['boolean_search'] = preg_replace(array('/AND/', '/OR/', '/NOT/', '/ANDNOT/', '/"/', '/\(/','/\)/'),'',$aText['boolean_search']);
 			$aText['boolean_search'] = preg_replace('/\s\s+/', ' ', $aText['boolean_search']);
 			$aText['boolean_search'] = explode(' ', trim($aText['boolean_search']));
 			$aResult = array_merge($aResult,$aText['boolean_search']);

@@ -5,10 +5,12 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.too
 
 <div class="wide form" id="serch-screen-form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php
+	$form=$this->beginWidget('CActiveForm', array(
 	'action'=>Yii::app()->createUrl('/employees/list'),
 	'method'=>'post',
-)); ?>
+	));
+?>
 	<?php
 		echo CHtml::hiddenField(
 			'Search[instances_id]',
