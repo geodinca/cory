@@ -77,6 +77,17 @@
 	</div>
 
 	<div class="row">
+		<?php echo Chtml::label('EXACT wording or phrase Hint:', 'exact_word'); ?>
+		<?php echo CHtml::textField('Hint[exact_word]',
+				isset($aPostedData['exact_word']) ? $aPostedData['exact_word'] : '',
+				array(
+					'size'=>50,
+					'maxlength'=>256,
+					//'class' => 'search_form',
+				)); ?>
+	</div>
+
+	<div class="row">
 		<?php echo Chtml::label('ANY of this words Hint:', 'any_word'); ?>
 		<?php echo CHtml::textField('Hint[any_word]',
 				isset($aPostedData['any_word']) ? $aPostedData['any_word'] : '',

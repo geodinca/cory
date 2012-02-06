@@ -168,6 +168,11 @@ class PFormatter extends CFormatter
 			$aResult = array_merge($aResult,$aText['country_state']);
 		}
 
+		if (!empty($aText['exact_word'])) {
+			$aText['any_word'] = explode(' ', trim($aText['exact_word']));
+			$aResult = array_merge($aResult,$aText['exact_word']);
+		}
+
 		if (!empty($aText['any_word'])) {
 			$aText['any_word'] = explode(' ', trim($aText['any_word']));
 			$aResult = array_merge($aResult,$aText['any_word']);
