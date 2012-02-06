@@ -360,7 +360,14 @@ class EmployeesController extends Controller
 
 		if(isset($_POST['Search'])) {
 			$oCriteria = new CDbCriteria;
-			$aSearchFields = array('geographical_area', 'contact_info', 'profile', 'name', 'title', 'notes.note');
+			$aSearchFields = array(
+				't.geographical_area',
+				't.contact_info',
+				't.profile',
+				't.name',
+				't.title',
+				'present_employer.name',
+				'notes.note');
 			$aPostedData = $_POST;
 
 			if($_POST['Search']['boolean_search']){
