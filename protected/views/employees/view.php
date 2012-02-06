@@ -48,24 +48,8 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		</span>
 		<span style="float: right">
 			<?php
-				$this->widget('ext.mPrint.mPrint', array(
-					'title' => 'Profile',        //the title of the document. Defaults to the HTML title
-					'tooltip' => 'Print',        //tooltip message of the print icon. Defaults to 'print'
-					'text' => 'Print',           //text which will appear beside the print icon. Defaults to NULL
-					'element' => '#page',        //the element to be printed.
-					'exceptions' => array(       //the element/s which will be ignored
-						'.summary',
-						'.search-form',
-						'.tabmenu',
-						'.profile-actions',
-						'#header',
-						'#top-menu',
-					),
-					'publishCss' => false,       //publish the CSS for the whole page?
-					'visible' => true,  //should this be visible to the current user?
-					'alt' => 'print',       //text which will appear if image can't be loaded
-					'debug' => true,            //enable the debugger to see what you will get
-					'id' => 'prin-div'         //id of the print link
+				echo CHtml::button('Print', array(
+					'id' => 'printBtn',
 				));
 			?>
 		</span>
@@ -77,7 +61,7 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 		</span>
 	</div>
 	<div class="clear"></div>
-	<div id="printable">
+
 		<div id="profile-area" class="profile-data" style="height: 340px; ">
 			<?php
 				$aSession = unserialize(Yii::app()->session->get('search_criteria'));
@@ -124,7 +108,7 @@ $this->renderPartial('_menu',array('action'=>'selected_profile'));
 				</div>
 			</div>
 		</div>
-	</div>
+
 </div>
 
 <div id="pdf_content" class="ui-widget">
@@ -184,6 +168,12 @@ $(document).ready(function(){
 				bounce: true
 			}
 		});
+	});
+
+	$('#printBtn').bind('click',function() {
+		var url = '<?php echo Yii::app()->createUrl('/employees/print', array('id' => $model->id)) ?>';
+		var thePopup = window.open( url, "Profile Print Window", "menubar=0,location=0,height=700,width=700" );
+		//$('#popup-content').clone().appendTo( thePopup.document.body );
 	});
 });
 //-->

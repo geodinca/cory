@@ -35,6 +35,7 @@ class EmployeesController extends Controller
 					'admin',
 					'list',
 					'view',
+					'print',
 					'next',
 					'prev',
 					'getTooltip',
@@ -81,6 +82,18 @@ class EmployeesController extends Controller
 		$this->render('view',array(
 			'model' => $model,
 			'isMarked' => $isMarked,
+		));
+	}
+
+	/**
+	 * This action ahow a profile in a printable format without toolbar and js
+	 * @param int $id
+	 */
+	public function actionPrint($id)
+	{
+		$model = $this->loadModel($id);
+		$this->render('print',array(
+			'model' => $model,
 		));
 	}
 
