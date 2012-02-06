@@ -371,7 +371,7 @@ class EmployeesController extends Controller
 				} else {
 					$sConditionalString = "'".$sConditionalString."'";
 				}
-				$oCriteria->with = array('notes');
+				$oCriteria->with = array('notes','present_employer');
 				$oCriteria->condition = 'MATCH ('.implode(',', $aSearchFields).') AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
 			} else {
 
@@ -379,7 +379,7 @@ class EmployeesController extends Controller
 					$oCriteria->with = array('present_employer');
 					$oCriteria->addInCondition('present_employer.name', explode(':: ', substr(trim($_POST['Search']['present_employer']), 0, -2)));
 				}
-				$oCriteria->with = array('notes');
+				$oCriteria->with = array('notes','present_employer');
 				if($_POST['Search']['present_or_past_employer']){
 					$oCriteria1 = new CDbCriteria;
 					$aCond = explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -2));
