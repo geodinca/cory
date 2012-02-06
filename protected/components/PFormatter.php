@@ -169,7 +169,7 @@ class PFormatter extends CFormatter
 		}
 
 		if (!empty($aText['exact_word'])) {
-			$aText['any_word'] = explode(' ', trim($aText['exact_word']));
+			$aText['exact_word'] = explode(' ', trim($aText['exact_word']));
 			$aResult = array_merge($aResult,$aText['exact_word']);
 		}
 
