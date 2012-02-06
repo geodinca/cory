@@ -44,6 +44,7 @@ class EmployeesController extends Controller
 					'selection',
 					'reset',
 					'getCountryState',
+					'update'
 				),
 				'users'=>array('@'),
 			),

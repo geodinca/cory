@@ -117,13 +117,13 @@
 		<?php echo $form->error($model,'date_update'); ?>
 	</div>
 
-	<div class="row">
+	<!--<div class="row">
 		<?php echo $form->labelEx($model,'misc_info'); ?>
 		<?php echo $form->textArea($model,'misc_info',array('rows'=>6, 'cols'=>50)); ?>
 		<?php echo $form->error($model,'misc_info'); ?>
 	</div>
 
-	<div class="row buttons">
+	--><div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
 
