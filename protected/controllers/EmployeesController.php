@@ -378,7 +378,7 @@ class EmployeesController extends Controller
 					$oCriteria->with = array('present_employer');
 					$oCriteria->addInCondition('present_employer.name', explode(':: ', substr(trim($_POST['Search']['present_employer']), 0, -2)));
 				}
-
+				$oCriteria->with = array('notes');
 				if($_POST['Search']['present_or_past_employer']){
 					$oCriteria1 = new CDbCriteria;
 					$aCond = explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -2));
@@ -406,7 +406,7 @@ class EmployeesController extends Controller
 
 				if($_POST['Search']['exact_word']){
 					$oCriteria1 = new CDbCriteria;
-					$oCriteria1->with = array('notes');
+					//$oCriteria1->with = array('notes');
 					$sWord = trim($_POST['Search']['exact_word']);
 					$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
 					$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
@@ -419,7 +419,7 @@ class EmployeesController extends Controller
 
 				if($_POST['Search']['any_word']){
 					$oCriteria1 = new CDbCriteria;
-					$oCriteria1->with = array('notes');
+					//$oCriteria1->with = array('notes');
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
 					foreach($aWordsToBeSearched as $sWord){
 						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
@@ -437,7 +437,7 @@ class EmployeesController extends Controller
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['all_word']));
 					foreach($aWordsToBeSearched as $sWord){
 						$oCriteria1 = new CDbCriteria;
-						$oCriteria1->with = array('notes');
+						//$oCriteria1->with = array('notes');
 						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
 						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
@@ -451,7 +451,7 @@ class EmployeesController extends Controller
 
 				if($_POST['Search']['none_word']){
 					$oCriteria1 = new CDbCriteria;
-					$oCriteria1->with = array('notes');
+					//$oCriteria1->with = array('notes');
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['none_word']));
 					foreach($aWordsToBeSearched as $sWord){
 						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'AND', 'NOT LIKE');

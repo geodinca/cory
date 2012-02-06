@@ -172,7 +172,7 @@ $(document).ready(function(){
 
 	$('#printBtn').bind('click',function() {
 		var url = '<?php echo Yii::app()->createUrl('/employees/print', array('id' => $model->id)) ?>';
-		var thePopup = window.open( url, "Profile Print Window", "menubar=0,location=0,height=700,width=700" );
+		var thePopup = window.open( url, "Profile Print Window", "menubar=0,location=0,height=700,width=700,scrollbars=1" );
 		//$('#popup-content').clone().appendTo( thePopup.document.body );
 	});
 });
