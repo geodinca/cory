@@ -449,7 +449,7 @@ class EmployeesController extends Controller
 				}
 			}
 
-			echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
+//			echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
 
 			// instance condition
 			if(Yii::app()->user->credentials['type'] != 'admin'){
