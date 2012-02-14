@@ -72,7 +72,7 @@ class Employees extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array(
-				'name, title, geographical_area, company_name',
+				'name, title, geographical_area, company_name, search',
 				'safe',
 				'on'=>'search'
 			),

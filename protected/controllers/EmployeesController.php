@@ -378,104 +378,78 @@ class EmployeesController extends Controller
 				} else {
 					$sConditionalString = "'".$sConditionalString."'";
 				}
-				$oCriteria->with = array('notes','present_employer');
-//				$oCriteria->condition = 'MATCH ('.implode(',', $aSearchFields).') AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
-				$oCriteria->condition = 'MATCH (t.seach) AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
+				$oCriteria->with = array('notes', 'present_employer');
+				$oCriteria->condition = 'MATCH (t.search) AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
 			} else {
 				$sConditionalString = '';
-
-				if($_POST['Search']['present_employer']){
-					$oCriteria->with = array('present_employer');
-					$oCriteria->addInCondition('present_employer.name', explode(':: ', substr(trim($_POST['Search']['present_employer']), 0, -2)));
-				}
-				$oCriteria->with = array('notes','present_employer');
+				$oCriteria->with = array('notes', 'present_employer');
+				
 				if($_POST['Search']['present_or_past_employer']){
-					$oCriteria1 = new CDbCriteria;
 					$aCond = explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -2));
+					
+					$sConditionalString .= '+(';
 					foreach($aCond as $sWord){
-						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
+						$sConditionalString .= '"'.$sWord.'" ';
 					}
-					$oCriteria->mergeWith($oCriteria1);
+					$sConditionalString .= ') ';
 				}
+				
 				if($_POST['Search']['contact_info']){
-					$oCriteria1 = new CDbCriteria;
 					$aCond = explode(' ', trim($_POST['Search']['contact_info']));
+					
+					$sConditionalString .= '+(';
 					foreach($aCond as $sWord){
-						$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
+						$sConditionalString .= '"'.$sWord.'" ';
 					}
-					$oCriteria->mergeWith($oCriteria1);
+					$sConditionalString .= ') ';
 				}
+				
 				if($_POST['Search']['country_state']){
 					$aCond = explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -2));
-					if(count($aCond) > 1){
-						$oCriteria->addInCondition('t.geographical_area', $aCond, 'AND');
-					} else {
-						$oCriteria->addSearchCondition('t.geographical_area', $aCond[0], true, 'AND');
+					
+					$sConditionalString .= '+(';
+					foreach($aCond as $sWord){
+						$sConditionalString .= '"'.$sWord.'" ';
 					}
+					$sConditionalString .= ') ';
 				}
 
 				if($_POST['Search']['exact_word']){
-					$oCriteria1 = new CDbCriteria;
-					//$oCriteria1->with = array('notes');
 					$sWord = trim($_POST['Search']['exact_word']);
-					$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
-					$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
-					$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
-					$oCriteria1->addSearchCondition('t.name', $sWord, true, 'OR');
-					$oCriteria1->addSearchCondition('t.title', $sWord, true, 'OR');
-					$oCriteria1->addSearchCondition('notes.note', $sWord, true, 'OR');
-					$oCriteria->mergeWith($oCriteria1);
+					$sConditionalString .= '+("' . $sWord . '") ';
 				}
 
 				if($_POST['Search']['any_word']){
-					$oCriteria1 = new CDbCriteria;
-					//$oCriteria1->with = array('notes');
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
+					
+					$sConditionalString .= '+(';
 					foreach($aWordsToBeSearched as $sWord){
-						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.name', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.title', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('notes.note', $sWord, true, 'OR');
+						$sConditionalString .= '"' . $sWord . '" ';
 					}
-					$oCriteria->mergeWith($oCriteria1);
+					$sConditionalString .= ') ';
 				}
 
 				if($_POST['Search']['all_word']){
-					$oTmpCriteria = new CDbCriteria;
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['all_word']));
 					foreach($aWordsToBeSearched as $sWord){
-						$oCriteria1 = new CDbCriteria;
-						//$oCriteria1->with = array('notes');
-						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.name', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('t.title', $sWord, true, 'OR');
-						$oCriteria1->addSearchCondition('notes.note', $sWord, true, 'OR');
-						$oTmpCriteria->mergeWith($oCriteria1);
+						$sConditionalString .= '+"' . $sWord . '" ';
 					}
-					$oCriteria->mergeWith($oTmpCriteria);
 				}
 
 				if($_POST['Search']['none_word']){
-					$oCriteria1 = new CDbCriteria;
-					//$oCriteria1->with = array('notes');
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['none_word']));
 					foreach($aWordsToBeSearched as $sWord){
-						$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'AND', 'NOT LIKE');
-						$oCriteria1->addSearchCondition('t.contact_info', $sWord, true, 'AND', 'NOT LIKE');
-						$oCriteria1->addSearchCondition('t.profile', $sWord, true, 'AND', 'NOT LIKE');
-						$oCriteria1->addSearchCondition('t.name', $sWord, true, 'AND', 'NOT LIKE');
-						$oCriteria1->addSearchCondition('t.title', $sWord, true, 'AND', 'NOT LIKE');
-						$oCriteria1->addSearchCondition('notes.note', $sWord, true, 'AND', 'NOT LIKE');
+						$sConditionalString .= '-"' . $sWord . '" ';
 					}
-					$oCriteria->mergeWith($oCriteria1);
+				}
+				$oCriteria->condition = 'MATCH (t.search) AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
+				
+				if($_POST['Search']['present_employer']){
+					$oCriteria->addInCondition('present_employer.name', explode(':: ', substr(trim($_POST['Search']['present_employer']), 0, -2)));
 				}
 			}
 
-//			echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
+			echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
 
 			// instance condition
 			if(Yii::app()->user->credentials['type'] != 'admin'){
