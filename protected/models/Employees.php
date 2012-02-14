@@ -68,7 +68,7 @@ class Employees extends CActiveRecord
 			array('importdata', 'file', 'types' => 'xls, xlsx', 'on' => 'import'),
 			array('companies_id, instances_id', 'numerical', 'integerOnly'=>true),
 			array('name, title, geographical_area, email, home_street, home_city, home_state_country, home_zip, home_phone, actual_location_street, actual_location_city, actual_location_state', 'length', 'max'=>255),
-			array('contact_info, profile, date_entered, date_update, misc_info', 'safe'),
+			array('contact_info, profile, date_entered, date_update, misc_info, search', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array(

@@ -77,7 +77,7 @@ class ImportsController extends Controller
 	            $objPHPExcel = $objReader->load(@$sFileToImport);
 	            $objWorksheet = $objPHPExcel->getActiveSheet();
 	            $highestRow = $objWorksheet->getHighestRow(); // e.g. 10
-	
+	            
 	            // register back to Yii autoload
 	            spl_autoload_register(array('YiiBase','autoload'));
 	            
@@ -159,7 +159,14 @@ class ImportsController extends Controller
 							'actual_location_state' => $objWorksheet->getCellByColumnAndRow(19, $row)->getValue(),
 							'profile' => $sProfile,
 							'date_entered' => date('Y-m-d H:i:s'),
-							'misc_info' => $objWorksheet->getCellByColumnAndRow(26, $row)->getValue()
+							'misc_info' => $objWorksheet->getCellByColumnAndRow(26, $row)->getValue(),
+							'search' => $sEmployeeName .' '.
+										$objWorksheet->getCellByColumnAndRow(1, $row)->getValue().' '.
+										$objWorksheet->getCellByColumnAndRow(3, $row)->getValue().' '.
+										$objWorksheet->getCellByColumnAndRow(4, $row)->getValue().' '.
+										$objWorksheet->getCellByColumnAndRow(26, $row)->getValue().' '.
+										$sCompanyName.' '.
+										$sProfile
 						);
 						if(!$oEmployeesModel->save()){
 			            	$iFailedEployees++;
