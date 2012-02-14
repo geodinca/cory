@@ -379,8 +379,10 @@ class EmployeesController extends Controller
 					$sConditionalString = "'".$sConditionalString."'";
 				}
 				$oCriteria->with = array('notes','present_employer');
-				$oCriteria->condition = 'MATCH ('.implode(',', $aSearchFields).') AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
+//				$oCriteria->condition = 'MATCH ('.implode(',', $aSearchFields).') AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
+				$oCriteria->condition = 'MATCH (t.seach) AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
 			} else {
+				$sConditionalString = '';
 
 				if($_POST['Search']['present_employer']){
 					$oCriteria->with = array('present_employer');
