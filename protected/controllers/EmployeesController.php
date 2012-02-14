@@ -424,7 +424,7 @@ class EmployeesController extends Controller
 					
 					$sConditionalString .= '+(';
 					foreach($aWordsToBeSearched as $sWord){
-						$sConditionalString .= '"' . $sWord . '" ';
+						$sConditionalString .= $sWord . ' ';
 					}
 					$sConditionalString .= ') ';
 				}
@@ -432,17 +432,17 @@ class EmployeesController extends Controller
 				if($_POST['Search']['all_word']){
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['all_word']));
 					foreach($aWordsToBeSearched as $sWord){
-						$sConditionalString .= '+"' . $sWord . '" ';
+						$sConditionalString .= '+' . $sWord . ' ';
 					}
 				}
 
 				if($_POST['Search']['none_word']){
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['none_word']));
 					foreach($aWordsToBeSearched as $sWord){
-						$sConditionalString .= '-"' . $sWord . '" ';
+						$sConditionalString .= '-' . $sWord . ' ';
 					}
 				}
-				$oCriteria->condition = 'MATCH (t.search) AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
+				$oCriteria->condition = 'MATCH (t.search) AGAINST (\''.$sConditionalString.'\' IN BOOLEAN MODE)';
 				
 				if($_POST['Search']['present_employer']){
 					$oCriteria->addInCondition('present_employer.name', explode(':: ', substr(trim($_POST['Search']['present_employer']), 0, -2)));
