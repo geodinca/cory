@@ -11,6 +11,12 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.too
 	'method'=>'post',
 	));
 ?>
+
+	<div class="row buttons-top">
+		<?php echo CHtml::submitButton('Search'); ?>
+		<?php echo CHtml::button('Reset', array('onclick' => 'resetSearch();'));?>
+	</div>
+
 	<?php
 		echo CHtml::hiddenField(
 			'Search[instances_id]',

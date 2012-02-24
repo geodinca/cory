@@ -69,7 +69,7 @@ div.form .hint
 {
 	margin: 0;
 	padding: 0;
-	color: #999;
+	color: #555;
 }
 
 div.form .note
@@ -159,6 +159,13 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 	clear: left;
 	padding-left: 110px;
 }
+div.wide.form .buttons-top {
+	clear: left;
+	float: right;
+	position: relative;
+	padding-right: 110px;
+	top: -55px;
+	}
 
 div.wide.form .search_form
 {
@@ -168,5 +175,6 @@ div.wide.form .search_form
 div.wide.form .hint
 {
 	padding-left: 310px;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
+	font-size: 0.9em;
 }

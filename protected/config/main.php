@@ -8,7 +8,7 @@
 
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Cory Coman Web Application',
+	'name'=>'Cory\'s Database',
 
 	// preloading 'log' component
 	'preload'=>array('log'),

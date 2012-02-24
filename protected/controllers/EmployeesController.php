@@ -373,40 +373,47 @@ class EmployeesController extends Controller
 			if($_POST['Search']['boolean_search']){
 				// prepare condition string
 				$sConditionalString = str_replace(array("'", 'OR ', 'AND ', 'ANDNOT ', 'NOT '), array('"', '', '+', '-', '-'), trim($_POST['Search']['boolean_search']));
+				$isNot = substr_count($sConditionalString,'-');
+				$iWords = str_word_count($sConditionalString);
+				//workaround to avoid only NOT conditions with returns emty results
+				if ($isNot == $iWords) {
+					$sConditionalString = 'a* '.$sConditionalString;
+				}
 				if(substr($sConditionalString, 0, 1) != '-'){
 					$sConditionalString = "'+".$sConditionalString."'";
 				} else {
 					$sConditionalString = "'".$sConditionalString."'";
 				}
+
 				$oCriteria->with = array('notes', 'present_employer');
 				$oCriteria->condition = 'MATCH (t.search) AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
 			} else {
 				$sConditionalString = '';
 				$oCriteria->with = array('notes', 'present_employer');
-				
+
 				if($_POST['Search']['present_or_past_employer']){
 					$aCond = explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -2));
-					
+
 					$sConditionalString .= '+(';
 					foreach($aCond as $sWord){
 						$sConditionalString .= '"'.$sWord.'" ';
 					}
 					$sConditionalString .= ') ';
 				}
-				
+
 				if($_POST['Search']['contact_info']){
 					$aCond = explode(' ', trim($_POST['Search']['contact_info']));
-					
+
 					$sConditionalString .= '+(';
 					foreach($aCond as $sWord){
 						$sConditionalString .= '"'.$sWord.'" ';
 					}
 					$sConditionalString .= ') ';
 				}
-				
+
 				if($_POST['Search']['country_state']){
 					$aCond = explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -2));
-					
+
 					$sConditionalString .= '+(';
 					foreach($aCond as $sWord){
 						$sConditionalString .= '"'.$sWord.'" ';
@@ -421,29 +428,42 @@ class EmployeesController extends Controller
 
 				if($_POST['Search']['any_word']){
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['any_word']));
-					
 					$sConditionalString .= '+(';
+					$aConditionalString = array();
 					foreach($aWordsToBeSearched as $sWord){
-						$sConditionalString .= $sWord . ' ';
+						$aConditionalString[]= $sWord;
 					}
+					$sConditionalString .= implode(' ', $aConditionalString);
 					$sConditionalString .= ') ';
 				}
 
 				if($_POST['Search']['all_word']){
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['all_word']));
+					$aConditionalString = array();
 					foreach($aWordsToBeSearched as $sWord){
-						$sConditionalString .= '+' . $sWord . ' ';
+						$aConditionalString[]= '+' . $sWord;
 					}
+					$sConditionalString .= implode(' ', $aConditionalString).' ';
 				}
 
 				if($_POST['Search']['none_word']){
 					$aWordsToBeSearched = explode(' ', trim($_POST['Search']['none_word']));
+					$aConditionalString = array();
 					foreach($aWordsToBeSearched as $sWord){
-						$sConditionalString .= '-' . $sWord . ' ';
+						$aConditionalString[] = '-' . $sWord;
 					}
+					$sConditionalString .= implode(' ', $aConditionalString);
 				}
+
+				$isNot = substr_count($sConditionalString,'-');
+				$iWords = str_word_count($sConditionalString);
+				//workaround to avoid only NOT conditions with returns emty results
+				if ($isNot == $iWords) {
+					$sConditionalString = 'a* '.$sConditionalString;
+				}
+
 				$oCriteria->condition = 'MATCH (t.search) AGAINST (\''.$sConditionalString.'\' IN BOOLEAN MODE)';
-				
+
 				if($_POST['Search']['present_employer']){
 					$oCriteria->addInCondition('present_employer.name', explode(':: ', substr(trim($_POST['Search']['present_employer']), 0, -2)));
 				}
