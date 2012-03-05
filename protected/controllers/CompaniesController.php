@@ -212,9 +212,7 @@ class CompaniesController extends Controller
 				$aSearchNames[] = $company->name;
 				$aSearchIds[] = $compani_id;
 			}
-//			var_dump($aSearchNames); die();
 			
-			//@TODO: make uniq value in array of companies
 			switch($type) {
 				case 'present':
 					if(!isset($aPostedData['Search']['present_employer'])){
