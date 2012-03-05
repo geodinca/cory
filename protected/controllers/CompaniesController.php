@@ -212,23 +212,35 @@ class CompaniesController extends Controller
 				$aSearchNames[] = $company->name;
 				$aSearchIds[] = $compani_id;
 			}
+//			var_dump($aSearchNames); die();
+			
 			//@TODO: make uniq value in array of companies
 			switch($type) {
 				case 'present':
-					$aPostedData['Search']['present_employer'] = $aPostedData['Search']['present_employer'].','.implode(',',$aSearchIds);
-					if (!empty($aPostedData['present_employer']))
-						$aPostedData['present_employer'] = $aPostedData['present_employer'].':: '.implode(':: ',$aSearchNames);
-					else
-						$aPostedData['present_employer'] = implode(':: ',$aSearchNames);
+					if(!isset($aPostedData['Search']['present_employer'])){
+						$aPostedData['Search']['present_employer'] = implode(':: ',$aSearchNames);
+					} else {
+						$aPresentData = explode(':: ', $aPostedData['Search']['present_employer']);
+						$aPresentData = array_merge($aPresentData, $aSearchNames);
+						$aPresentData = array_unique($aPresentData);
+						$aPostedData['Search']['present_employer'] = implode(':: ', $aPresentData);
+					}
 					break;
 				case 'past':
-					$aPostedData['Search']['present_or_past_employer'] = $aPostedData['Search']['present_or_past_employer'].implode(':: ',$aSearchNames);
+					if(!isset($aPostedData['Search']['present_or_past_employer'])){
+						$aPostedData['Search']['present_or_past_employer'] = implode(':: ',$aSearchNames);
+					} else {
+						$aPresentData = explode(':: ', $aPostedData['Search']['present_or_past_employer']);
+						$aPresentData = array_merge($aPresentData, $aSearchNames);
+						$aPresentData = array_unique($aPresentData);
+						$aPostedData['Search']['present_or_past_employer'] = implode(':: ', $aPresentData);
+					}
 					break;
 			}
-			Yii::app()
-				->session
-				->add('search_criteria',serialize(array('criteria' => $aSession['criteria'], 'data' => $aPostedData)));
-			$this->redirect(array('../employees/admin'));
+			
+			$aCriteria = isset($aSession['criteria']) ? $aSession['criteria'] : array();
+			Yii::app()->session->add('search_criteria',serialize(array('criteria' => $aCriteria, 'data' => $aPostedData)));
+			$this->redirect('/employees/admin');
 		} else {
 			$this->redirect(array('/'));
 		}
