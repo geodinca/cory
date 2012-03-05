@@ -1,7 +1,17 @@
 <?php
 $employee = $model->employee;
-$contact = Yii::app()->format->html(nl2br($employee[0]->contact_info));
-$products =  Yii::app()->format->html(nl2br($model->products));
+if(isset($employee[0]->contact_info)){
+	$contact = Yii::app()->format->html(nl2br($employee[0]->contact_info));
+} else {
+	$contact = null;
+}
+
+if(isset($model->products)){
+	$products =  Yii::app()->format->html(nl2br($model->products));
+} else {
+	$products = null;
+}
+
 $companyInfo = "<h3>Company name: $model->name</h3>";
 if (!empty($contact)) {
 	$companyInfo .="
