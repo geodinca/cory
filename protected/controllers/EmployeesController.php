@@ -315,11 +315,8 @@ class EmployeesController extends Controller
 
 		//show selected button action
 		if (isset($_GET['showSelected']) && !empty($aSession['employees'])) {
-			//$oCriteria = $aSession['criteria'];
-
 			$oCriteria1 = new CDbCriteria;
 			$oCriteria1->addInCondition('t.id',$aSession['employees']);
-			//$oCriteria->mergeWith($oCriteria1);
 
 			$dataProvider = new CActiveDataProvider($model, array(
 				'criteria'=>$oCriteria1,
@@ -345,7 +342,6 @@ class EmployeesController extends Controller
 					}
 				}
 				$oCriteria->mergeWith($oCriteria1);
-//				echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
 
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria'=>$oCriteria,
@@ -386,33 +382,31 @@ class EmployeesController extends Controller
 				}
 
 				$oCriteria->with = array('notes', 'present_employer');
-				$oCriteria->condition = 'MATCH (t.search) AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
+				$oCriteria->condition = 'MATCH (t.search, notes.note, present_employer.name) AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
 			} else {
 				$sConditionalString = '';
 				$oCriteria->with = array('notes', 'present_employer');
 
 				if($_POST['Search']['present_or_past_employer']){
-					$aCond = explode(':: ', substr(trim($_POST['Search']['present_or_past_employer']), 0, -2));
+					$aCond = explode('::', trim($_POST['Search']['present_or_past_employer']));
 
 					$sConditionalString .= '+(';
 					foreach($aCond as $sWord){
-						$sConditionalString .= '"'.$sWord.'" ';
+						if (!empty($sWord)) {
+							if (1 == str_word_count($sWord)) {
+								$sConditionalString .= trim($sWord).'* ';
+							} else {
+								$sConditionalString .= '"'. trim($sWord).'" ';
+							}
+
+						}
 					}
+					$sConditionalString = trim($sConditionalString);
 					$sConditionalString .= ') ';
 				}
 
 				if($_POST['Search']['contact_info']){
 					$aCond = explode(' ', trim($_POST['Search']['contact_info']));
-
-					$sConditionalString .= '+(';
-					foreach($aCond as $sWord){
-						$sConditionalString .= '"'.$sWord.'" ';
-					}
-					$sConditionalString .= ') ';
-				}
-
-				if($_POST['Search']['country_state']){
-					$aCond = explode(':: ', substr(trim($_POST['Search']['country_state']), 0, -2));
 
 					$sConditionalString .= '+(';
 					foreach($aCond as $sWord){
@@ -462,14 +456,39 @@ class EmployeesController extends Controller
 					$sConditionalString = 'a* '.$sConditionalString;
 				}
 
-				$oCriteria->condition = 'MATCH (t.search) AGAINST (\''.$sConditionalString.'\' IN BOOLEAN MODE)';
+				$oCriteria->condition = 'MATCH (t.search, notes.note, present_employer.name) AGAINST (\''.$sConditionalString.'\' IN BOOLEAN MODE)';
 
 				if($_POST['Search']['present_employer']){
-					$oCriteria->addInCondition('present_employer.name', explode(':: ', substr(trim($_POST['Search']['present_employer']), 0, -2)));
+					$oCriteria1 = new CDbCriteria;
+					$aCond = explode('::', trim($_POST['Search']['present_employer']));
+					foreach ($aCond as $key=>$sWord) {
+						if (!empty($sWord)) {
+							$sWord = trim($sWord);
+							$oCriteria1->addSearchCondition('present_employer.name', $sWord, true, 'OR');
+						}
+					}
+					$oCriteria->mergeWith($oCriteria1);
+				}
+
+				if($_POST['Search']['country_state']){
+					$oCriteria1 = new CDbCriteria;
+					$aCond = explode('::', trim($_POST['Search']['country_state']));
+					foreach ($aCond as $key=>$sWord) {
+						if (!empty($sWord)) {
+							$sWord = trim($sWord);
+							$oCriteria1->addSearchCondition('t.geographical_area', $sWord, true, 'OR');
+						}
+					}
+					$oCriteria->mergeWith($oCriteria1);
+//                  $sConditionalString .= '+(';
+//                  foreach($aCond as $sWord){
+//                      $sConditionalString .= '"'.$sWord.'" ';
+//                  }
+//                  $sConditionalString .= ') ';
 				}
 			}
 
-//			echo '<pre>'.print_r($oCriteria, true).'</pre>'; die();
+//			echo '<pre>'.print_r($oCriteria, true).'</pre>'; //die();
 
 			// instance condition
 			if(Yii::app()->user->credentials['type'] != 'admin'){
