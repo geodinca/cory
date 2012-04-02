@@ -301,9 +301,11 @@ class EmployeesController extends Controller
 		$this->selectedEmployees = isset($aSession['employees']) ? $aSession['employees'] : array();
 
 		if(Yii::app()->request->isAjaxRequest){
-			if($aSession){
+			if($aSession && isset($aSession['criteria'])){
+				$oCriteria = $aSession['criteria'];
+				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 				$dataProvider = new CActiveDataProvider($model, array(
-					'criteria'=>$aSession['criteria'],
+					'criteria'=>$oCriteria,
 					'pagination'=>array('pageSize'=>50),
 				));
 			} else {
@@ -316,7 +318,7 @@ class EmployeesController extends Controller
 		if (isset($_GET['showSelected']) && !empty($aSession['employees'])) {
 			$oCriteria1 = new CDbCriteria;
 			$oCriteria1->addInCondition('t.id',$aSession['employees']);
-
+			$oCriteria1->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 			$dataProvider = new CActiveDataProvider($model, array(
 				'criteria'=>$oCriteria1,
 				'pagination'=>array('pageSize'=>50),
@@ -324,10 +326,9 @@ class EmployeesController extends Controller
 		}
 
 		if(isset($_GET['Employees'])){
-
-			if($aSession){
+			if($aSession && isset($aSession['criteria'])){
 				$oCriteria = $aSession['criteria'];
-
+				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 				$oCriteria1 = new CDbCriteria;
 				$model->attributes=$_GET['Employees'];
 				foreach($model->attributes as $sAttribute => $sValue){
@@ -516,7 +517,6 @@ class EmployeesController extends Controller
 			if(!empty($aSession) && isset($aSession['criteria'])){
 				$oCriteria = $aSession['criteria'];
 				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
-				var_dump($oCriteria);
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria' => $oCriteria,
 					'pagination'=>array('pageSize'=>50),
@@ -524,6 +524,11 @@ class EmployeesController extends Controller
 			} else {
 				$model->instances_id = $aCurrentInstanceId[0];
 				$dataProvider = $model->search();
+//				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
+//				$dataProvider = new CActiveDataProvider($model, array(
+//					'criteria' => $oCriteria,
+//					'pagination'=>array('pageSize'=>50),
+//				));
 			}
 		}
 
@@ -541,7 +546,7 @@ class EmployeesController extends Controller
 		$aToolbar['currentIndex'] = 0;
 		$aToolbar['currentId'] = isset($aToolbar['employees'][0]) ? $aToolbar['employees'][0] : null;
 		Yii::app()->session->add('toolbar',serialize($aToolbar));
-//var_dump($dataProvider);
+
 		$this->render('list',array(
 			'model'=>$model,
 			'dataProvider' => $dataProvider
