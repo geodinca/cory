@@ -513,9 +513,9 @@ class EmployeesController extends Controller
 
 		if(empty($dataProvider)){
 			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
-			$oCriteria = $aSession['criteria'];
-			$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 			if(!empty($aSession) && isset($aSession['criteria'])){
+				$oCriteria = $aSession['criteria'];
+				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria' => $aSession['criteria'],
 					'pagination'=>array('pageSize'=>50),
