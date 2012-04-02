@@ -307,7 +307,7 @@ class EmployeesController extends Controller
 					'pagination'=>array('pageSize'=>50),
 				));
 			} else {
-				$model->instances_id = $aCurrentInstanceId;
+				$model->instances_id = $aCurrentInstanceId[0];
 				$dataProvider = $model->search();
 			}
 		}
@@ -348,7 +348,7 @@ class EmployeesController extends Controller
 				));
 			} else {
 				$model->attributes=$_GET['Employees'];
-				$model->instances_id = $aCurrentInstanceId;
+				$model->instances_id = $aCurrentInstanceId[0];
 				$dataProvider = $model->search();
 			}
 		}
