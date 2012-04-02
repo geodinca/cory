@@ -54,7 +54,7 @@ class SiteController extends Controller
 			$aPostedData = $aSession['data'];
 			if(isset($_GET['id'])) {
 				//add instance to session
-				$aSessionUser['current_appTitle'] = $aSession['current_instance_id'] = $_GET['id'];
+				$aSessionUser['current_instance_id'] = $aSession['current_instance_id'] = $_GET['id'];
 				$aSession['data']['Search']['instances_id'] = $_GET['id'];
 				$i = Instances::model()->findByPk($aSession['current_instance_id']);
 				$aSessionUser['current_appTitle'] = $i->name;

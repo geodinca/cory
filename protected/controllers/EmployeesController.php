@@ -296,7 +296,8 @@ class EmployeesController extends Controller
 		// get stored session data
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 		// set allowed instance
-		$aCurrentInstanceId = array($aSession['current_instance_id']);
+		$aSessionUser = unserialize(Yii::app()->session->get('app_setts'));
+		$aCurrentInstanceId = array($aSessionUser['current_instance_id']);
 		// get selected employees to use in cgridview
 		$this->selectedEmployees = isset($aSession['employees']) ? $aSession['employees'] : array();
 
