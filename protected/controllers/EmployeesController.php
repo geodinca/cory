@@ -541,7 +541,7 @@ class EmployeesController extends Controller
 		$aToolbar['currentIndex'] = 0;
 		$aToolbar['currentId'] = isset($aToolbar['employees'][0]) ? $aToolbar['employees'][0] : null;
 		Yii::app()->session->add('toolbar',serialize($aToolbar));
-var_dump($dataProvider);
+//var_dump($dataProvider);
 		$this->render('list',array(
 			'model'=>$model,
 			'dataProvider' => $dataProvider
