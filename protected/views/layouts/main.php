@@ -134,8 +134,9 @@
 			cory@innovatorscircle.com<br />
 			Please do not hesitate to write
 		</div>
-		<?php if(isset($this->dbTitle)):?>
-			<div id="application-title"><?php echo $this->dbTitle; ?></div>
+		<?php $aSeession = unserialize(Yii::app()->session->get('search_criteria'));?>
+		<?php if(isset($aSeession['current_appTitle']) && ($_SERVER['REDIRECT_URL'] != '/site/index')):?>
+			<div id="application-title"><?php echo $aSeession['current_appTitle'] ?></div>
 		<?php else: ?>
 			<div id="application-title"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 		<?php endif;?>

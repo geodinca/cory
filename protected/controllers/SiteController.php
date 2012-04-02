@@ -55,6 +55,8 @@ class SiteController extends Controller
 				//add instance to session
 				$aSession['current_instance_id'] = $_GET['id'];
 				$aSession['data']['Search']['instances_id'] = $_GET['id'];
+				$i = Instances::model()->findByPk($aSession['current_instance_id']);
+				$aSession['current_appTitle'] = $i->name;
 				Yii::app()->session->add('search_criteria', serialize($aSession));
 
 				$this->redirect(array('/employees/admin'));
