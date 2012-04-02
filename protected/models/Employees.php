@@ -135,7 +135,7 @@ class Employees extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		//$criteria->compare('companies_id',$this->companies_id);
+//		$criteria->compare('companies_id',$this->companies_id,true);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('geographical_area',$this->geographical_area,true);
