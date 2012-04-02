@@ -512,12 +512,13 @@ class EmployeesController extends Controller
 		}
 
 		if(empty($dataProvider)){
-			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+//			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 			if(!empty($aSession) && isset($aSession['criteria'])){
 				$oCriteria = $aSession['criteria'];
 				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
+				var_dump($oCriteria);
 				$dataProvider = new CActiveDataProvider($model, array(
-					'criteria' => $aSession['criteria'],
+					'criteria' => $oCriteria,
 					'pagination'=>array('pageSize'=>50),
 				));
 			} else {
@@ -540,7 +541,7 @@ class EmployeesController extends Controller
 		$aToolbar['currentIndex'] = 0;
 		$aToolbar['currentId'] = isset($aToolbar['employees'][0]) ? $aToolbar['employees'][0] : null;
 		Yii::app()->session->add('toolbar',serialize($aToolbar));
-
+var_dump($dataProvider);
 		$this->render('list',array(
 			'model'=>$model,
 			'dataProvider' => $dataProvider
