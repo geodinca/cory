@@ -134,7 +134,7 @@
 			cory@innovatorscircle.com<br />
 			Please do not hesitate to write
 		</div>
-		<?php $aSeession = unserialize(Yii::app()->session->get('search_criteria'));?>
+		<?php $aSeession = unserialize(Yii::app()->session->get('app_setts')); ?>
 		<?php if(isset($aSeession['current_appTitle']) && ($_SERVER['REDIRECT_URL'] != '/site/index')):?>
 			<div id="application-title"><?php echo $aSeession['current_appTitle'] ?></div>
 		<?php else: ?>

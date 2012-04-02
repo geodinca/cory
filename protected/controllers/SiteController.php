@@ -50,15 +50,16 @@ class SiteController extends Controller
 
 		if (!Yii::app()->user->isGuest) {
 			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+			$aSessionUser = array();
 			$aPostedData = $aSession['data'];
 			if(isset($_GET['id'])) {
 				//add instance to session
-				$aSession['current_instance_id'] = $_GET['id'];
+				$aSessionUser['current_appTitle'] = $aSession['current_instance_id'] = $_GET['id'];
 				$aSession['data']['Search']['instances_id'] = $_GET['id'];
 				$i = Instances::model()->findByPk($aSession['current_instance_id']);
-				$aSession['current_appTitle'] = $i->name;
+				$aSessionUser['current_appTitle'] = $i->name;
 				Yii::app()->session->add('search_criteria', serialize($aSession));
-
+				Yii::app()->session->add('app_setts', serialize($aSessionUser));
 				$this->redirect(array('/employees/admin'));
 			}
 		}
