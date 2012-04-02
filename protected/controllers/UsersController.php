@@ -186,7 +186,7 @@ class UsersController extends Controller
 			Yii::app()->end();
 		}
 	}
-	
+
 	/**
 	 * Get user instances by client
 	 * - client id sent by POST
@@ -195,7 +195,15 @@ class UsersController extends Controller
 	public function actionGetInstanceByClient(){
 		if(isset($_POST['Users'])){
 			$iClientId = (int)$_POST['Users']['client_id'];
-			$aInstances = CHtml::listData(Instances::model()->findAll(array('condition' => 'client_id = :clID', 'params' => array(':clID' => $iClientId), 'order' => 'name ASC')), 'id', 'name');
+			$aInstances = CHtml::listData(
+				Instances::model()->findAll(array(
+					'condition' => 'client_id = :clID',
+					'params' => array(':clID' => $iClientId),
+					'order' => 'name ASC'
+				)),
+				'id',
+				'name'
+			);
 			foreach($aInstances as $iSessionId => $sSessionName){
 				echo CHtml::tag('option', array('value'=>$iSessionId),CHtml::encode($sSessionName),true);
 			}

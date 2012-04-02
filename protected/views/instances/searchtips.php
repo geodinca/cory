@@ -1,7 +1,11 @@
+<?php
+if ($model->search_tips):
+	echo $model->search_tips;
+else:
+?>
+<div>
 <div id="static-page">
 	<h1>Search Tips</h1>
-
-<p>POTENTIAL CANDIDATES FOR GM (LEDs)</p>
 
 <p>*  When you open the database you will see the search screen <br />
 You can start using search key words or you could click Search and see all profiles.<br />
@@ -23,3 +27,5 @@ You write systems you get profiles with the word systems</p>
 	cory@corysdatabase.com<br />
 	cory@innovatorscircle.com</p>
 </div>
+</div>
+<?php endif;?>

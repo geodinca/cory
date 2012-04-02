@@ -121,6 +121,12 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'search_tips'); ?>
+		<?php echo $form->textArea($model,'search_tips'); ?>
+		<?php echo $form->error($model,'search_tips'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'created'); ?>
 		<?php echo $form->textField($model,'created'); ?>
 		<?php echo $form->error($model,'created'); ?>

@@ -35,7 +35,7 @@ class InstancesController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update', 'searchtips'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -61,6 +61,10 @@ class InstancesController extends Controller
 
 		if(isset($_POST['Instances']))
 		{
+//			if (isset($_POST['Instances']['search_tips'])) {
+//				$_POST['Instances']['search_tips'] = htmlentities($_POST['Instances']['search_tips']);
+//			}
+//			var_dump($_POST['Instances']);die;
 			if (isset($_POST['Hint'])) {
 				$aPostedData = $_POST['Hint'];
 				$jsonData = CJSON::encode($aPostedData);
@@ -118,6 +122,16 @@ class InstancesController extends Controller
 			$model->attributes=$_GET['Instances'];
 
 		$this->render('admin',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionSearchtips() {
+		$aCurrenSession = unserialize(Yii::app()->session->get('search_criteria'));
+//		var_dump($aCurrenSession);
+		$model = $this->loadModel($aCurrenSession['current_instance_id']);
+//		return $model->search_tips;
+		$this->render('searchtips',array(
 			'model'=>$model,
 		));
 	}

@@ -57,7 +57,7 @@
 				),
 				array(
 					'label'=>'Search Tips',
-					'url'=>array('/site/page', 'view'=>'searchtips'),
+					'url'=>array('/instances/searchtips', 'view'=>'searchtips'),
 					'visible'=>!Yii::app()->user->isGuest
 				),
 				array(

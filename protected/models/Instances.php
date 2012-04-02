@@ -42,6 +42,7 @@ class Instances extends CActiveRecord
 			array('name', 'length', 'max'=>255),
 			array('client_id', 'length', 'max'=>10),
 			array('hints', 'safe'),
+			array('search_tips', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array(
@@ -70,12 +71,13 @@ class Instances extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id'        => 'ID',
-			'name'      => 'Instance Name',
-			'client_id' => 'Instance Client',
-			'hints'     => 'Hints',
-			'created'   => 'Created',
-			'expire'    => 'Instance Expiration Date',
+			'id'          => 'ID',
+			'name'        => 'Instance Name',
+			'client_id'   => 'Instance Client',
+			'hints'       => 'Hints',
+			'search_tips' => 'Search tips',
+			'created'     => 'Created',
+			'expire'      => 'Instance Expiration Date',
 		);
 	}
 
