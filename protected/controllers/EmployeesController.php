@@ -493,7 +493,7 @@ class EmployeesController extends Controller
 			}
 
 			$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
-			echo '<pre>'.print_r($oCriteria, true).'</pre>'; //die();
+//			echo '<pre>'.print_r($oCriteria, true).'</pre>'; //die();
 			// instance condition
 //			if(Yii::app()->user->credentials['type'] != 'admin'){
 //				$oCriteria->addSearchCondition('t.instances_id',  $aCurrentInstanceId[0]);
