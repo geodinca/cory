@@ -128,9 +128,7 @@ class InstancesController extends Controller
 
 	public function actionSearchtips() {
 		$aCurrenSession = unserialize(Yii::app()->session->get('search_criteria'));
-//		var_dump($aCurrenSession);
 		$model = $this->loadModel($aCurrenSession['current_instance_id']);
-//		return $model->search_tips;
 		$this->render('searchtips',array(
 			'model'=>$model,
 		));

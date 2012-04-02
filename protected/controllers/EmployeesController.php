@@ -291,13 +291,12 @@ class EmployeesController extends Controller
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-
-		// get allowed instances
-		$aInstances = CHtml::listData(Instances::model()->findAll('client_id = :clId', array(':clId' => Yii::app()->user->credentials['client_id'])), 'id', 'id');
+		//$aInstances = CHtml::listData(Instances::model()->findAll('client_id = :clId', array(':clId' => Yii::app()->user->credentials['client_id'])), 'id', 'id');
 
 		// get stored session data
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
-
+		// set allowed instance
+		$aCurrentInstanceId = array($aSession['current_instance_id']);
 		// get selected employees to use in cgridview
 		$this->selectedEmployees = isset($aSession['employees']) ? $aSession['employees'] : array();
 
@@ -308,7 +307,7 @@ class EmployeesController extends Controller
 					'pagination'=>array('pageSize'=>50),
 				));
 			} else {
-				$model->instances_id = $aInstances;
+				$model->instances_id = $aCurrentInstanceId;
 				$dataProvider = $model->search();
 			}
 		}
@@ -349,21 +348,24 @@ class EmployeesController extends Controller
 				));
 			} else {
 				$model->attributes=$_GET['Employees'];
-				$model->instances_id = $aInstances;
+				$model->instances_id = $aCurrentInstanceId;
 				$dataProvider = $model->search();
 			}
 		}
 
+		$oCriteria = new CDbCriteria;
+		$aSearchFields = array(
+			't.geographical_area',
+			't.instances_id',
+			't.contact_info',
+			't.profile',
+			't.name',
+			't.title',
+			'present_employer.name',
+			'notes.note');
+
 		if(isset($_POST['Search'])) {
-			$oCriteria = new CDbCriteria;
-			$aSearchFields = array(
-				't.geographical_area',
-				't.contact_info',
-				't.profile',
-				't.name',
-				't.title',
-				'present_employer.name',
-				'notes.note');
+
 			$aPostedData = $_POST;
 
 			if($_POST['Search']['boolean_search']){
@@ -383,6 +385,7 @@ class EmployeesController extends Controller
 
 				$oCriteria->with = array('notes', 'present_employer');
 				$oCriteria->condition = 'MATCH (t.search, notes.note, present_employer.name) AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
+				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 			} else {
 				$sConditionalString = '';
 				$oCriteria->with = array('notes', 'present_employer');
@@ -486,19 +489,20 @@ class EmployeesController extends Controller
 //                  }
 //                  $sConditionalString .= ') ';
 				}
+
 			}
 
-//			echo '<pre>'.print_r($oCriteria, true).'</pre>'; //die();
-
+			$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
+			echo '<pre>'.print_r($oCriteria, true).'</pre>'; //die();
 			// instance condition
-			if(Yii::app()->user->credentials['type'] != 'admin'){
-				$oCriteria->addSearchCondition('t.instances_id', $_POST['Search']['instances_id']);
-			}
+//			if(Yii::app()->user->credentials['type'] != 'admin'){
+//				$oCriteria->addSearchCondition('t.instances_id',  $aCurrentInstanceId[0]);
+//			}
 
 			Yii::app()->session->add('search_criteria', serialize(array(
 				'criteria' => $oCriteria,
 				'data' => $aPostedData,
-				'current_instance_id'=>$_POST['Search']['instances_id'],
+				'current_instance_id'=> $aCurrentInstanceId[0],
 			)));
 
 			$dataProvider = new CActiveDataProvider($model, array(
@@ -509,13 +513,15 @@ class EmployeesController extends Controller
 
 		if(empty($dataProvider)){
 			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+			$oCriteria = $aSession['criteria'];
+			$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 			if(!empty($aSession) && isset($aSession['criteria'])){
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria' => $aSession['criteria'],
 					'pagination'=>array('pageSize'=>50),
 				));
 			} else {
-				$model->instances_id = $aInstances;
+				$model->instances_id =  $aCurrentInstanceId;
 				$dataProvider = $model->search();
 			}
 		}
