@@ -47,14 +47,14 @@
 					'label'=>'Home',
 					'url'=>array('/site/index'),
 				),
-				array(
-					'label'=>'About',
-					'url'=>array('/site/page', 'view'=>'about')
-				),
-				array(
-					'label'=>'Contact',
-					'url'=>array('/site/contact')
-				),
+//				array(
+//					'label'=>'About',
+//					'url'=>array('/site/page', 'view'=>'about')
+//				),
+//				array(
+//					'label'=>'Contact',
+//					'url'=>array('/site/contact')
+//				),
 				array(
 					'label'=>'Search Tips',
 					'url'=>array('/instances/searchtips', 'view'=>'searchtips'),

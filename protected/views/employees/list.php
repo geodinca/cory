@@ -59,7 +59,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 		array('name'=>'geographical_area','headerHtmlOptions' => array('width' => '12%')),
 		array(
-			'header' => 'Note',
+			'header' => 'Notes',
 			'type'   => 'raw',
 			'headerHtmlOptions' => array('width' => '40%'),
 			'value'  => '$this->grid->controller->widget(\'application.widgets.GetUserNotes\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
