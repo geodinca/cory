@@ -203,4 +203,13 @@ class PFormatter extends CFormatter
 		return preg_replace("/[^a-zA-Z0-9]/", "-", strtolower($sText));
 	}
 
+	public function formatNote($sText){
+		if (strlen($sText) > 170)
+		{
+			$sText = preg_replace('/\s+?(\S+)?$/', '', substr($sText, 0, 171));
+			$sText .= ' ...';
+		}
+		return $sText;
+
+	}
 }
