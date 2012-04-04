@@ -465,7 +465,7 @@ table thead input[type="text"] {
 
 .grid-view table.items tr td {cursor: pointer}
 
-#yw0 {position: relative; top: 50px;}
+#yw0 {position: relative;}
 #top-menu #yw0 {top:0px;}
 .search-word {color:#00F;font-weight: bold;}
 
@@ -484,5 +484,5 @@ table thead input[type="text"] {
 	margin-top:5px;
 }
 #printable {padding:10px;}
-#serch-screen-form {margin-bottom: 50px;display: block;}
-.grid-view .pager { margin-bottom: 20px; }
+#serch-screen-form {padding-bottom: 30px; display: block; top: 50px; position: relative;}
+.grid-view .pager { margin: 5px 0 !important; }
