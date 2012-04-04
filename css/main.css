@@ -27,7 +27,7 @@ body
 	padding: 0;
 	position: fixed;
 	top: 20px;
-	z-index: 1000;
+	z-index: 10;
 	background: #EFEFEF;
 	width: 100%;
 }
@@ -54,15 +54,9 @@ body
 #clients-screen,
 #users-screen,
 #instances-screen,
-#search-screen
-{
-	padding: 0 20px;
-}
+#search-screen { padding: 0 20px; margin: 20px 0; }
 
-#sidebar
-{
-	padding: 20px 20px 20px 0;
-}
+#sidebar { padding: 20px 20px 20px 0;}
 
 #logo
 {
@@ -252,10 +246,11 @@ div.search-form
 
 #logo-tag
 {
-	padding: 10px 20px 0;
+	padding: 7px 20px 0;
 	width: 200px;
 	clear:right;
 	float:left;
+	font-size: 0.9em
 }
 
 #application-title

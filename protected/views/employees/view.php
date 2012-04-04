@@ -135,23 +135,32 @@ $(function(){
 });
 
 $(document).ready(function(){
-	$('#profile-area').height($(window).height() - 337);
+	active_area = $(window).height() -160;
+	profile_area = parseInt(2*(active_area/3));
+	notes_area = active_area - profile_area;
+	$('#profile-area').height(profile_area);
+	$('.profile-notes').height(notes_area);
 
 	$('.profile-data').jScrollPane();
-	$('.profile-notes-scroll').jScrollPane();
+	//$('.profile-notes-scroll').jScrollPane();
 
 	$('.edit_area').editable("<?php echo Yii::app()->createUrl('/notes/saveNotes'); ?>", {
-		type      	: 'textarea',
-		name	  	: 'note',
-		placeholder	: 'Dubleclick to edit',
-		loadurl  	: "<?php echo Yii::app()->createUrl('/notes/loadNotes'); ?>",
-		loadtype   	: 'POST',
-		loaddata 	: {id: "<?php echo $model->id ?>"},
-		rows	  	: 5,
-		cols	  	: 117,
-		onblur    	: 'submit',
-		event	  	: 'dblclick',
-		tooltip   	: 'Dubleclick to edit...'
+		type        : 'textarea',
+		name	    : 'note',
+		placeholder : 'Dubleclick to edit',
+		loadurl     : "<?php echo Yii::app()->createUrl('/notes/loadNotes'); ?>",
+		loadtype    : 'POST',
+		loaddata    : {id: "<?php echo $model->id ?>"},
+		//rows	    : 5,
+		//cols	    : 122,
+		width       : 870,
+		height      : notes_area - 100,
+		onblur      : 'ignore',
+		event	    : 'dblclick',
+		tooltip     : 'Dubleclick to edit...',
+		cancel      : 'Cancel',
+		submit      : 'OK',
+		select      : true
 	});
 
 	// initialize tooltip

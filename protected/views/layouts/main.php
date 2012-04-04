@@ -131,7 +131,8 @@
 				CLIENT: <strong><?php echo Yii::app()->user->credentials['username']; ?></strong><br />
 			<?php endif;?>
 			DEVELOPER: Cory Coman<br />
-			cory@innovatorscircle.com<br />
+			<a href="mailto:cory@corysdatabase.com">cory@corysdatabase.com</a><br />
+			<a href="mailto:cory@innovatorscircle.com">cory@innovatorscircle.com</a><br />
 			Please do not hesitate to write
 		</div>
 		<?php $aSeession = unserialize(Yii::app()->session->get('app_setts'));?>
