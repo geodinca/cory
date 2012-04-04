@@ -38,7 +38,7 @@
 </head>
 
 <body>
-<div class="container" id="page">
+<div id="page">
 	<div id="top-menu">
 		<?php
 			// common menu section

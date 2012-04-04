@@ -19,17 +19,22 @@ body
 
 #header
 {
-	border-bottom: 1px solid #FFFFFF;
-	border-top: 1px solid #FFFFFF;
+	/*border-bottom: 1px solid #FFFFFF;
+	border-top: 1px solid #FFFFFF;*/
 	display: block;
 	height: 80px;
 	margin: 0;
 	padding: 0;
+	position: fixed;
+	top: 20px;
+	z-index: 1000;
+	background: #EFEFEF;
+	width: 100%;
 }
 
 #top-menu
 {
-	background: #C9E0ED;
+	background: #C9E0ED;position: fixed; display: block; width: 100%; z-index: 1000;
 }
 
 .sf-menu {
@@ -319,7 +324,7 @@ table thead input[type="text"] {
 
 .tabmenu
 {
-	background: #FFF url(bg.gif) repeat-x left top;
+	background: #FFF url(bg.gif) repeat-x left top; position: fixed; top: 95px; width: 100%;
 }
 
 .tabmenu ul
@@ -372,6 +377,8 @@ table thead input[type="text"] {
 	line-height:25px;
 	overflow: hidden;
 	margin-bottom: 4px;
+	position: relative;
+	top: 26px;
 }
 
 .profile-actions span
@@ -392,7 +399,7 @@ table thead input[type="text"] {
 	padding: 0px 10px 10px 10px;
 	border: 1px solid #666666;
 	width: 877px;
-	margin-bottom: 2px;
+	margin: 27px 0 2px 0;
 }
 
 #profile-area .jspVerticalBar
@@ -427,8 +434,7 @@ table thead input[type="text"] {
 
 
 .grid-view {
-	padding: 15px !important;
-	width: 98%;
+	padding: 30px 10px !important;
 }
 
 .tooltip
@@ -487,3 +493,4 @@ table thead input[type="text"] {
 }
 #printable {padding:10px;}
 #serch-screen-form {margin-bottom: 50px;display: block;}
+.grid-view .pager { margin-bottom: 20px; }
