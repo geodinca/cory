@@ -127,7 +127,7 @@ class PFormatter extends CFormatter
 		foreach ($aWords as $word) {
 			if (strlen($word) > 1){
 			/*** quote the text for regex ***/
-			$word = preg_quote($word);
+			$word = preg_quote($word, '/');
 			/*** highlight the words ***/
 			$sProfile = preg_replace("/\b($word)\b/i","<span class=\"search-word\">$1</span>",$sProfile);
 			}

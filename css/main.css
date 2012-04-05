@@ -358,6 +358,7 @@ table thead input[type="text"] {
 	max-width: 900px;
 }
 
+.profile-view h1 {margin-bottom: 1.3em; top: 1em; position: relative;}
 .profile-view h3
 {
 	padding: 10px 0 0 0;
@@ -391,7 +392,7 @@ table thead input[type="text"] {
 
 .profile-data
 {
-	padding: 0px 10px 10px 10px;
+	padding: 0px 10px 25px 10px;
 	border: 1px solid #666666;
 	width: 877px;
 	margin: 27px 0 2px 0;

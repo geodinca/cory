@@ -43,6 +43,7 @@ class Companies extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('instances_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'required'),
 			array('name, street, city, country, state, zip, phone, web, sales', 'length', 'max'=>255),
 			array('products', 'safe'),
@@ -60,7 +61,8 @@ class Companies extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				'employee' => array(self::HAS_MANY, 'Employees', 'companies_id')
+				'employee'  => array(self::HAS_MANY, 'Employees', 'companies_id'),
+				'instances' => array(self::BELONGS_TO, 'Instances', 'instances_id')
 		);
 	}
 
