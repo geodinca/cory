@@ -137,7 +137,11 @@ class ImportsController extends Controller
 					if($iCompanyId){
 						$sEmployeeName = ucwords($objWorksheet->getCellByColumnAndRow(0, $row)->getValue());
 
-						$oEmployeesModel = Employees::model()->findByAttributes(array('name' => $sEmployeeName));
+						$oEmployeesModel = Employees::model()
+							->findByAttributes(array(
+								'name' => $sEmployeeName,
+								'instances_id' => $oInstance->id,
+							));
 						if(!$oEmployeesModel){
 							$iNewEployees++;
 							$oEmployeesModel = new Employees;
