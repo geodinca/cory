@@ -107,18 +107,20 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 		),
 		array(
 			'header' => '#',
+			'headerHtmlOptions' => array('width' => '15px'),
 			'value'	 => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row + 1)'
 		),
 		array(
 			'name'=> 'name',
-			'htmlOptions'=>array('class' => 'company_title', ),
+			'htmlOptions'=>array('class' => 'company_title'),
+			'headerHtmlOptions' => array('width' => '300px'),
 			'type' => 'html',
 			'value'=> array($this,'getTooltip'),
 		),
-		'street',
-		'city',
-		'country',
-		'state',
+		array('name' => 'street','headerHtmlOptions' => array('width' => '150px'),),
+		array('name' => 'city','headerHtmlOptions' => array('width' => '150px'),),
+		array('name' => 'country','headerHtmlOptions' => array('width' => '150px'),),
+		array('name' => 'state','headerHtmlOptions' => array('width' => '150px'),),
 		/*
 		'zip',
 		'phone',
@@ -157,7 +159,16 @@ $(document).ready(function(){
 
 });
 
+$(document).ready(function() {
+	$("table.items tbody tr").each(function(){
+		var counter = 1;
+		$(this).children("td,th").each( function()  {
+			$(this).addClass("column-" + counter);
+			counter++;
+		});
 
+	})
+});
 /*]]>*/
 
 </script>
