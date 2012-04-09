@@ -43,31 +43,31 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 		array(
 			'header' => '#',
-			'headerHtmlOptions' => array('width' => '2%'),
+			'headerHtmlOptions' => array('width' => '15px'),
 			'value'	 => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row + 1)'
 		),
-		array('name'=>'name','headerHtmlOptions' => array('width' => '12%')),
-		array('name'=>'title','headerHtmlOptions' => array('width' => '14%')),
+		array('name'=>'name','headerHtmlOptions' => array('width' => '150px')),
+		array('name'=>'title','headerHtmlOptions' => array('width' => '150px')),
 		array(
 			'header'      => 'Employer',
 			'name'        => 'companies_id',
 			'htmlOptions' => array('class' => 'company_title'),
-			'headerHtmlOptions' => array('width' => '14%'),
+			'headerHtmlOptions' => array('width' => '150px'),
 			'type'        => 'html',
 			'value'       => array($this, 'getTooltip'),
 			'filter'	=> CHtml::listData(Companies::model()->findAll(array('order' => 'name ASC')), 'id', 'name')
 		),
-		array('name'=>'geographical_area','headerHtmlOptions' => array('width' => '12%')),
+		array('name'=>'geographical_area','headerHtmlOptions' => array('width' => '150px')),
 		array(
 			'header' => 'Notes',
 			'type'   => 'raw',
-			'headerHtmlOptions' => array('width' => '40%'),
+			'headerHtmlOptions' => array('width' => '500px'),
 			'value'  => '$this->grid->controller->widget(\'application.widgets.GetUserNotes\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
 		),
 		array(
 			'class'=>'CButtonColumn',
 			'template' => $sTemplate,
-			'headerHtmlOptions' => array('width' => '5%'),
+			'headerHtmlOptions' => array('width' => '50px'),
 		),
 	),
 ));
@@ -102,4 +102,16 @@ $(function(){
 		}); //.dynamic({ bottom: { direction: 'down', bounce: true } });
 	});
 });
+
+$(document).ready(function() {
+	$("table.items tbody tr").each(function(){
+		var counter = 1;
+		$(this).children("td,th").each( function()  {
+			$(this).addClass("column-" + counter);
+			counter++;
+		});
+
+	})
+});
+
 </script>

@@ -317,10 +317,7 @@ table thead input[type="text"] {
 	font-family: Tahoma, Geneva, sans-serif;
 }
 
-.tabmenu
-{
-	background: #FFF url(bg.gif) repeat-x left top; position: fixed; top: 95px; width: 100%;
-}
+.tabmenu { background: #FFF url(bg.gif) repeat-x left top; position: fixed; top: 100px; width: 100%; z-index: 100;}
 
 .tabmenu ul
 {
@@ -370,13 +367,33 @@ table thead input[type="text"] {
 {
 	padding: 5px;
 	background: #ccc;
-	line-height:25px;
+	line-height:15px;
 	overflow: hidden;
 	margin-bottom: 4px;
-	position: relative;
-	top: 26px;
+	position: fixed;
+	top: 125px;
+	width: 100%;
+	z-index: 10;
+}
+#employees-grid .summary {
+	position: fixed;
+	right: 15px;
+	top: 130px;
+	z-index: 10;
 }
 
+.profile-view .profile-actions
+{
+	padding: 5px;
+	background: #ccc;
+	line-height:15px;
+	overflow: hidden;
+	margin-bottom: 4px;
+	position: fixed;
+	top: 125px;
+	width: 889px;
+	z-index: 10;
+}
 .profile-actions span
 {
 	padding: 0 15px 0 0;
@@ -395,7 +412,7 @@ table thead input[type="text"] {
 	padding: 0px 10px 25px 10px;
 	border: 1px solid #666666;
 	width: 877px;
-	margin: 27px 0 2px 0;
+	margin: 61px 0 2px 0;
 }
 
 #profile-area .jspVerticalBar
@@ -430,7 +447,7 @@ table thead input[type="text"] {
 
 
 .grid-view {
-	padding: 30px 10px !important;
+	padding: 60px 10px !important; z-index:20;
 }
 
 .tooltip
@@ -446,7 +463,8 @@ table thead input[type="text"] {
 {
 	float: left;
 	position: relative;
-	top: -40px;
+	top: -20px;
+	z-index: 10;
 	margin: 0 0 -20px 0 !important;
 }
 
@@ -488,3 +506,15 @@ table thead input[type="text"] {
 #printable {padding:10px;}
 #serch-screen-form {padding-bottom: 30px; display: block; top: 50px; position: relative;}
 .grid-view .pager { margin: 5px 0 !important; }
+
+#employees-grid table thead {position: fixed; width:98%; z-index: 10}
+#employees-grid table tbody {display: block; padding: 57px 0 0; position: relative; width: 100%;}
+#employees-grid table tbody tr .column-1 {width: 19px;}
+#employees-grid table tbody tr .column-2 {width: 15px;}
+#employees-grid table tbody tr .column-3 {width: 149px;}
+#employees-grid table tbody tr .column-4 {width: 149px;}
+#employees-grid table tbody tr .column-5 {width: 149px;}
+#employees-grid table tbody tr .column-6 {width: 149px;}
+#employees-grid table tbody tr .column-7 {width: 499px;}
+#employees-grid table tbody tr .column-8 {width: 54px;}
+
