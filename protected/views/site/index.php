@@ -15,11 +15,12 @@
 			$aInstances = Instances::model()->findAll();
 		} else {
 			$aInstances = InstancesUsers::model()->findAll('user_id = :uID', array(':uID' => Yii::app()->user->id));
+			$accessInstances = array();
+			foreach ($aInstances as $oInstance) {
+				$accessInstances[] = Instances::model()->find('id = :id', array(':id' => $oInstance->instance_id));
+			}
 		}
-		$accessInstances = array();
-		foreach ($aInstances as $oInstance) {
-			$accessInstances[] = Instances::model()->find('id = :id', array(':id' => $oInstance->instance_id));
-		}
+
 	?>
 	<ol id="db-list">
 		<?php foreach($accessInstances as $oInstance):?>
