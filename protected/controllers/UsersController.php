@@ -102,6 +102,22 @@ class UsersController extends Controller
 			}
 
 			if($model->save()){
+				// add instances
+				$bSavedInstances = true;
+				foreach($_POST['Users']['instances'] as $iInstanceId){
+					$oInstances = new InstancesUsers;
+					$oInstances->attributes = array(
+						'instance_id' => (int)$iInstanceId,
+						'user_id' => $model->id
+					);
+					if(!$oInstances->save()){
+						$bSavedInstances = false;
+					}
+				}
+				if(!$bSavedInstances){
+					$model->delete();
+				}
+
 				$this->redirect(array('admin'));
 			}
 		}
