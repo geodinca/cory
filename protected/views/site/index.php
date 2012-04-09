@@ -13,14 +13,17 @@
 	<?php
 		if(Yii::app()->user->credentials['type'] == 'admin'){
 			$aInstances = Instances::model()->findAll();
-		} else { 
-			$aInstances = Instances::model()->findAll('client_id = :cID', array(':cID' => Yii::app()->user->credentials['client_id']));
+		} else {
+			$aInstances = InstancesUsers::model()->findAll('user_id = :uID', array(':uID' => Yii::app()->user->id));
+		}
+		$accessInstances = array();
+		foreach ($aInstances as $oInstance) {
+			$accessInstances[] = Instances::model()->find('id = :id', array(':id' => $oInstance->instance_id));
 		}
 	?>
 	<ol id="db-list">
-		<?php foreach($aInstances as $oInstance):?>
+		<?php foreach($accessInstances as $oInstance):?>
 			<li>
-				<?php //var_dump($oInstance)?>
 				<span class="ui-icon ui-icon-folder-open"></span>
 				<?php echo CHtml::link(" {$oInstance->name}", array('index', 'id' => $oInstance->id)); ?>
 			</li>

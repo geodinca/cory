@@ -194,6 +194,7 @@ class UsersController extends Controller
 	 */
 	public function actionGetInstanceByClient(){
 		if(isset($_POST['Users'])){
+			var_dump($_POST);
 			$iClientId = (int)$_POST['Users']['client_id'];
 			$aInstances = CHtml::listData(
 				Instances::model()->findAll(array(
