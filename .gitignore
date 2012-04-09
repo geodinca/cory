@@ -4,6 +4,7 @@
 assets/*
 runtime/*
 protected/data/*.db
+protected/config/main.php
 protected/tests/report/*
 protected/runtime/*
 *.swp
