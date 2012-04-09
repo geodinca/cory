@@ -130,7 +130,9 @@ class ImportsController extends Controller
 					$sCompanyName = strtolower($objWorksheet->getCellByColumnAndRow(2, $row)->getValue());
 
 					// get company id to save into employees table
-					$iCompanyId = $aSavedCompanies[$sCompanyName];
+					if ($sCompanyName) {
+						$iCompanyId = $aSavedCompanies[$sCompanyName];
+					}
 
 					if($iCompanyId){
 						$sEmployeeName = ucwords($objWorksheet->getCellByColumnAndRow(0, $row)->getValue());
