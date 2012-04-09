@@ -148,9 +148,13 @@ class CompaniesController extends Controller
 	{
 		$model=new Companies('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Companies']))
+		if(isset($_GET['Companies'])) {
 			$model->attributes=$_GET['Companies'];
+		}
 
+		$aSessionUser = unserialize(Yii::app()->session->get('app_setts'));
+		$aCurrentInstanceId = $aSessionUser['current_instance_id'];
+		$model->instances_id = $aCurrentInstanceId;
 		$this->render('admin',array(
 			'model'=>$model,
 		));
@@ -212,7 +216,7 @@ class CompaniesController extends Controller
 				$aSearchNames[] = $company->name;
 				$aSearchIds[] = $compani_id;
 			}
-			
+
 			switch($type) {
 				case 'present':
 					if(!isset($aPostedData['Search']['present_employer'])){
@@ -235,7 +239,7 @@ class CompaniesController extends Controller
 					}
 					break;
 			}
-			
+
 			$aCriteria = isset($aSession['criteria']) ? $aSession['criteria'] : array();
 			Yii::app()->session->add('search_criteria',serialize(array('criteria' => $aCriteria, 'data' => $aPostedData)));
 			$this->redirect('/employees/admin');
@@ -243,7 +247,7 @@ class CompaniesController extends Controller
 			$this->redirect(array('/'));
 		}
 	}
-	
+
 	/**
 	 * Ajax request get company for autocomplete
 	 * @return json
@@ -251,9 +255,12 @@ class CompaniesController extends Controller
 	public function actionGetCompany(){
 		$aResult = array();
 		$sTerm = trim($_GET['term']);
-		
+		// set allowed instance
+		$aSessionUser = unserialize(Yii::app()->session->get('app_setts'));
+		$aCurrentInstanceId = $aSessionUser['current_instance_id'];
 		$oCriteria = new CDbCriteria;
 		$oCriteria->addCondition('t.name LIKE "'.$sTerm.'%"');
+		$oCriteria->addCondition('t.instances_id ='.$aCurrentInstanceId);
 		$oCriteria->order = 't.name ASC';
 		$oCriteria->limit = 15;
 		$aCompanies = Companies::model()->findAll($oCriteria);
@@ -264,7 +271,7 @@ class CompaniesController extends Controller
 				'title' => CHtml::encode(nl2br($aCompany['products']))
 			);
 		}
-		
+
 		echo CJSON::encode($aResult);
 		Yii::app()->end();
 	}

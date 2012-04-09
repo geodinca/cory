@@ -94,7 +94,11 @@ class ImportsController extends Controller
 				for ($row = 2; $row <= $highestRow; ++$row) {
 					$sCompanyName = strtolower($objWorksheet->getCellByColumnAndRow(2, $row)->getValue());
 					if(!array_key_exists($sCompanyName, $aSavedCompanies)){
-						$oCompanyModel = Companies::model()->findByAttributes(array('name' => ucwords($sCompanyName)));
+						$oCompanyModel = Companies::model()
+							->findByAttributes(array(
+								'name' => ucwords($sCompanyName),
+								'instances_id' => $oInstance->id,
+							));
 						if(!$oCompanyModel){
 							$oCompanyModel = new Companies;
 							$iNewCompanies++;

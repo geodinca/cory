@@ -108,7 +108,9 @@ class Companies extends CActiveRecord
 		$criteria->compare('web',$this->web,true);
 		$criteria->compare('products',$this->products,true);
 		$criteria->compare('sales',$this->sales,true);
-
+		$aSessionUser = unserialize(Yii::app()->session->get('app_setts'));
+		$aCurrentInstanceId = $aSessionUser['current_instance_id'];
+		$criteria->compare('instances_id',$aCurrentInstanceId);
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'pagination'=>array('pageSize'=>50),

@@ -439,6 +439,7 @@ table thead input[type="text"] {
 	padding: 15px;
 	border: 1px #ccc solid;
 	width: 500px;
+	z-index: 1000;
 }
 
 #companies-grid .summary
