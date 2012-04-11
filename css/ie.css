@@ -36,7 +36,7 @@ form.inline input.checkbox, form.inline input.radio, form.inline input.button, f
 button, input.button {position:relative;top:0.25em;}
 
 #employees-grid table thead {position: relative; width:98%; z-index: 10; top: 150px}
-#employees-grid table tbody {display: block; padding: 57px 0 0; position: relative; width: 100%;}
+#employees-grid table tbody {display: block; padding: 57px 0 0; position: relative !important; width: 100%;}
 #employees-grid table tbody tr .column-1 {width: 19px;}
 #employees-grid table tbody tr .column-2 {width: 15px;}
 #employees-grid table tbody tr .column-3 {width: 149px;}
@@ -48,7 +48,7 @@ button, input.button {position:relative;top:0.25em;}
 
 #companies-grid {padding: 59px 10px !important;}
 #companies-grid table {margin: 0 auto; width: 1064px;}
-#companies-grid table thead {position: relative; width:98%; z-index: 10; top: 156px;}
+#companies-grid table thead {position: relative !important; width:98%; z-index: 10; top: 156px;}
 #companies-grid table tbody {display: block; padding: 57px 0 0; position: relative; width: 100%;}
 #companies-grid table tbody tr .column-1 {width: 19px;}
 #companies-grid table tbody tr .column-2 {width: 15px;}
