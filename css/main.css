@@ -521,7 +521,7 @@ table .filters {background-color:#EEE;}
 
 #companies-grid {padding: 59px 10px !important;}
 #companies-grid table {margin: 0 auto; width: 1064px;}
-#companies-grid table thead {position: fixed; width:98%; z-index: 10}
+#companies-grid table thead {position: fixed; width:98%; z-index: 10; top: 156px;}
 #companies-grid table tbody {display: block; padding: 57px 0 0; position: relative; width: 100%;}
 #companies-grid table tbody tr .column-1 {width: 19px;}
 #companies-grid table tbody tr .column-2 {width: 15px;}
