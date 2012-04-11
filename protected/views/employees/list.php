@@ -27,7 +27,8 @@ $this->renderPartial('_menu',array('action'=>'search_result'));
 <?php
 
 $sTemplate = (Yii::app()->user->credentials['type'] == 'admin') ? '{view}{update}{delete}' : '{view}';
-
+$aSessionUser = unserialize(Yii::app()->session->get('app_setts'));
+$aCurrentInstanceId = $aSessionUser['current_instance_id'];
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'employees-grid',
 	'dataProvider'=>$dataProvider,
@@ -55,7 +56,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'headerHtmlOptions' => array('width' => '150px'),
 			'type'        => 'html',
 			'value'       => array($this, 'getTooltip'),
-			'filter'	=> CHtml::listData(Companies::model()->findAll(array('order' => 'name ASC')), 'id', 'name')
+			'filter'	=> CHtml::listData(Companies::model()->findAll(array('condition'=>'instances_id = '.$aCurrentInstanceId,'order' => 'name ASC')), 'id', 'name')
 		),
 		array('name'=>'geographical_area','headerHtmlOptions' => array('width' => '150px')),
 		array(
