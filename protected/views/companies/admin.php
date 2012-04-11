@@ -104,23 +104,25 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 		array(
 			'class'=>'CCheckBoxColumn',
 			'selectableRows'  => 2,
+			'htmlOptions' => array('class' => 'column-1'),
 		),
 		array(
 			'header' => '#',
 			'headerHtmlOptions' => array('width' => '15px'),
+			'htmlOptions' => array('class' => 'column-2'),
 			'value'	 => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row + 1)'
 		),
 		array(
 			'name'=> 'name',
-			'htmlOptions'=>array('class' => 'company_title'),
+			'htmlOptions'=>array('class' => 'company_title column-3'),
 			'headerHtmlOptions' => array('width' => '300px'),
 			'type' => 'html',
 			'value'=> array($this,'getTooltip'),
 		),
-		array('name' => 'street','headerHtmlOptions' => array('width' => '150px'),),
-		array('name' => 'city','headerHtmlOptions' => array('width' => '150px'),),
-		array('name' => 'country','headerHtmlOptions' => array('width' => '150px'),),
-		array('name' => 'state','headerHtmlOptions' => array('width' => '150px'),),
+		array('name' => 'street','headerHtmlOptions' => array('width' => '150px'),'htmlOptions'=>array('class' => 'company_title column-4'),),
+		array('name' => 'city','headerHtmlOptions' => array('width' => '150px'),'htmlOptions'=>array('class' => 'company_title column-5'),),
+		array('name' => 'country','headerHtmlOptions' => array('width' => '150px'),'htmlOptions'=>array('class' => 'company_title column-6'),),
+		array('name' => 'state','headerHtmlOptions' => array('width' => '150px'),'htmlOptions'=>array('class' => 'company_title column-7'),),
 		/*
 		'zip',
 		'phone',
@@ -131,6 +133,7 @@ $this->renderPartial('../employees/_menu',array('action'=>'companies_data'));
 		array(
 			'class'=>'CButtonColumn',
 			'template' => $sTemplate,
+			'htmlOptions'=>array('class' => 'company_title column-8'),
 		),
 	),
 )); ?>
@@ -159,16 +162,6 @@ $(document).ready(function(){
 
 });
 
-$(document).ready(function() {
-	$("table.items tbody tr").each(function(){
-		var counter = 1;
-		$(this).children("td,th").each( function()  {
-			$(this).addClass("column-" + counter);
-			counter++;
-		});
-
-	})
-});
 /*]]>*/
 
 </script>

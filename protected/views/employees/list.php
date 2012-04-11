@@ -40,34 +40,38 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'class'=>'CCheckBoxColumn',
 			'selectableRows' => 2,
 			'id' => 'chk_grid',
+			'htmlOptions' => array('class' => 'column-1'),
 			'checked' => 'in_array($data->id, $this->grid->controller->selectedEmployees)'
 		),
 		array(
 			'header' => '#',
 			'headerHtmlOptions' => array('width' => '15px'),
+			'htmlOptions' => array('class' => 'column-2'),
 			'value'	 => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row + 1)'
 		),
-		array('name'=>'name','headerHtmlOptions' => array('width' => '150px')),
-		array('name'=>'title','headerHtmlOptions' => array('width' => '150px')),
+		array('name'=>'name','headerHtmlOptions' => array('width' => '150px'), 'htmlOptions' => array('class' => 'column-3'),),
+		array('name'=>'title','headerHtmlOptions' => array('width' => '150px'), 'htmlOptions' => array('class' => 'column-4'),),
 		array(
 			'header'      => 'Employer',
 			'name'        => 'companies_id',
-			'htmlOptions' => array('class' => 'company_title'),
+			'htmlOptions' => array('class' => 'company_title column-5'),
 			'headerHtmlOptions' => array('width' => '150px'),
 			'type'        => 'html',
 			'value'       => array($this, 'getTooltip'),
 			'filter'	=> CHtml::listData(Companies::model()->findAll(array('condition'=>'instances_id = '.$aCurrentInstanceId,'order' => 'name ASC')), 'id', 'name')
 		),
-		array('name'=>'geographical_area','headerHtmlOptions' => array('width' => '150px')),
+		array('name'=>'geographical_area','headerHtmlOptions' => array('width' => '150px'), 'htmlOptions' => array('class' => 'column-6'),),
 		array(
 			'header' => 'Notes',
 			'type'   => 'raw',
 			'headerHtmlOptions' => array('width' => '500px'),
+			'htmlOptions' => array('class' => 'column-7'),
 			'value'  => '$this->grid->controller->widget(\'application.widgets.GetUserNotes\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
 		),
 		array(
 			'class'=>'CButtonColumn',
 			'template' => $sTemplate,
+			'htmlOptions' => array('class' => 'column-8'),
 			'headerHtmlOptions' => array('width' => '50px'),
 		),
 	),
@@ -104,15 +108,6 @@ $(function(){
 	});
 });
 
-$(document).ready(function() {
-	$("table.items tbody tr").each(function(){
-		var counter = 1;
-		$(this).children("td,th").each( function()  {
-			$(this).addClass("column-" + counter);
-			counter++;
-		});
 
-	})
-});
 
 </script>

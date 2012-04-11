@@ -304,7 +304,6 @@ class EmployeesController extends Controller
 		if(Yii::app()->request->isAjaxRequest){
 			if($aSession && isset($aSession['criteria'])){
 				$oCriteria = $aSession['criteria'];
-				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria'=>$oCriteria,
 					'pagination'=>array('pageSize'=>50),
@@ -314,7 +313,6 @@ class EmployeesController extends Controller
 				$dataProvider = $model->search();
 			}
 		}
-
 		//show selected button action
 		if (isset($_GET['showSelected']) && !empty($aSession['employees'])) {
 			$oCriteria1 = new CDbCriteria;
@@ -495,6 +493,7 @@ class EmployeesController extends Controller
 			}
 
 			$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
+			$oCriteria->order = 't.geographical_area ASC, present_employer.name ASC';
 //			echo '<pre>'.print_r($oCriteria, true).'</pre>'; //die();
 			// instance condition
 //			if(Yii::app()->user->credentials['type'] != 'admin'){
