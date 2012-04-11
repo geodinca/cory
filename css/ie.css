@@ -1,8 +1,8 @@
 /* -----------------------------------------------------------------------
 
 
- Blueprint CSS Framework 1.0.1
- http://blueprintcss.org
+Blueprint CSS Framework 1.0.1
+http://blueprintcss.org
 
    * Copyright (c) 2007-Present. See LICENSE for more info.
    * See README for instructions on how to use Blueprint.
@@ -34,3 +34,29 @@ input.checkbox, input.radio {position:relative;top:.25em;}
 form.inline div, form.inline p {vertical-align:middle;}
 form.inline input.checkbox, form.inline input.radio, form.inline input.button, form.inline button {margin:0.5em 0;}
 button, input.button {position:relative;top:0.25em;}
+
+#employees-grid table thead {position: relative; width:98%; z-index: 10; top: 150px}
+#employees-grid table tbody {display: block; padding: 57px 0 0; position: relative; width: 100%;}
+#employees-grid table tbody tr .column-1 {width: 19px;}
+#employees-grid table tbody tr .column-2 {width: 15px;}
+#employees-grid table tbody tr .column-3 {width: 149px;}
+#employees-grid table tbody tr .column-4 {width: 149px;}
+#employees-grid table tbody tr .column-5 {width: 149px;}
+#employees-grid table tbody tr .column-6 {width: 149px;}
+#employees-grid table tbody tr .column-7 {width: 499px;}
+#employees-grid table tbody tr .column-8 {width: 54px;}
+
+#companies-grid {padding: 59px 10px !important;}
+#companies-grid table {margin: 0 auto; width: 1064px;}
+#companies-grid table thead {position: relative; width:98%; z-index: 10; top: 156px;}
+#companies-grid table tbody {display: block; padding: 57px 0 0; position: relative; width: 100%;}
+#companies-grid table tbody tr .column-1 {width: 19px;}
+#companies-grid table tbody tr .column-2 {width: 15px;}
+#companies-grid table tbody tr .column-3 {width: 300px;}
+#companies-grid table tbody tr .column-4 {width: 149px;}
+#companies-grid table tbody tr .column-5 {width: 150px;}
+#companies-grid table tbody tr .column-6 {width: 150px;}
+#companies-grid table tbody tr .column-7 {width: 150px;}
+#companies-grid table tbody tr .column-8 {width: 60px;}
+
+div.wide.form .buttons-top {position: fixed !important; right: 10%; top: 97px !important; z-index: 100;}

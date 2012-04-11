@@ -509,7 +509,7 @@ table thead input[type="text"] {
 
 table .filters {background-color:#EEE;}
 #employees-grid table thead {position: fixed; width:98%; z-index: 10; top: 150px}
-#employees-grid table tbody {display: block; padding: 57px 0 0; position: relative; width: 100%; top:8px; margin-top:10px;}
+#employees-grid table tbody {display: block; padding: 57px 0 0; position: relative; width: 100%;}
 #employees-grid table tbody tr .column-1 {width: 19px;}
 #employees-grid table tbody tr .column-2 {width: 15px;}
 #employees-grid table tbody tr .column-3 {width: 149px;}
