@@ -35,7 +35,7 @@ form.inline div, form.inline p {vertical-align:middle;}
 form.inline input.checkbox, form.inline input.radio, form.inline input.button, form.inline button {margin:0.5em 0;}
 button, input.button {position:relative;top:0.25em;}
 
-#employees-grid table thead {position: relative; width:98%; z-index: 10; top: 150px}
+#employees-grid table thead {position: relative !important; width:98%; z-index: 10; top: 150px}
 #employees-grid table tbody {display: block; padding: 57px 0 0; position: relative !important; width: 100%;}
 #employees-grid table tbody tr .column-1 {width: 19px;}
 #employees-grid table tbody tr .column-2 {width: 15px;}
