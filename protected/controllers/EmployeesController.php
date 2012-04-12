@@ -256,7 +256,7 @@ class EmployeesController extends Controller
 	{
 		$iActiveInstance = '';
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
-
+		Yii::app()->session->add('current_page', 0);
 		if (!empty($aSession['current_instance_id'])) {
 			$iActiveInstance = $aSession['current_instance_id'];
 			$aHints = Instances::model()->getHints($iActiveInstance);
@@ -291,23 +291,27 @@ class EmployeesController extends Controller
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-		//$aInstances = CHtml::listData(Instances::model()->findAll('client_id = :clId', array(':clId' => Yii::app()->user->credentials['client_id'])), 'id', 'id');
 
 		// get stored session data
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
+
 		// set allowed instance
 		$aSessionUser = unserialize(Yii::app()->session->get('app_setts'));
 		$aCurrentInstanceId = array($aSessionUser['current_instance_id']);
+		$currentPage = Yii::app()->session->get('current_page');
+
 		// get selected employees to use in cgridview
 		$this->selectedEmployees = isset($aSession['employees']) ? $aSession['employees'] : array();
 
 		if(Yii::app()->request->isAjaxRequest){
 			if($aSession && isset($aSession['criteria'])){
+				$currentPage = $_GET['Employees_page'];
 				$oCriteria = $aSession['criteria'];
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria'=>$oCriteria,
 					'pagination'=>array('pageSize'=>50),
 				));
+				Yii::app()->session->add('current_page', $currentPage);
 			} else {
 				$model->instances_id = $aCurrentInstanceId[0];
 				$dataProvider = $model->search();
@@ -317,7 +321,6 @@ class EmployeesController extends Controller
 		if (isset($_GET['showSelected']) && !empty($aSession['employees'])) {
 			$oCriteria1 = new CDbCriteria;
 			$oCriteria1->addInCondition('t.id',$aSession['employees']);
-			$oCriteria1->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 			$dataProvider = new CActiveDataProvider($model, array(
 				'criteria'=>$oCriteria1,
 				'pagination'=>array('pageSize'=>50),
@@ -327,7 +330,6 @@ class EmployeesController extends Controller
 		if(isset($_GET['Employees'])){
 			if($aSession && isset($aSession['criteria'])){
 				$oCriteria = $aSession['criteria'];
-				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 				$oCriteria1 = new CDbCriteria;
 				$model->attributes=$_GET['Employees'];
 				foreach($model->attributes as $sAttribute => $sValue){
@@ -483,22 +485,12 @@ class EmployeesController extends Controller
 						}
 					}
 					$oCriteria->mergeWith($oCriteria1);
-//                  $sConditionalString .= '+(';
-//                  foreach($aCond as $sWord){
-//                      $sConditionalString .= '"'.$sWord.'" ';
-//                  }
-//                  $sConditionalString .= ') ';
 				}
-
 			}
 
 			$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 			$oCriteria->order = 't.geographical_area ASC, present_employer.name ASC';
 //			echo '<pre>'.print_r($oCriteria, true).'</pre>'; //die();
-			// instance condition
-//			if(Yii::app()->user->credentials['type'] != 'admin'){
-//				$oCriteria->addSearchCondition('t.instances_id',  $aCurrentInstanceId[0]);
-//			}
 
 			Yii::app()->session->add('search_criteria', serialize(array(
 				'criteria' => $oCriteria,
@@ -508,27 +500,20 @@ class EmployeesController extends Controller
 
 			$dataProvider = new CActiveDataProvider($model, array(
 				'criteria'=>$oCriteria,
-				'pagination'=>array('pageSize'=>50),
+				'pagination'=>array('pageSize'=>50, 'currentPage' => $currentPage),
 			));
 		}
 
 		if(empty($dataProvider)){
-//			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 			if(!empty($aSession) && isset($aSession['criteria'])){
 				$oCriteria = $aSession['criteria'];
-				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria' => $oCriteria,
-					'pagination'=>array('pageSize'=>50),
+					'pagination'=>array('pageSize'=>50, 'currentPage' => $currentPage),
 				));
 			} else {
 				$model->instances_id = $aCurrentInstanceId[0];
 				$dataProvider = $model->search();
-//				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
-//				$dataProvider = new CActiveDataProvider($model, array(
-//					'criteria' => $oCriteria,
-//					'pagination'=>array('pageSize'=>50),
-//				));
 			}
 		}
 
