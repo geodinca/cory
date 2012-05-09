@@ -152,6 +152,16 @@ class ImportsController extends Controller
 						$sProfile = str_replace(array_keys($aSavedCompaniesUrls), $aSavedCompaniesUrls, $objWorksheet->getCellByColumnAndRow(21, $row)->getValue());
 //						echo '<pre>'.print_r(CHtml::encode($sProfile), true).'</pre>'; die();
 
+						$searchField = sEmployeeName .' '.
+										$objWorksheet->getCellByColumnAndRow(1, $row)->getValue().' '.
+										$objWorksheet->getCellByColumnAndRow(3, $row)->getValue().' '.
+										$objWorksheet->getCellByColumnAndRow(4, $row)->getValue().' '.
+										$objWorksheet->getCellByColumnAndRow(26, $row)->getValue().' '.
+										$sCompanyName.' '.
+										$sProfile;
+						
+						$searchField = str_replace('+','AND',$searchField);
+
 						$oEmployeesModel->attributes = array(
 							'companies_id' => $iCompanyId,
 							'instances_id' => $oInstance->id,
@@ -171,13 +181,7 @@ class ImportsController extends Controller
 							'profile' => $sProfile,
 							'date_entered' => date('Y-m-d H:i:s'),
 							'misc_info' => $objWorksheet->getCellByColumnAndRow(26, $row)->getValue(),
-							'search' => $sEmployeeName .' '.
-										$objWorksheet->getCellByColumnAndRow(1, $row)->getValue().' '.
-										$objWorksheet->getCellByColumnAndRow(3, $row)->getValue().' '.
-										$objWorksheet->getCellByColumnAndRow(4, $row)->getValue().' '.
-										$objWorksheet->getCellByColumnAndRow(26, $row)->getValue().' '.
-										$sCompanyName.' '.
-										$sProfile
+							'search' => $searchField
 						);
 						if(!$oEmployeesModel->save()){
 							$iFailedEployees++;
