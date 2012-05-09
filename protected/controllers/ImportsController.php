@@ -160,7 +160,7 @@ class ImportsController extends Controller
 										$sCompanyName.' '.
 										$sProfile;
 						
-						$searchField = str_replace('+','AND',$searchField);
+						$searchField = str_replace('+','__plus',$searchField);
 
 						$oEmployeesModel->attributes = array(
 							'companies_id' => $iCompanyId,

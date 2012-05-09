@@ -372,7 +372,8 @@ class EmployeesController extends Controller
 
 			if($_POST['Search']['boolean_search']){
 				// prepare condition string
-				$sConditionalString = str_replace(array("'", 'OR ', 'AND ', 'ANDNOT ', 'NOT '), array('"', '', '+', '-', '-'), trim($_POST['Search']['boolean_search']));
+				$sConditionalString = str_replace('+','__plus',trim($_POST['Search']['boolean_search']));
+				$sConditionalString = str_replace(array("'", 'OR ', 'AND ', 'ANDNOT ', 'NOT '), array('"', '', '+', '-', '-'), $sConditionalString);
 				$isNot = substr_count($sConditionalString,'-');
 				$iWords = str_word_count($sConditionalString);
 				//workaround to avoid only NOT conditions with returns emty results
