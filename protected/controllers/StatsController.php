@@ -145,6 +145,7 @@ class StatsController extends Controller
 		if(empty($dataProvider)){
 			$oCriteria = new CDbCriteria;
 			$oCriteria->with = array('user');
+			$oCriteria->order = 't.id DESC';
 			$dataProvider = new CActiveDataProvider($model, array(
 					'criteria' => $oCriteria,
 			));
