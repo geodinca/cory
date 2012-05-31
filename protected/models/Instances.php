@@ -113,4 +113,10 @@ class Instances extends CActiveRecord
 		$oResult = $this->findAllByPk($id);
 		return CJSON::decode(unserialize($oResult[0]->hints));
 	}
+	
+	public function getInstanceName($id)
+	{
+		$oResult = $this->findByPk($id);
+		return $oResult;
+	}
 }

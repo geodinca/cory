@@ -369,7 +369,8 @@ class EmployeesController extends Controller
 		if(isset($_POST['Search'])) {
 
 			$aPostedData = $_POST;
-
+			Stats::log_search($aPostedData['Search']);
+			var_dump($aPostedData['Search']);die;
 			if($_POST['Search']['boolean_search']){
 				// prepare condition string
 				$sConditionalString = str_replace('+','__plus',trim($_POST['Search']['boolean_search']));

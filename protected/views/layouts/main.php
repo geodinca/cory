@@ -109,6 +109,12 @@
 							'visible'=>!Yii::app()->user->isGuest
 						),
 					)
+				);	
+
+				$aMenu[] = array(
+					'label'=>'Statistics',
+					'url'=>array('/stats/admin'),
+					'visible'=>!Yii::app()->user->isGuest,
 				);
 			}
 			//Always put Logout at the end

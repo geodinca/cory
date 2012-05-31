@@ -42,9 +42,17 @@ class SiteController extends Controller
 		if(isset($_POST['LoginForm']))
 		{
 			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
+			// validate user input
 			if($model->validate() && $model->login()) {
-
+				//Log in stats model the login of the user
+				$stats = array(
+					'user_id' => Yii::app()->user->id, 
+					'login_date' => date( 'Y-m-d H:i:s', time() ),
+					'search' => 'Login'
+				);
+				$model=new Stats;
+				$model->attributes=$stats;
+				$model->save();
 			}
 		}
 
@@ -52,6 +60,9 @@ class SiteController extends Controller
 			$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 			$aSessionUser = array();
 			$aPostedData = $aSession['data'];
+			
+			
+			
 			if(isset($_GET['id'])) {
 				//add instance to session
 				$aSessionUser['current_instance_id'] = $aSession['current_instance_id'] = $_GET['id'];
