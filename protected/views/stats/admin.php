@@ -20,18 +20,18 @@ $('.search-form form').submit(function(){
 <p>&nbsp;</p>
 <h1>Manage Stats</h1>
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
+<?php //echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
+<?php //$this->renderPartial('_search',array(
+	//'model'=>$model,
+//)); ?>
 <?php //var_dump($dataProvider)?>
 </div><!-- search-form -->
 <?php $sTemplate = (Yii::app()->user->credentials['type'] == 'admin') ? '{view}{delete}' : '{view}';?>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'stats-grid',
 	'dataProvider'=>$dataProvider,
-	'filter'=>$model,
+	//'filter'=>$model,
 	'columns'=>array(
 		//'id',
 		array(
