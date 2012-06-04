@@ -61,7 +61,8 @@ class SiteController extends Controller
 			$aSessionUser = array();
 			$aPostedData = $aSession['data'];
 			
-			
+			//reset an possible previuous Search
+			Yii::app()->session->remove('search_criteria');
 			
 			if(isset($_GET['id'])) {
 				//add instance to session
