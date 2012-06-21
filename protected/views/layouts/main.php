@@ -60,11 +60,11 @@
 					'url'=>array('/instances/searchtips', 'view'=>'searchtips'),
 					'visible'=>!Yii::app()->user->isGuest
 				),
-				array(
-					'label'=>'Users',
-					'url'=>array('/users/index'),
-					'visible'=>!Yii::app()->user->isGuest
-				),
+// 				array(
+// 					'label'=>'Users',
+// 					'url'=>array('/users/index'),
+// 					'visible'=>!Yii::app()->user->isGuest
+// 				),
 			);
 
 			// admin section

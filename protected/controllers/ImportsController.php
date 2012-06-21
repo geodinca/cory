@@ -152,7 +152,7 @@ class ImportsController extends Controller
 						$sProfile = str_replace(array_keys($aSavedCompaniesUrls), $aSavedCompaniesUrls, $objWorksheet->getCellByColumnAndRow(21, $row)->getValue());
 //						echo '<pre>'.print_r(CHtml::encode($sProfile), true).'</pre>'; die();
 
-						$searchField = sEmployeeName .' '.
+						$searchField = $sEmployeeName .' '.
 										$objWorksheet->getCellByColumnAndRow(1, $row)->getValue().' '.
 										$objWorksheet->getCellByColumnAndRow(3, $row)->getValue().' '.
 										$objWorksheet->getCellByColumnAndRow(4, $row)->getValue().' '.
