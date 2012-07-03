@@ -299,7 +299,6 @@ class EmployeesController extends Controller
 		$aSessionUser = unserialize(Yii::app()->session->get('app_setts'));
 		$aCurrentInstanceId = array($aSessionUser['current_instance_id']);
 		$currentPage = Yii::app()->session->get('current_page');
-
 		// get selected employees to use in cgridview
 		$this->selectedEmployees = isset($aSession['employees']) ? $aSession['employees'] : array();
 
@@ -388,7 +387,7 @@ class EmployeesController extends Controller
 
 				$oCriteria->with = array('notes', 'present_employer');
 				$oCriteria->condition = 'MATCH (t.search, notes.note, present_employer.name) AGAINST ('.$sConditionalString.' IN BOOLEAN MODE)';
-				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
+				$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], false, 'AND');
 			} else {
 				$sConditionalString = '';
 				$oCriteria->with = array('notes', 'present_employer');
@@ -489,7 +488,7 @@ class EmployeesController extends Controller
 				}
 			}
 
-			$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], true, 'AND');
+			$oCriteria->addSearchCondition('t.instances_id', $aCurrentInstanceId[0], false, 'AND');
 			$oCriteria->order = 't.geographical_area ASC, present_employer.name ASC';
 //			echo '<pre>'.print_r($oCriteria, true).'</pre>'; //die();
 
