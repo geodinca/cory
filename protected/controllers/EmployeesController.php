@@ -291,7 +291,7 @@ class EmployeesController extends Controller
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-
+		$iPageSize = 80;
 		// get stored session data
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 
@@ -309,7 +309,7 @@ class EmployeesController extends Controller
 				$oCriteria = $aSession['criteria'];
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria'=>$oCriteria,
-					'pagination'=>array('pageSize'=>50),
+					'pagination'=>array('pageSize' => $iPageSize),
 				));
 				Yii::app()->session->add('current_page', $currentPage);
 			} else {
@@ -323,7 +323,7 @@ class EmployeesController extends Controller
 			$oCriteria1->addInCondition('t.id',$aSession['employees']);
 			$dataProvider = new CActiveDataProvider($model, array(
 				'criteria'=>$oCriteria1,
-				'pagination'=>array('pageSize'=>50),
+				'pagination'=>array('pageSize' => $iPageSize),
 			));
 		}
 
@@ -346,7 +346,7 @@ class EmployeesController extends Controller
 
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria'=>$oCriteria,
-					'pagination'=>array('pageSize'=>50),
+					'pagination'=>array('pageSize' => $iPageSize),
 				));
 			} else {
 				$model->attributes=$_GET['Employees'];
@@ -501,7 +501,7 @@ class EmployeesController extends Controller
 
 			$dataProvider = new CActiveDataProvider($model, array(
 				'criteria'=>$oCriteria,
-				'pagination'=>array('pageSize'=>50, 'currentPage' => $currentPage),
+				'pagination'=>array('pageSize' => $iPageSize, 'currentPage' => $currentPage),
 			));
 		}
 
@@ -510,7 +510,7 @@ class EmployeesController extends Controller
 				$oCriteria = $aSession['criteria'];
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria' => $oCriteria,
-					'pagination'=>array('pageSize'=>50, 'currentPage' => $currentPage),
+					'pagination'=>array('pageSize' => $iPageSize, 'currentPage' => $currentPage),
 				));
 			} else {
 				$model->instances_id = $aCurrentInstanceId[0];
