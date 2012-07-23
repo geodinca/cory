@@ -45,8 +45,8 @@ class Companies extends CActiveRecord
 		return array(
 			array('instances_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'required'),
-			array('name, street, city, country, state, zip, phone, web, sales', 'length', 'max'=>255),
-			array('products', 'safe'),
+			array('name, street, city, country, state, zip, phone, web', 'length', 'max'=>255),
+			array('products, sales', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, name, street, city, country, state, zip, phone, web, products, sales', 'safe', 'on'=>'search'),
