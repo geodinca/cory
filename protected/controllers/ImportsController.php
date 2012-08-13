@@ -22,7 +22,7 @@ class ImportsController extends Controller
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin'),
-				'users'=>array('admin'),
+				'users'=>array('admin', 'CoryComan'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -121,6 +121,8 @@ class ImportsController extends Controller
 						if($oCompanyModel->save()){
 							$aSavedCompanies[$sCompanyName] = $oCompanyModel->id;
 							$aSavedCompaniesUrls[ucwords($sCompanyName)] = CHtml::link(ucwords($sCompanyName), array('/companies/'.$oCompanyModel->id));
+						} else {
+							var_dump($oCompanyModel);
 						}
 					}
 				}
@@ -128,10 +130,11 @@ class ImportsController extends Controller
 				// import employees
 				for ($row = 2; $row <= $highestRow; ++$row) {
 					$sCompanyName = strtolower($objWorksheet->getCellByColumnAndRow(2, $row)->getValue());
-
 					// get company id to save into employees table
-					if ($sCompanyName) {
+					if ($sCompanyName && isset($aSavedCompanies[$sCompanyName])) {
 						$iCompanyId = $aSavedCompanies[$sCompanyName];
+					} else {
+						echo "There is an error importing employees of $sCompanyName \n";
 					}
 
 					if($iCompanyId){

@@ -134,6 +134,16 @@ class PFormatter extends CFormatter
 		}
 		return html_entity_decode($sProfile);
 	}
+	
+	public function formatProfile($sText){
+		if (strlen($sText) > 170)
+		{
+			$sText = preg_replace('/\s+?(\S+)?$/', '', substr($sText, 0, 171));
+			$sText .= ' ...';
+		}
+		return $sText;
+	
+	}
 
 	/**
 	 * Expode in one single array the search POST form array
