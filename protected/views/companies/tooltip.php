@@ -8,6 +8,7 @@ if(isset($employee[0]->contact_info)){
 
 if(isset($model->products)){
 	$products =  Yii::app()->format->html(nl2br($model->products));
+	$products = htmlentities($products,ENT_QUOTES);
 } else {
 	$products = null;
 }
