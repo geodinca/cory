@@ -31,8 +31,8 @@ $aSessionUser = unserialize(Yii::app()->session->get('app_setts'));
 $aCurrentInstanceId = $aSessionUser['current_instance_id'];
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'employees-grid',
-	'dataProvider'=>$dataProvider,
-	'filter'=>$model,
+	'dataProvider'=> $dataProvider,
+	'filter'=> $model,
 	'selectableRows'=>2,
 	'selectionChanged'=>'function(id){ location.href = "'.$this->createUrl('view').'/id/"+$.fn.yiiGridView.getSelection(id);}',
 	'columns'=>array(
@@ -49,8 +49,19 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'htmlOptions' => array('class' => 'column-2'),
 			'value'	 => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row + 1)'
 		),
-		array('name'=>'name','headerHtmlOptions' => array('width' => '150px'), 'htmlOptions' => array('class' => 'column-3'),),
-		array('name'=>'title','headerHtmlOptions' => array('width' => '150px'), 'htmlOptions' => array('class' => 'column-4'),),
+		array(
+			'header' => 'Name & Title',
+			'name'=>'name',
+			'type'        => 'html',
+			'value'       => '$data->name.\'<br /><span class="employee-title">\'.$data->title.\'</span>.\'',
+			'headerHtmlOptions' => array('width' => '150px'), 
+			'htmlOptions' => array('class' => 'column-3'),
+		),
+// 		array(
+// 			'name'=>'title',
+// 			'headerHtmlOptions' => array('width' => '150px'), 
+// 			'htmlOptions' => array('class' => 'column-4'),
+// 		),
 		array(
 			'header'      => 'Employer',
 			'name'        => 'companies_id',
@@ -62,9 +73,16 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 		array('name'=>'geographical_area','headerHtmlOptions' => array('width' => '150px'), 'htmlOptions' => array('class' => 'column-6'),),
 		array(
+			'header' => 'Profile',
+			'type'   => 'raw',
+			'headerHtmlOptions' => array('width' => '350px'),
+			'htmlOptions' => array('class' => 'column-profile'),
+			'value'  => '$this->grid->controller->widget(\'application.widgets.GetUserProfile\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
+		),
+		array(
 			'header' => 'Notes',
 			'type'   => 'raw',
-			'headerHtmlOptions' => array('width' => '500px'),
+			'headerHtmlOptions' => array('width' => '300px'),
 			'htmlOptions' => array('class' => 'column-7'),
 			'value'  => '$this->grid->controller->widget(\'application.widgets.GetUserNotes\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
 		),

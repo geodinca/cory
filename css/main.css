@@ -382,6 +382,15 @@ table thead input[type="text"] {
 	z-index: 10;
 }
 
+#employees-grid .column-3 {
+	font-weight: bold;
+}
+
+#employees-grid .column-3 .employee-title {
+	font-weight: normal;
+}
+
+
 .profile-view .profile-actions
 {
 	padding: 5px;
@@ -516,8 +525,9 @@ table .filters {background-color:#EEE;}
 #employees-grid table tbody tr .column-4 {width: 149px;}
 #employees-grid table tbody tr .column-5 {width: 149px;}
 #employees-grid table tbody tr .column-6 {width: 149px;}
-#employees-grid table tbody tr .column-7 {width: 499px;}
+#employees-grid table tbody tr .column-7 {width: 299px;}
 #employees-grid table tbody tr .column-8 {width: 54px;}
+#employees-grid table tbody tr .column-profile {width: 349px;}
 
 #companies-grid {padding: 59px 10px !important;}
 #companies-grid table {margin: 0 auto; width: 1064px;}
