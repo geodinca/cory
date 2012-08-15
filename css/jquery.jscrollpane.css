@@ -61,7 +61,7 @@
 
 .jspDrag
 {
-	background: #bbd;
+	background: #666;
 	position: relative;
 	top: 0;
 	left: 0;
@@ -92,6 +92,7 @@
 .jspVerticalBar .jspArrow
 {
 	height: 16px;
+	background-color: #CCC;
 }
 
 .jspHorizontalBar .jspArrow
@@ -117,4 +118,13 @@
 * html .jspCorner
 {
 	margin: 0 -3px 0 0;
+}
+
+a.jspArrowUp
+{
+	background: url("basic_arrow_up.gif") no-repeat scroll 0 0 transparent
+}
+
+a.jspArrowDown {
+    background: url("basic_arrow_down.gif") no-repeat scroll 0 0 transparent;
 }

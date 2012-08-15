@@ -25,7 +25,6 @@ $this->renderPartial('_menu',array('action'=>'search_result'));
 </div>
 
 <?php
-
 $sTemplate = (Yii::app()->user->credentials['type'] == 'admin') ? '{view}{update}{delete}' : '{view}';
 $aSessionUser = unserialize(Yii::app()->session->get('app_setts'));
 $aCurrentInstanceId = $aSessionUser['current_instance_id'];
@@ -77,7 +76,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'type'   => 'raw',
 			'headerHtmlOptions' => array('width' => '350px'),
 			'htmlOptions' => array('class' => 'column-profile'),
-			'value'  => '$this->grid->controller->widget(\'application.widgets.GetUserProfile\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
+			'value'  => '$this->grid->controller->widget(\'application.widgets.GetUserProfile\', array("iEmployeeId" => $data->id, "search" => Yii::app()->session->get(\'search_criteria\')), true);'
 		),
 		array(
 			'header' => 'Notes',

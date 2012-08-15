@@ -291,7 +291,7 @@ class EmployeesController extends Controller
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-		$iPageSize = 80;
+		$iPageSize = 50;
 		// get stored session data
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 
@@ -304,7 +304,8 @@ class EmployeesController extends Controller
 
 		if(Yii::app()->request->isAjaxRequest){
 			if($aSession && isset($aSession['criteria'])){
-				$currentPage = $_GET['Employees_page'];
+				if(isset($_GET['Employees_page'])) $currentPage = $_GET['Employees_page'];
+				else $currentPage = 1;
 				$oCriteria = $aSession['criteria'];
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria'=>$oCriteria,
