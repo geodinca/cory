@@ -72,7 +72,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 		array('name'=>'geographical_area','headerHtmlOptions' => array('width' => '150px'), 'htmlOptions' => array('class' => 'column-6'),),
 		array(
-			'header' => 'Profile',
+			'header' => 'Keywords Result',
 			'type'   => 'raw',
 			'headerHtmlOptions' => array('width' => '350px'),
 			'htmlOptions' => array('class' => 'column-profile'),

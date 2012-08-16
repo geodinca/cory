@@ -138,13 +138,13 @@ class PFormatter extends CFormatter
 	public function formatProfile($sProfile, $aWords){
 		$sProfile = htmlentities($sProfile);
         $out = "....";
-		        foreach($aWords as $tmp) {
-					preg_match("/(\w+)? ?(\w+)? ?$tmp? ?(\w+)? ?(\w+)?/i",$sProfile,$result);
-		            if(isset($result[0])) {
-		            	$out .= preg_replace("/$tmp/i","<B>$tmp</B>",$result[0]);
-		            	$out .= "....";
-		            }
-		            
+		foreach($aWords as $tmp) {
+			preg_match_all("/(\w+)? ?(\w+)? ?$tmp? ?(\w+)? ?(\w+)?/i",$sProfile,$result);
+			if(isset($result[0])) {
+				$found = implode('...',$result[0]);
+				$out .= preg_replace("/$tmp/i","<B>$tmp</B>",$found);
+				$out .= "....";
+			}
         }
         if ($out == "....") $out = self::formatNote($sProfile);
         return html_entity_decode($out);

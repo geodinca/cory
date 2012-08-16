@@ -55,7 +55,7 @@
 
 .jspTrack
 {
-	background: #dde;
+	background: #C9E0ED;
 	position: relative;
 }
 
@@ -122,9 +122,9 @@
 
 a.jspArrowUp
 {
-	background: url("basic_arrow_up.gif") no-repeat scroll 0 0 transparent
+	background: url("scroll_arrow.png") no-repeat scroll 0 0 transparent
 }
 
 a.jspArrowDown {
-    background: url("basic_arrow_down.gif") no-repeat scroll 0 0 transparent;
+    background: url("scroll_arrow.png") no-repeat scroll 0 -16px transparent;
 }

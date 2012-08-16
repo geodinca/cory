@@ -390,6 +390,14 @@ table thead input[type="text"] {
 	font-weight: normal;
 }
 
+#employees-grid table.items th, .grid-view table.items td
+{
+	border-right: 1px #666 solid !important;
+}
+
+#employees-grid table.items {
+    border: 1px solid #666666 !important;
+}
 
 .profile-view .profile-actions
 {
