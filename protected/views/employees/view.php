@@ -141,7 +141,9 @@ $(document).ready(function(){
 	$('#profile-area').height(profile_area);
 	$('.profile-notes').height(notes_area);
 
-	$('.profile-data').jScrollPane();
+	$('.profile-data').jScrollPane({
+			showArrows : true
+	});
 	//$('.profile-notes-scroll').jScrollPane();
 
 	$('.edit_area').editable("<?php echo Yii::app()->createUrl('/notes/saveNotes'); ?>", {

@@ -55,13 +55,13 @@
 
 .jspTrack
 {
-	background: #dde;
+	background: #C9E0ED;
 	position: relative;
 }
 
 .jspDrag
 {
-	background: #bbd;
+	background: #666;
 	position: relative;
 	top: 0;
 	left: 0;
@@ -92,6 +92,7 @@
 .jspVerticalBar .jspArrow
 {
 	height: 16px;
+	background-color: #CCC;
 }
 
 .jspHorizontalBar .jspArrow
@@ -117,4 +118,13 @@
 * html .jspCorner
 {
 	margin: 0 -3px 0 0;
+}
+
+a.jspArrowUp
+{
+	background: url("scroll_arrow.png") no-repeat scroll 0 0 transparent
+}
+
+a.jspArrowDown {
+    background: url("scroll_arrow.png") no-repeat scroll 0 -16px transparent;
 }

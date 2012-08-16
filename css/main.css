@@ -382,6 +382,23 @@ table thead input[type="text"] {
 	z-index: 10;
 }
 
+#employees-grid .column-3 {
+	font-weight: bold;
+}
+
+#employees-grid .column-3 .employee-title {
+	font-weight: normal;
+}
+
+#employees-grid table.items th, .grid-view table.items td
+{
+	border-right: 1px #666 solid !important;
+}
+
+#employees-grid table.items {
+    border: 1px solid #666666 !important;
+}
+
 .profile-view .profile-actions
 {
 	padding: 5px;
@@ -487,7 +504,7 @@ table thead input[type="text"] {
 
 #yw0 {position: relative;}
 #top-menu #yw0 {top:0px;}
-.search-word {color:#00F;font-weight: bold;}
+.search-word {color:#00F;font-weight: bold;background-color: orange;}
 
 #db-list { padding: 0 0 0 25px; list-style-type: none;}
 
@@ -516,8 +533,9 @@ table .filters {background-color:#EEE;}
 #employees-grid table tbody tr .column-4 {width: 149px;}
 #employees-grid table tbody tr .column-5 {width: 149px;}
 #employees-grid table tbody tr .column-6 {width: 149px;}
-#employees-grid table tbody tr .column-7 {width: 499px;}
+#employees-grid table tbody tr .column-7 {width: 299px;}
 #employees-grid table tbody tr .column-8 {width: 54px;}
+#employees-grid table tbody tr .column-profile {width: 349px;}
 
 #companies-grid {padding: 59px 10px !important;}
 #companies-grid table {margin: 0 auto; width: 1064px;}
