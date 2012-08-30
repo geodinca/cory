@@ -145,7 +145,17 @@ class StatsController extends Controller
 		if(empty($dataProvider)){
 			$oCriteria = new CDbCriteria;
 			$oCriteria->with = array('user');
-			$oCriteria->order = 't.id DESC';
+			
+			$sSort = 't.id DESC';
+			if(Yii::app()->request->isAjaxRequest){
+				$sorting = Yii::app()->request->getParam('Stats_sort');
+				$aSort = explode('.',$sorting);
+				$field = 't.'.$aSort[0];
+				if (isset($aSort[1])) $dir = strtoupper($aSort[1]);
+				else $dir = 'ASC';
+				$sSort = $field.' '.$dir;
+			}
+			$oCriteria->order = $sSort;
 			$dataProvider = new CActiveDataProvider($model, array(
 					'criteria' => $oCriteria,
 			));
@@ -156,6 +166,8 @@ class StatsController extends Controller
 			'model'=>$model,
 			'dataProvider' => $dataProvider
 		));
+		
+		var_dump($dataProvider);
 	}
 
 	/**

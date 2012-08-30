@@ -311,7 +311,7 @@ input[type="text"], input[type="password"] {
 }
 
 table thead input[type="text"] {
-	width: 98% !important;
+	width: 144px !important;
 	padding: 2px;
 	color: #636363;
 	font-family: Tahoma, Geneva, sans-serif;
@@ -394,6 +394,8 @@ table thead input[type="text"] {
 {
 	border-right: 1px #666 solid !important;
 }
+
+#employees-grid .filters select {width: 150px !important;}
 
 #employees-grid table.items {
     border: 1px solid #666666 !important;
@@ -524,18 +526,30 @@ table thead input[type="text"] {
 #serch-screen-form {padding-bottom: 30px; display: block; top: 50px; position: relative;}
 .grid-view .pager { margin: 5px 0 !important; }
 
+.grid-view table.items th, .grid-view table.items td {
+    border: 1px solid white;
+    font-size: 11px;
+    padding: 1px;
+}
+
+.grid-view-loading
+{
+	background:url(loading.gif) no-repeat 10px 0;
+	z-index: 100;
+}
+
 table .filters {background-color:#EEE;}
-#employees-grid table thead {position: fixed; width:98%; z-index: 10; top: 150px}
+#employees-grid table thead { left: 11px; position: fixed; right: 11px; top: 150px; z-index: 10;}
 #employees-grid table tbody {display: block; padding: 57px 0 0; position: relative; width: 100%;}
-#employees-grid table tbody tr .column-1 {width: 19px;}
-#employees-grid table tbody tr .column-2 {width: 15px;}
-#employees-grid table tbody tr .column-3 {width: 149px;}
-#employees-grid table tbody tr .column-4 {width: 149px;}
-#employees-grid table tbody tr .column-5 {width: 149px;}
-#employees-grid table tbody tr .column-6 {width: 149px;}
-#employees-grid table tbody tr .column-7 {width: 299px;}
-#employees-grid table tbody tr .column-8 {width: 54px;}
-#employees-grid table tbody tr .column-profile {width: 349px;}
+#employees-grid table #chk_grid, #employees-grid table tbody tr .column-1 {width: 20px;}
+#employees-grid table #employees-grid_c1, #employees-grid table tbody tr .column-2 {width: 15px;}
+#employees-grid table #employees-grid_c2, #employees-grid table tbody tr .column-3 {width: 150px;}
+#employees-grid table #employees-grid_c3, #employees-grid table tbody tr .column-4 {width: 150px;}
+#employees-grid table #employees-grid_c4, #employees-grid table tbody tr .column-5 {width: 150px;}
+#employees-grid table tbody tr .column-6 {width: 150px;}
+#employees-grid table #employees-grid_c6, #employees-grid table tbody tr .column-7 {width: 300px;}
+#employees-grid table #employees-grid_c7, #employees-grid table tbody tr .column-8 {width: 50px;}
+#employees-grid table #employees-grid_c5, #employees-grid table tbody tr .column-profile {width: 350px;}
 
 #companies-grid {padding: 59px 10px !important;}
 #companies-grid table {margin: 0 auto; width: 1064px;}

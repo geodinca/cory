@@ -291,7 +291,7 @@ class EmployeesController extends Controller
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-		$iPageSize = 50;
+		$iPageSize = 10;
 		// get stored session data
 		$aSession = unserialize(Yii::app()->session->get('search_criteria'));
 
@@ -307,6 +307,8 @@ class EmployeesController extends Controller
 				if(isset($_GET['Employees_page'])) $currentPage = $_GET['Employees_page'];
 				else $currentPage = 1;
 				$oCriteria = $aSession['criteria'];
+				$oCriteria->order = '';
+
 				$dataProvider = new CActiveDataProvider($model, array(
 					'criteria'=>$oCriteria,
 					'pagination'=>array('pageSize' => $iPageSize),
@@ -334,7 +336,7 @@ class EmployeesController extends Controller
 				$model->attributes=$_GET['Employees'];
 				foreach($model->attributes as $sAttribute => $sValue){
 					if($sValue){
-						$oCriteria1->addCondition($sAttribute.' LIKE :v_'.$sAttribute);
+						$oCriteria1->addCondition('t.'.$sAttribute.' LIKE :v_'.$sAttribute);
 						if(stristr($sAttribute, 'id')){
 							$oCriteria1->params[':v_'.$sAttribute] = $sValue;
 						} else {

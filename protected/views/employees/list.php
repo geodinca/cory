@@ -44,7 +44,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 		array(
 			'header' => '#',
-			'headerHtmlOptions' => array('width' => '15px'),
 			'htmlOptions' => array('class' => 'column-2'),
 			'value'	 => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row + 1)'
 		),
@@ -53,35 +52,29 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'name'=>'name',
 			'type'        => 'html',
 			'value'       => '$data->name.\'<br /><span class="employee-title">\'.$data->title.\'</span>.\'',
-			'headerHtmlOptions' => array('width' => '150px'), 
 			'htmlOptions' => array('class' => 'column-3'),
 		),
-// 		array(
-// 			'name'=>'title',
-// 			'headerHtmlOptions' => array('width' => '150px'), 
-// 			'htmlOptions' => array('class' => 'column-4'),
-// 		),
 		array(
 			'header'      => 'Employer',
 			'name'        => 'companies_id',
 			'htmlOptions' => array('class' => 'company_title column-5'),
-			'headerHtmlOptions' => array('width' => '150px'),
 			'type'        => 'html',
 			'value'       => array($this, 'getTooltip'),
 			'filter'	=> CHtml::listData(Companies::model()->findAll(array('condition'=>'instances_id = '.$aCurrentInstanceId,'order' => 'name ASC')), 'id', 'name')
 		),
-		array('name'=>'geographical_area','headerHtmlOptions' => array('width' => '150px'), 'htmlOptions' => array('class' => 'column-6'),),
+		array(
+			'name'=>'geographical_area',
+			'htmlOptions' => array('class' => 'column-6'),
+		),
 		array(
 			'header' => 'Keywords Result',
 			'type'   => 'raw',
-			'headerHtmlOptions' => array('width' => '350px'),
 			'htmlOptions' => array('class' => 'column-profile'),
 			'value'  => '$this->grid->controller->widget(\'application.widgets.GetUserProfile\', array("iEmployeeId" => $data->id, "search" => Yii::app()->session->get(\'search_criteria\')), true);'
 		),
 		array(
 			'header' => 'Notes',
 			'type'   => 'raw',
-			'headerHtmlOptions' => array('width' => '300px'),
 			'htmlOptions' => array('class' => 'column-7'),
 			'value'  => '$this->grid->controller->widget(\'application.widgets.GetUserNotes\', array("iEmployeeId" => $data->id, "iUserId" => Yii::app()->user->id), true);'
 		),
@@ -89,7 +82,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'class'=>'CButtonColumn',
 			'template' => $sTemplate,
 			'htmlOptions' => array('class' => 'column-8'),
-			'headerHtmlOptions' => array('width' => '50px'),
 		),
 	),
 ));
