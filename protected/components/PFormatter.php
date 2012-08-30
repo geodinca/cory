@@ -143,7 +143,7 @@ class PFormatter extends CFormatter
 			if(isset($result[0])) {
 				$found = implode('...',$result[0]);
 				$out .= preg_replace("/$tmp/i","<B>$tmp</B>",$found);
-				$out .= "....";
+				$out .= "... ";
 			}
         }
         if ($out == "....") $out = self::formatNote($sProfile);
