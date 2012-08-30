@@ -549,7 +549,7 @@ table .filters {background-color:#EEE;}
 #employees-grid table tbody tr .column-6 {width: 150px;}
 #employees-grid table #employees-grid_c6, #employees-grid table tbody tr .column-7 {width: 300px;}
 #employees-grid table #employees-grid_c7, #employees-grid table tbody tr .column-8 {width: 50px;}
-#employees-grid table #employees-grid_c5, #employees-grid table tbody tr .column-profile {width: 350px;}
+#employees-grid table #employees-grid_c5, #employees-grid table tbody tr .column-profile {width: 350px; word-wrap:break-word;}
 
 #companies-grid {padding: 59px 10px !important;}
 #companies-grid table {margin: 0 auto; width: 1064px;}
